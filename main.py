@@ -6,6 +6,7 @@ from middleware import configure_middleware
 
 from employees.router import router as employee_router
 from departments.router import router as department_router
+from exceptions.handlers import register_exception_handlers
 
 from config import settings
 
@@ -27,6 +28,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+register_exception_handlers(app)
 configure_middleware(app)
 
 app.include_router(employee_router)

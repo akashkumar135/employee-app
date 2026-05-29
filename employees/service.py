@@ -1,12 +1,9 @@
 """ Employee Service"""
 
-from fastapi import status
-from fastapi.exceptions import HTTPException
-
+from exceptions import NotFoundException
 from database import AsyncSession
 from models.employee import Employee
 from employees.repo import create, search, find_all, find_by_id, update_by_id, delete_by_id
-
 # Mainly manage business logics
 
 
@@ -32,27 +29,14 @@ async def employee_by_id(db: AsyncSession, id: int) -> Employee:
     employee = await find_by_id(db, id)
 
     if employee is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="employee not found")
+        raise NotFoundException(detail=f"Employee with id {id} not found")
     
     return employee
 
 async def update_employee(db: AsyncSession, id: int, updated_data: dict) -> Employee:
 
-    updated_fields = {}
 
-    if updated_data.get("name") is not None:
-        if not isinstance(updated_data.get("name"), str):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="name must be a non-empty string")
-        
-        updated_fields["name"] = updated_data.get("name")
-    
-    if updated_data.get("email") is not None:
-        if not isinstance(updated_data.get("email"), str):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="email must be a non-empty string")
-        
-        updated_fields["email"] = updated_data.get("email")
-
-    updated_employee = await update_by_id(db, id, updated_data=updated_fields)
+    updated_employee = await update_by_id(db, id, updated_data=updated_data)
 
     return updated_employee
 
