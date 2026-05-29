@@ -7,7 +7,7 @@ from middleware import configure_middleware
 from employees.router import router as employee_router
 from departments.router import router as department_router
 
-from config import APP_ENV
+from config import settings
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,5 +35,5 @@ app.include_router(department_router)
 
 @app.get("/health", tags=["Health"])
 def health_check():
-    return {"status": "healthy", "message": "Employee CRUD API is running", "environment": APP_ENV}
+    return {"status": "healthy", "message": "Employee CRUD API is running", "environment": settings.app_env}
 
