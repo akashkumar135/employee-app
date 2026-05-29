@@ -10,14 +10,9 @@ from employees.repo import create, search, find_all, find_by_id, update_by_id, d
 # Mainly manage business logics
 
 
-async def create_employee(db: AsyncSession, name: str, email: str) -> Employee:
+async def create_employee(db: AsyncSession, data) -> Employee:
 
-    if not isinstance(name, str) or not name.strip():
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="name must be a non-empty string")
-    if not isinstance(email, str) or not email.strip():
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="email must be a non-empty string")
-    
-    employee = await create(db, name, email)
+    employee = await create(db, data)
 
     return employee
 

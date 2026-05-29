@@ -9,13 +9,17 @@ from sqlalchemy import select, update
 
 from database import AsyncSession
 from models.employee import Employee
+from employees.schemas import EmployeeCreate
 
 # Manages only db related queries and return exact response
 
 
-async def create(db: AsyncSession, name: str, email: str) -> Employee:
+async def create(db: AsyncSession, employee: EmployeeCreate) -> Employee:
 
-    db_employee = Employee(name=name, email=email)
+    data = employee.model_dump()
+    address = data.pop("address")
+
+    db_employee = Employee(**data)
 
     db.add(db_employee)
 
@@ -24,7 +28,7 @@ async def create(db: AsyncSession, name: str, email: str) -> Employee:
 
     except IntegrityError:
         await db.rollback()
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Email '{email.strip()}' is already in use")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Email '{data.get("email").strip()}' is already in use")
         
 
     await db.refresh(db_employee)
