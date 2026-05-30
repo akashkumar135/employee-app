@@ -4,15 +4,22 @@
 from auth.utils import hash_password
 from database import AsyncSession
 from employees.repo import (
+    add_address,
     create,
     delete_by_id,
     find_all,
     find_by_id,
+    remove_address,
     search,
     update_by_id,
 )
-from employees.schemas import CreateEmployeePayload, SearchEmployeeQueryParams
+from employees.schemas import (
+    CreateAddressPayload,
+    CreateEmployeePayload,
+    SearchEmployeeQueryParams,
+)
 from exceptions import NotFoundException
+from models.address import Address
 from models.employee import Employee
 
 
@@ -56,3 +63,13 @@ async def update_employee(db: AsyncSession, id: int, updated_data: dict) -> Empl
 
 async def delete_employee(db: AsyncSession, id: int):
     return await delete_by_id(db, id)
+
+
+async def add_address_employee(
+    db: AsyncSession, id: int, data: CreateAddressPayload
+) -> Address:
+    return await add_address(db, id, data.model_dump())
+
+
+async def remove_address_employee(db: AsyncSession, address_id: int):
+    await remove_address(db, address_id)
