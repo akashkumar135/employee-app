@@ -11,12 +11,14 @@ from employees.repo import (
     find_by_id_with_addresses_and_departments,
     remove_address,
     search,
+    update_address,
     update_by_id,
 )
 from employees.schemas import (
     CreateAddressPayload,
     CreateEmployeePayload,
     SearchEmployeeQueryParams,
+    UpdateAddressPayload,
     UpdateEmployeePayload,
 )
 from exceptions import NotFoundException
@@ -72,6 +74,12 @@ async def add_address_employee(
     db: AsyncSession, id: int, data: CreateAddressPayload
 ) -> Address:
     return await add_address(db, id, data.model_dump())
+
+
+async def update_address_employee(
+    db: AsyncSession, address_id: int, data: UpdateAddressPayload
+):
+    return await update_address(db, address_id, data.model_dump(exclude_none=True))
 
 
 async def remove_address_employee(db: AsyncSession, address_id: int):

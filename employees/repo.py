@@ -169,6 +169,39 @@ async def add_address(db: AsyncSession, id: int, data: dict[str, Any]):
     return db_address
 
 
+async def find_address_by_id(db: AsyncSession, address_id: int):
+
+    stnt = _address_stnt.where(Address.id == address_id, Address.deleted_at.is_(None))
+
+    try:
+        return (await db.execute(stnt)).scalar_one()
+    except NoResultFound:
+        raise NotFoundException(detail=f"address with id {address_id} not found")
+
+
+async def update_address(
+    db: AsyncSession, address_id: int, data: dict[str, Any]
+) -> Address:
+
+    if not data:
+        return await find_address_by_id(db, address_id)
+
+    stnt = (
+        update(Address)
+        .where(Address.id == address_id, Address.deleted_at.is_(None))
+        .values(**data)
+        .returning(Address)
+    )
+
+    try:
+        updated_address = (await db.execute(stnt)).scalar_one()
+        await db.commit()
+    except NoResultFound:
+        raise NotFoundException(detail=f"address with id {address_id} not found")
+
+    return updated_address
+
+
 async def remove_address(db: AsyncSession, address_id: int):
 
     stnt = (

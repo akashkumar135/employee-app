@@ -14,23 +14,28 @@ from pydantic import (
 from departments.schemas import DepartmentResponse
 
 
-class CreateAddressPayload(BaseModel):
-    line1: str = Field(min_length=1, max_length=100)
-    city: str = Field(min_length=1, max_length=50)
-    postal_code: str = Field(min_length=1, max_length=10)
-    country: str = Field(min_length=1, max_length=20)
+class BaseAddressPayload(BaseModel):
+    line1: str | None = Field(min_length=1, max_length=100, default=None)
+    city: str | None = Field(min_length=1, max_length=50, default=None)
+    postal_code: str | None = Field(min_length=1, max_length=10, default=None)
+    country: str | None = Field(min_length=1, max_length=20, default=None)
 
     @field_validator("postal_code")
     @classmethod
-    def validate_postal_code(cls, v: str) -> str:
+    def validate_postal_code(cls, v: str | None) -> str | None:
 
-        if not v.isdigit():
+        if v and not v.isdigit():
             raise ValueError("Postal code must contain only digits (0-9)")
 
         return v
 
+    # NOTE: This validation will fail if user doesn't provide county but postal_code. Need to move this validation to repo level
+    # or make it require country when postal is needed
     @model_validator(mode="after")
     def validate_postal_code_for_country(self):
+
+        if not self.country or not self.postal_code:
+            return self
 
         country = self.country.strip().upper()
 
@@ -43,6 +48,17 @@ class CreateAddressPayload(BaseModel):
             raise ValueError("Indian PIN codes must be exactly 6 digits")
 
         return self
+
+
+class CreateAddressPayload(BaseAddressPayload):
+    line1: str = Field(min_length=1, max_length=100)
+    city: str = Field(min_length=1, max_length=50)
+    postal_code: str = Field(min_length=1, max_length=10)
+    country: str = Field(min_length=1, max_length=20)
+
+
+class UpdateAddressPayload(BaseAddressPayload):
+    pass
 
 
 class CreateEmployeePayload(BaseModel):

@@ -14,6 +14,7 @@ from employees.schemas import (
     EmployeeResponse,
     EmployeeWithAddressesAndDepartmentsResponse,
     SearchEmployeeQueryParams,
+    UpdateAddressPayload,
     UpdateEmployeePayload,
 )
 
@@ -64,6 +65,19 @@ async def add_address_employee(
     id: int, body: CreateAddressPayload, db: AsyncSession = Depends(get_db)
 ):
     return await service.add_address_employee(db, id, body)
+
+
+@router.put(
+    "/{id}/addresses/{address_id}",
+    response_model=AddressResponse,
+)
+async def update_address_employee(
+    id: int,
+    address_id: int,
+    body: UpdateAddressPayload,
+    db: AsyncSession = Depends(get_db),
+):
+    return await service.update_address_employee(db, address_id, body)
 
 
 @router.delete("/{id}/addresses/{address_id}", status_code=status.HTTP_204_NO_CONTENT)
