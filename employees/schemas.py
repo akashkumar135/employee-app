@@ -66,6 +66,7 @@ class GlobalAddressResponse(BaseModel):
     id: int
     line1: str
     city: str
+    employee_id: int
     postal_code: str
     created_at: datetime
     updated_at: datetime

@@ -7,7 +7,9 @@ from auth.schemas import TokenPayload
 from database import AsyncSession, get_db
 from employees import service
 from employees.schemas import (
+    CreateAddressPayload,
     CreateEmployeePayload,
+    GlobalAddressResponse,
     GlobalEmployeeResponse,
     ListEmployeeResponse,
     SearchEmployeeQueryParams,
@@ -52,6 +54,24 @@ async def update_employee(
     id: int, body: dict = Body(...), db: AsyncSession = Depends(get_db)
 ):
     return await service.update_employee(db, id, body)
+
+
+@router.post(
+    "/{id}/addresses",
+    status_code=status.HTTP_201_CREATED,
+    response_model=GlobalAddressResponse,
+)
+async def add_address_employee(
+    id: int, body: CreateAddressPayload, db: AsyncSession = Depends(get_db)
+):
+    return await service.add_address_employee(db, id, body)
+
+
+@router.delete("/{id}/addresses/{address_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_address_employee(
+    id: int, address_id: int, db: AsyncSession = Depends(get_db)
+):
+    return await service.remove_address_employee(db, address_id)
 
 
 @router.delete("/{id}", response_model=GlobalEmployeeResponse)
