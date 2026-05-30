@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError, NoResultFound
@@ -9,7 +10,7 @@ from models.department import Department
 from models.employee_x_department import Employee_X_Department
 
 
-async def create(db: AsyncSession, data: dict) -> Department:
+async def create(db: AsyncSession, data: dict[str, Any]) -> Department:
 
     department = Department(**data)
 

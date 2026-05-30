@@ -6,19 +6,14 @@ from departments.repo import (
     remove_employee,
     update_by_id,
 )
+from departments.schemas import CreateDepartmentPayload
 from models.department import Department
 
 
-async def create_department(db: AsyncSession, data: dict) -> Department:
-
-    valid_datas = {}
-
-    if data is not None and data.get("name"):
-        name = data.get("name")
-        if isinstance(name, str):
-            valid_datas["name"] = name.strip()
-
-    return await create(db, valid_datas)
+async def create_department(
+    db: AsyncSession, data: CreateDepartmentPayload
+) -> Department:
+    return await create(db, data.model_dump())
 
 
 async def update_department(db: AsyncSession, id: int, data: dict) -> Department:

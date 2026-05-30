@@ -2,13 +2,20 @@ from fastapi import APIRouter, Body, Depends, status
 
 from database import AsyncSession, get_db
 from departments import service as department_service
+from departments.schemas import (
+    CreateDepartmentPayload,
+    DepartmentResponse,
+    UpdateDepartmentPayload,
+)
 
 router = APIRouter(prefix="/department", tags=["Departments"])
 
 
-@router.post("", status_code=status.HTTP_201_CREATED)
-async def create_department(data: dict = Body(...), db: AsyncSession = Depends(get_db)):
-    return (await department_service.create_department(db, data)).to_api_dict()
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=DepartmentResponse)
+async def create_department(
+    data: CreateDepartmentPayload, db: AsyncSession = Depends(get_db)
+):
+    return await department_service.create_department(db, data)
 
 
 @router.put("/{id}")
