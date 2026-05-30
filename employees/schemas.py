@@ -53,6 +53,14 @@ class CreateEmployeePayload(BaseModel):
     address: CreateAddressPayload | None = None
 
 
+class UpdateEmployeePayload(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
+
+    name: str | None = Field(min_length=1, default=None)
+    email: EmailStr | None = None
+    age: int | None = Field(gt=0, lt=150, default=None)
+
+
 class SearchEmployeeQueryParams(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
 

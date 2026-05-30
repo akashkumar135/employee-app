@@ -17,6 +17,7 @@ from employees.schemas import (
     CreateAddressPayload,
     CreateEmployeePayload,
     SearchEmployeeQueryParams,
+    UpdateEmployeePayload,
 )
 from exceptions import NotFoundException
 from models.address import Address
@@ -57,8 +58,10 @@ async def get_employee(db: AsyncSession, id: int) -> Employee:
     return employee
 
 
-async def update_employee(db: AsyncSession, id: int, updated_data: dict) -> Employee:
-    return await update_by_id(db, id, updated_data=updated_data)
+async def update_employee(
+    db: AsyncSession, id: int, updated_data: UpdateEmployeePayload
+) -> Employee:
+    return await update_by_id(db, id, updated_data.model_dump())
 
 
 async def delete_employee(db: AsyncSession, id: int):

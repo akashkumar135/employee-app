@@ -83,7 +83,7 @@ async def find_by_email(db: AsyncSession, email: str) -> Employee:
     return await db.scalar(stnt)
 
 
-async def update_by_id(db: AsyncSession, id: int, updated_data: dict):
+async def update_by_id(db: AsyncSession, id: int, updated_data: dict[str, Any]):
 
     stnt = (
         update(Employee)
@@ -102,7 +102,7 @@ async def update_by_id(db: AsyncSession, id: int, updated_data: dict):
             detail=f"Email '{updated_data.get('email')}' is already in use"
         )
     except NoResultFound:
-        raise NotFoundException(detail=f"user not found")
+        raise NotFoundException(detail=f"user with id {id} not found")
 
     return updated_employee
 

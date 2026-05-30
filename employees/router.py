@@ -13,6 +13,7 @@ from employees.schemas import (
     GlobalEmployeeResponse,
     ListEmployeeResponse,
     SearchEmployeeQueryParams,
+    UpdateEmployeePayload,
 )
 
 # Contains mainly the routes , parsing logics
@@ -39,7 +40,6 @@ async def search_employee(
 @router.get("", response_model=list[ListEmployeeResponse])
 async def list_employee(
     db: AsyncSession = Depends(get_db),
-    _current_user: TokenPayload = Depends(get_current_user),
 ):
     return await service.list_employee(db)
 
@@ -51,7 +51,7 @@ async def get_employee(id: int, db: AsyncSession = Depends(get_db)):
 
 @router.put("/{id}", response_model=GlobalEmployeeResponse)
 async def update_employee(
-    id: int, body: dict = Body(...), db: AsyncSession = Depends(get_db)
+    id: int, body: UpdateEmployeePayload, db: AsyncSession = Depends(get_db)
 ):
     return await service.update_employee(db, id, body)
 
