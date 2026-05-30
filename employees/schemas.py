@@ -1,7 +1,15 @@
 """Employee Request Validation And Response Transform Schemas"""
 
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator, model_validator
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    Field,
+    field_validator,
+    model_validator,
+)
 
 
 class CreateAddressPayload(BaseModel):
@@ -16,9 +24,9 @@ class CreateAddressPayload(BaseModel):
 
         if not v.isdigit():
             raise ValueError("Postal code must contain only digits (0-9)")
-        
+
         return v
-    
+
     @model_validator(mode="after")
     def validate_postal_code_for_country(self):
 
@@ -27,18 +35,16 @@ class CreateAddressPayload(BaseModel):
         n = len(self.postal_code)
 
         if country in ("US", "USA") and n != 5:
-
             raise ValueError("US ZIP codes must be exactly 5 digits")
 
         elif country == "IN" and n != 6:
-
             raise ValueError("Indian PIN codes must be exactly 6 digits")
 
         return self
-    
-class CreateEmployeePayload(BaseModel):
 
-    model_config  = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+class CreateEmployeePayload(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
 
     name: str = Field(min_length=1)
     email: EmailStr
@@ -47,7 +53,26 @@ class CreateEmployeePayload(BaseModel):
     address: CreateAddressPayload | None = None
 
 
+class SearchEmployeeQueryParams(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
+
+    name: str | None = None
+    email: str | None = None
+
+
+class GlobalAddressResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    line1: str
+    city: str
+    postal_code: str
+    created_at: datetime
+    updated_at: datetime
+
+
 class GlobalEmployeeResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
 
     id: int
     name: str
@@ -56,8 +81,8 @@ class GlobalEmployeeResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-class ListEmployeeResponse(BaseModel):
 
+class ListEmployeeResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int

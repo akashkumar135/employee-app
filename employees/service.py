@@ -1,18 +1,27 @@
-""" Employee Service"""
+"""Employee Service"""
 
-from exceptions import NotFoundException
-from database import AsyncSession
-from models.employee import Employee
-from employees.repo import create, search, find_all, find_by_id, update_by_id, delete_by_id
 # Mainly manage business logics
 from auth.utils import hash_password
-from employees.schemas import CreateEmployeePayload
+from database import AsyncSession
+from employees.repo import (
+    create,
+    delete_by_id,
+    find_all,
+    find_by_id,
+    search,
+    update_by_id,
+)
+from employees.schemas import CreateEmployeePayload, SearchEmployeeQueryParams
+from exceptions import NotFoundException
+from models.employee import Employee
 
 
-async def create_employee(db: AsyncSession, data: CreateEmployeePayload) -> Employee:
+async def create_employee(db: AsyncSession, data: CreateEmployeePayload):
 
     data_dict = data.model_dump()
+
     hashed_password = hash_password(data.password)
+
     data_dict.pop("password")
     data_dict["password_hash"] = hashed_password
 
@@ -20,25 +29,26 @@ async def create_employee(db: AsyncSession, data: CreateEmployeePayload) -> Empl
 
     return employee
 
+
 async def list_employee(db: AsyncSession) -> list[Employee]:
     return await find_all(db)
 
-async def search_employee(db: AsyncSession, name: str) -> list[Employee]:
 
-    if name is not None:
-        name = name.strip()
-    
-    return await search(db, name)
+async def search_employee(
+    db: AsyncSession, filters: SearchEmployeeQueryParams
+) -> list[Employee]:
+    return await search(db, filters.model_dump())
 
 
 async def get_employee(db: AsyncSession, id: int) -> Employee:
-    
+
     employee = await find_by_id(db, id)
 
     if employee is None:
         raise NotFoundException(detail=f"Employee with id {id} not found")
-    
+
     return employee
+
 
 async def update_employee(db: AsyncSession, id: int, updated_data: dict) -> Employee:
     return await update_by_id(db, id, updated_data=updated_data)
