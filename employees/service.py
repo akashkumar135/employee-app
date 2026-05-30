@@ -61,7 +61,7 @@ async def get_employee(db: AsyncSession, id: int) -> Employee:
 async def update_employee(
     db: AsyncSession, id: int, updated_data: UpdateEmployeePayload
 ) -> Employee:
-    return await update_by_id(db, id, updated_data.model_dump())
+    return await update_by_id(db, id, updated_data.model_dump(exclude_none=True))
 
 
 async def delete_employee(db: AsyncSession, id: int):

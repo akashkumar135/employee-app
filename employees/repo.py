@@ -75,7 +75,10 @@ async def find_by_id(db: AsyncSession, id: int) -> Employee:
 
     stnt = _employee_stnt.where(Employee.id == id, Employee.deleted_at.is_(None))
 
-    return await db.scalar(stnt)
+    try:
+        return (await db.execute(stnt)).scalar_one()
+    except NoResultFound:
+        raise NotFoundException(detail=f"employee with id {id} not found")
 
 
 async def find_by_id_with_addresses_and_departments(
@@ -104,6 +107,9 @@ async def find_by_email(db: AsyncSession, email: str) -> Employee:
 
 
 async def update_by_id(db: AsyncSession, id: int, updated_data: dict[str, Any]):
+
+    if not updated_data:
+        return await find_by_id(db, id)
 
     stnt = (
         update(Employee)
