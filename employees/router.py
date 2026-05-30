@@ -73,6 +73,6 @@ async def remove_address_employee(
     return await service.remove_address_employee(db, address_id)
 
 
-@router.delete("/{id}", response_model=EmployeeResponse)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_employee(id: int, db: AsyncSession = Depends(get_db)):
     return await service.delete_employee(db, id)

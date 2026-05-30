@@ -123,19 +123,16 @@ async def delete_by_id(db: AsyncSession, id: int):
         update(Employee)
         .where(Employee.id == id, Employee.deleted_at.is_(None))
         .values(deleted_at=datetime.now())
-        .returning(Employee)
     )
 
     try:
-        updated_employee = (await db.execute(stnt)).scalar_one()
+        (await db.execute(stnt)).scalar_one()
         await db.commit()
 
     except NoResultFound:
         raise NotFoundException(
             detail=f"user with id {id} not found or has already deleted"
         )
-
-    return updated_employee
 
 
 async def add_address(db: AsyncSession, id: int, data: dict[str, Any]):
