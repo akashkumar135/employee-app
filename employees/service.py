@@ -8,7 +8,7 @@ from employees.repo import (
     create,
     delete_by_id,
     find_all,
-    find_by_id,
+    find_by_id_with_addresses,
     remove_address,
     search,
     update_by_id,
@@ -50,7 +50,7 @@ async def search_employee(
 
 async def get_employee(db: AsyncSession, id: int) -> Employee:
 
-    employee = await find_by_id(db, id)
+    employee = await find_by_id_with_addresses(db, id)
 
     if employee is None:
         raise NotFoundException(detail=f"Employee with id {id} not found")

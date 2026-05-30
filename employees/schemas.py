@@ -68,7 +68,7 @@ class SearchEmployeeQueryParams(BaseModel):
     email: str | None = None
 
 
-class GlobalAddressResponse(BaseModel):
+class BaseAddressResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
@@ -76,25 +76,26 @@ class GlobalAddressResponse(BaseModel):
     city: str
     employee_id: int
     postal_code: str
+
+
+class AddressResponse(BaseAddressResponse):
     created_at: datetime
     updated_at: datetime
 
 
-class GlobalEmployeeResponse(BaseModel):
+class BaseEmployeeResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
     name: str
     email: str
     age: int | None
+
+
+class EmployeeResponse(BaseEmployeeResponse):
     created_at: datetime
     updated_at: datetime
 
 
-class ListEmployeeResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int
-    name: str
-    email: str
-    age: int | None
+class GlobalEmployeeWithAddressResponse(EmployeeResponse):
+    addresses: list[AddressResponse]

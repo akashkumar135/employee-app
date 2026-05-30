@@ -5,6 +5,7 @@ from typing import Any
 
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError, NoResultFound
+from sqlalchemy.orm import selectinload
 
 from database import AsyncSession
 from exceptions import ConflictException, NotFoundException
@@ -72,6 +73,15 @@ async def find_all(db: AsyncSession) -> list[Employee]:
 async def find_by_id(db: AsyncSession, id: int) -> Employee:
 
     stnt = _employee_stnt.where(Employee.id == id, Employee.deleted_at.is_(None))
+
+    return await db.scalar(stnt)
+
+
+async def find_by_id_with_addresses(db: AsyncSession, id: int) -> Employee:
+
+    stnt = _employee_stnt.options(selectinload(Employee.addresses)).where(
+        Employee.id == id, Employee.deleted_at.is_(None)
+    )
 
     return await db.scalar(stnt)
 
