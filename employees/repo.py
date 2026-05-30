@@ -8,15 +8,14 @@ from sqlalchemy import select, update
 from exceptions import NotFoundException, ConflictException
 from database import AsyncSession
 from models.employee import Employee
-from employees.schemas import EmployeeCreate
 
 
 # Manages only db related queries and return exact response
 
 
-async def create(db: AsyncSession, employee: EmployeeCreate) -> Employee:
+async def create(db: AsyncSession, employee) -> Employee:
 
-    data = employee.model_dump()
+    data = employee
     address = data.pop("address")
 
     db_employee = Employee(**data)
@@ -58,9 +57,14 @@ async def find_by_id(db: AsyncSession, id: int) -> Employee:
     
     stnt = select(Employee).where(Employee.id == id)
 
-    employee = await db.scalar(stnt)
+    return await db.scalar(stnt)
 
-    return employee
+async def find_by_email(db: AsyncSession, email: str) -> Employee:
+    
+    stnt = select(Employee).where(Employee.email == email, Employee.deleted_at.is_(None))
+
+    return await db.scalar(stnt)
+
 
 
 async def update_by_id(db: AsyncSession, id: int, updated_data: dict):
