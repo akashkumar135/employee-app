@@ -6,7 +6,7 @@ from departments.repo import (
     remove_employee,
     update_by_id,
 )
-from departments.schemas import CreateDepartmentPayload
+from departments.schemas import CreateDepartmentPayload, UpdateDepartmentPayload
 from models.department import Department
 
 
@@ -16,16 +16,10 @@ async def create_department(
     return await create(db, data.model_dump())
 
 
-async def update_department(db: AsyncSession, id: int, data: dict) -> Department:
-
-    valid_datas = {}
-
-    if data is not None and data.get("name"):
-        name = data.get("name")
-        if isinstance(name, str):
-            valid_datas["name"] = name.strip()
-
-    return await update_by_id(db, id, valid_datas)
+async def update_department(
+    db: AsyncSession, id: int, data: UpdateDepartmentPayload
+) -> Department:
+    return await update_by_id(db, id, data.model_dump(exclude_none=True))
 
 
 async def list_department(db: AsyncSession):

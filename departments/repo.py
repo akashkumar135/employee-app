@@ -35,7 +35,22 @@ async def find_all(db: AsyncSession) -> list[Department]:
     return (await db.execute(stnt)).scalars()
 
 
-async def update_by_id(db: AsyncSession, id, data: dict) -> Department:
+async def find_by_id(db: AsyncSession, id: int) -> list[Department]:
+
+    stnt = select(Department).where(
+        Department.id == id, Department.deleted_at.is_(None)
+    )
+
+    try:
+        return (await db.execute(stnt)).scalar_one()
+    except NoResultFound:
+        raise NotFoundException(detail=f"department with id {id} not found")
+
+
+async def update_by_id(db: AsyncSession, id, data: dict[str, Any]) -> Department:
+
+    if not data:
+        return await find_by_id(db, id)
 
     stnt = (
         update(Department)
@@ -49,9 +64,7 @@ async def update_by_id(db: AsyncSession, id, data: dict) -> Department:
         await db.commit()
 
     except IntegrityError:
-        raise ConflictException(
-            detail=f"{data.get('name') or 'department'} already exist"
-        )
+        raise ConflictException(detail=f"{data.get('name')} already exist")
     except NoResultFound:
         raise NotFoundException(detail=f"department with id {id} not found")
 
