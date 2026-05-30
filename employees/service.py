@@ -7,6 +7,7 @@ from employees.repo import (
     add_address,
     create,
     delete_by_id,
+    find_address_by_id,
     find_all,
     find_by_id_with_addresses_and_departments,
     remove_address,
@@ -21,7 +22,8 @@ from employees.schemas import (
     UpdateAddressPayload,
     UpdateEmployeePayload,
 )
-from exceptions import NotFoundException
+from employees.validators import validate_postal_code_for_country
+from exceptions import BadRequestException, NotFoundException
 from models.address import Address
 from models.employee import Employee
 
@@ -79,6 +81,23 @@ async def add_address_employee(
 async def update_address_employee(
     db: AsyncSession, address_id: int, data: UpdateAddressPayload
 ):
+
+    data_dict = data.model_dump(exclude_none=True)
+
+    address = await find_address_by_id(db, address_id)
+
+    postal_code = (
+        data_dict.get("postal_code")
+        if data_dict.get("postal_code")
+        else address.postal_code
+    )
+    country = data_dict.get("country") if data_dict.get("country") else address.country
+
+    try:
+        validate_postal_code_for_country(country, postal_code)
+    except ValueError as err:
+        raise BadRequestException(detail=str(err))
+
     return await update_address(db, address_id, data.model_dump(exclude_none=True))
 
 

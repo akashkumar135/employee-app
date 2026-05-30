@@ -12,6 +12,7 @@ from pydantic import (
 )
 
 from departments.schemas import DepartmentResponse
+from employees.validators import validate_postal_code_for_country
 
 
 class BaseAddressPayload(BaseModel):
@@ -32,21 +33,8 @@ class BaseAddressPayload(BaseModel):
     # NOTE: This validation will fail if user doesn't provide county but postal_code. Need to move this validation to repo level
     # or make it require country when postal is needed
     @model_validator(mode="after")
-    def validate_postal_code_for_country(self):
-
-        if not self.country or not self.postal_code:
-            return self
-
-        country = self.country.strip().upper()
-
-        n = len(self.postal_code)
-
-        if country in ("US", "USA") and n != 5:
-            raise ValueError("US ZIP codes must be exactly 5 digits")
-
-        elif country == "IN" and n != 6:
-            raise ValueError("Indian PIN codes must be exactly 6 digits")
-
+    def validate_address(self):
+        validate_postal_code_for_country(self.country, self.postal_code)
         return self
 
 
