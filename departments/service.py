@@ -31,4 +31,4 @@ async def add_employee_to_department(db: AsyncSession, id: int, employee_id: int
 
 
 async def remove_employee_from_department(db: AsyncSession, id: int, employee_id: int):
-    return await remove_employee(db, id, employee_id)
+    await remove_employee(db, id, employee_id)

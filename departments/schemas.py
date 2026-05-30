@@ -25,10 +25,23 @@ class UpdateDepartmentPayload(BaseModel):
         return name.lower() if name else name
 
 
-class DepartmentResponse(BaseModel):
+class BaseDepartmentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
     name: str
+
+
+class DepartmentResponse(BaseDepartmentResponse):
+    created_at: datetime
+    updated_at: datetime
+
+
+class EmployeeXDepartmentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    employee_id: int
+    department_id: int
     created_at: datetime
     updated_at: datetime

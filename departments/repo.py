@@ -93,9 +93,7 @@ async def add_employee(
     return employee_x_department
 
 
-async def remove_employee(
-    db: AsyncSession, id: int, employee_id: int
-) -> Employee_X_Department:
+async def remove_employee(db: AsyncSession, id: int, employee_id: int):
 
     stnt = (
         update(Employee_X_Department)
@@ -109,12 +107,10 @@ async def remove_employee(
     )
 
     try:
-        updated_employee_x_department = (await db.execute(stnt)).scalar_one()
+        (await db.execute(stnt)).scalar_one()
         await db.commit()
 
     except NoResultFound:
         raise NotFoundException(
             detail=f"employee with id {employee_id} is not an active member of department with id {id}"
         )
-
-    return updated_employee_x_department
