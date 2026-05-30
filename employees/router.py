@@ -32,7 +32,9 @@ async def create_employee(
 
 @router.get("/search", response_model=list[BaseEmployeeResponse])
 async def search_employee(
-    query: SearchEmployeeQueryParams = Depends(), db: AsyncSession = Depends(get_db)
+    query: SearchEmployeeQueryParams = Depends(),
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     return await service.search_employee(db, query)
 
@@ -46,13 +48,20 @@ async def list_employee(
 
 
 @router.get("/{id}", response_model=EmployeeWithAddressesAndDepartmentsResponse)
-async def get_employee(id: int, db: AsyncSession = Depends(get_db)):
+async def get_employee(
+    id: int,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     return await service.get_employee(db, id)
 
 
 @router.put("/{id}", response_model=EmployeeResponse)
 async def update_employee(
-    id: int, body: UpdateEmployeePayload, db: AsyncSession = Depends(get_db)
+    id: int,
+    body: UpdateEmployeePayload,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     return await service.update_employee(db, id, body)
 
@@ -63,7 +72,10 @@ async def update_employee(
     response_model=AddressResponse,
 )
 async def add_address_employee(
-    id: int, body: CreateAddressPayload, db: AsyncSession = Depends(get_db)
+    id: int,
+    body: CreateAddressPayload,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     return await service.add_address_employee(db, id, body)
 
@@ -76,6 +88,7 @@ async def update_address_employee(
     id: int,
     address_id: int,
     body: UpdateAddressPayload,
+    _current_user: TokenPayload = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     return await service.update_address_employee(db, address_id, body)
@@ -83,11 +96,18 @@ async def update_address_employee(
 
 @router.delete("/{id}/addresses/{address_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def remove_address_employee(
-    id: int, address_id: int, db: AsyncSession = Depends(get_db)
+    id: int,
+    address_id: int,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     return await service.remove_address_employee(db, address_id)
 
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_employee(id: int, db: AsyncSession = Depends(get_db)):
+async def delete_employee(
+    id: int,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     return await service.delete_employee(db, id)
