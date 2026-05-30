@@ -5,11 +5,18 @@ from database import AsyncSession
 from models.employee import Employee
 from employees.repo import create, search, find_all, find_by_id, update_by_id, delete_by_id
 # Mainly manage business logics
+from auth.utils import hash_password
+from employees.schemas import CreateEmployeePayload
 
 
-async def create_employee(db: AsyncSession, data) -> Employee:
+async def create_employee(db: AsyncSession, data: CreateEmployeePayload) -> Employee:
 
-    employee = await create(db, data)
+    data_dict = data.model_dump()
+    hashed_password = hash_password(data.password)
+    data_dict.pop("password")
+    data_dict["password_hash"] = hashed_password
+
+    employee = await create(db, data_dict)
 
     return employee
 
@@ -24,7 +31,7 @@ async def search_employee(db: AsyncSession, name: str) -> list[Employee]:
     return await search(db, name)
 
 
-async def employee_by_id(db: AsyncSession, id: int) -> Employee:
+async def get_employee(db: AsyncSession, id: int) -> Employee:
     
     employee = await find_by_id(db, id)
 
@@ -34,11 +41,7 @@ async def employee_by_id(db: AsyncSession, id: int) -> Employee:
     return employee
 
 async def update_employee(db: AsyncSession, id: int, updated_data: dict) -> Employee:
-
-
-    updated_employee = await update_by_id(db, id, updated_data=updated_data)
-
-    return updated_employee
+    return await update_by_id(db, id, updated_data=updated_data)
 
 
 async def delete_employee(db: AsyncSession, id: int):

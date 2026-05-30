@@ -1,9 +1,10 @@
+"""Employee Request Validation And Response Transform Schemas"""
 
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator, model_validator
 
 
-class AddressCreate(BaseModel):
+class CreateAddressPayload(BaseModel):
     line1: str = Field(min_length=1, max_length=100)
     city: str = Field(min_length=1, max_length=50)
     postal_code: str = Field(min_length=1, max_length=10)
@@ -35,7 +36,7 @@ class AddressCreate(BaseModel):
 
         return self
     
-class EmployeeCreate(BaseModel):
+class CreateEmployeePayload(BaseModel):
 
     model_config  = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
@@ -43,10 +44,10 @@ class EmployeeCreate(BaseModel):
     email: EmailStr
     age: int | None = Field(gt=0, lt=150)
     password: str = Field(min_length=6)
-    address: AddressCreate | None = None
+    address: CreateAddressPayload | None = None
 
 
-class EmployeeResponse(BaseModel):
+class GlobalEmployeeResponse(BaseModel):
 
     id: int
     name: str
@@ -55,7 +56,7 @@ class EmployeeResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-class EmployeeResponseList(BaseModel):
+class ListEmployeeResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 

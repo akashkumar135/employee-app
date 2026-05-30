@@ -71,12 +71,9 @@ async def update_by_id(db: AsyncSession, id: int, updated_data: dict):
 
     stnt = update(Employee).where(Employee.id == id, Employee.deleted_at.is_(None)).values(**updated_data).returning(Employee)
 
-    updated_employee = None
     try:
 
-        result  = (await db.execute(stnt))
-        updated_employee = result.scalar_one()
-
+        updated_employee  = (await db.execute(stnt)).scalar_one()
         await db.commit()
 
     except IntegrityError:
@@ -84,6 +81,7 @@ async def update_by_id(db: AsyncSession, id: int, updated_data: dict):
         raise ConflictException(detail=f"Email '{updated_data.get("email")}' is already in use")
     except NoResultFound:
         raise NotFoundException(detail=f"user not found")
+    
     return updated_employee
 
 async def delete_by_id(db: AsyncSession, id: int):
@@ -91,9 +89,7 @@ async def delete_by_id(db: AsyncSession, id: int):
     stnt = update(Employee).where(Employee.id == id, Employee.deleted_at.is_(None)).values(deleted_at=datetime.now()).returning(Employee)
 
     try:
-        result = await db.execute(stnt)
-        updated_employee  = result.scalar_one()
-        
+        updated_employee = (await db.execute(stnt)).scalar_one()
         await db.commit()
 
     except NoResultFound:
