@@ -39,6 +39,7 @@ async def search_employee(
 
 @router.get("", response_model=list[BaseEmployeeResponse])
 async def list_employee(
+    _current_user: TokenPayload = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     return await service.list_employee(db)
