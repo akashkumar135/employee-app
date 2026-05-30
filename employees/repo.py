@@ -5,11 +5,12 @@ from typing import Any
 
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError, NoResultFound
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, with_loader_criteria
 
 from database import AsyncSession
 from exceptions import ConflictException, NotFoundException
 from models.address import Address
+from models.department import Department
 from models.employee import Employee
 
 # Manages only db related queries and return exact response
@@ -77,11 +78,20 @@ async def find_by_id(db: AsyncSession, id: int) -> Employee:
     return await db.scalar(stnt)
 
 
-async def find_by_id_with_addresses(db: AsyncSession, id: int) -> Employee:
+async def find_by_id_with_addresses_and_departments(
+    db: AsyncSession, id: int
+) -> Employee:
 
-    stnt = _employee_stnt.options(selectinload(Employee.addresses)).where(
-        Employee.id == id, Employee.deleted_at.is_(None)
-    )
+    stnt = _employee_stnt.options(
+        selectinload(
+            Employee.addresses,
+        ),
+        selectinload(
+            Employee.departments,
+        ),
+        with_loader_criteria(Address, Address.deleted_at.is_(None)),
+        with_loader_criteria(Department, Department.deleted_at.is_(None)),
+    ).where(Employee.id == id, Employee.deleted_at.is_(None))
 
     return await db.scalar(stnt)
 

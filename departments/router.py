@@ -32,14 +32,14 @@ async def list_all_department(db: AsyncSession = Depends(get_db)):
     ]
 
 
-@router.post("/{id}/{employee_id}")
+@router.post("/{id}/{employee_id}", status_code=status.HTTP_201_CREATED)
 async def add_employee_to_department(
     id: int, employee_id: int, db: AsyncSession = Depends(get_db)
 ):
     return await department_service.add_employee_to_department(db, id, employee_id)
 
 
-@router.delete("/{id}/{employee_id}")
+@router.delete("/{id}/{employee_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def remove_employee_from_department(
     id: int, employee_id: int, db: AsyncSession = Depends(get_db)
 ):

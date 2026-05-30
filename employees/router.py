@@ -12,7 +12,7 @@ from employees.schemas import (
     CreateAddressPayload,
     CreateEmployeePayload,
     EmployeeResponse,
-    GlobalEmployeeWithAddressResponse,
+    EmployeeWithAddressesAndDepartmentsResponse,
     SearchEmployeeQueryParams,
     UpdateEmployeePayload,
 )
@@ -43,7 +43,7 @@ async def list_employee(
     return await service.list_employee(db)
 
 
-@router.get("/{id}", response_model=GlobalEmployeeWithAddressResponse)
+@router.get("/{id}", response_model=EmployeeWithAddressesAndDepartmentsResponse)
 async def get_employee(id: int, db: AsyncSession = Depends(get_db)):
     return await service.get_employee(db, id)
 

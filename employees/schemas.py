@@ -11,6 +11,8 @@ from pydantic import (
     model_validator,
 )
 
+from departments.schemas import DepartmentResponse
+
 
 class CreateAddressPayload(BaseModel):
     line1: str = Field(min_length=1, max_length=100)
@@ -97,5 +99,6 @@ class EmployeeResponse(BaseEmployeeResponse):
     updated_at: datetime
 
 
-class GlobalEmployeeWithAddressResponse(EmployeeResponse):
+class EmployeeWithAddressesAndDepartmentsResponse(EmployeeResponse):
     addresses: list[AddressResponse]
+    departments: list[DepartmentResponse]
