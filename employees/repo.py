@@ -15,6 +15,7 @@ from models.employee import Employee
 
 
 _employee_stnt = select(Employee)
+_address_stnt = select(Address)
 
 
 async def create(db: AsyncSession, employee: dict[str, Any]) -> Employee:
@@ -125,3 +126,39 @@ async def delete_by_id(db: AsyncSession, id: int):
         )
 
     return updated_employee
+
+
+async def add_address(db: AsyncSession, id: int, data: dict[str, Any]):
+
+    employee = await find_by_id(db, id)
+
+    if employee is None:
+        raise NotFoundException(detail=f"employee with id {id} not found")
+
+    db_address = Address(**data, employee_id=employee.id)
+
+    db.add(db_address)
+
+    await db.commit()
+
+    await db.refresh(db_address)
+
+    return db_address
+
+
+async def remove_address(db: AsyncSession, address_id: int):
+
+    stnt = (
+        update(Address)
+        .where(Address.id == address_id, Address.deleted_at.is_(None))
+        .values(deleted_at=datetime.now())
+        .returning(Address)
+    )
+
+    try:
+        (await db.execute(stnt)).scalar_one()
+        await db.commit()
+    except NoResultFound:
+        raise NotFoundException(
+            detail=f"address with id {address_id} not found or had already deleted"
+        )
