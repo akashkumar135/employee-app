@@ -6,6 +6,7 @@ from middleware import configure_middleware
 
 from employees.router import router as employee_router
 from departments.router import router as department_router
+from auth.router import router as auth_router
 from exceptions.handlers import register_exception_handlers
 
 from config import settings
@@ -33,6 +34,7 @@ configure_middleware(app)
 
 app.include_router(employee_router)
 app.include_router(department_router)
+app.include_router(auth_router)
 
 
 @app.get("/health", tags=["Health"])

@@ -7,6 +7,8 @@ from database import AsyncSession, get_db
 from employees import service
 from employees.schemas import EmployeeCreate, EmployeeResponse, EmployeeResponseList
 
+from auth.schemas import TokenPayload
+from auth.dependencies import get_current_user
 # Contains mainly the routes , parsing logics 
 
 router = APIRouter(prefix="/employee", tags=["Employees"])
@@ -28,8 +30,7 @@ async def search_employee(name: str = "", db: AsyncSession = Depends(get_db)):
 
 
 @router.get("", response_model=list[EmployeeResponseList])
-async def list_employee(db: AsyncSession = Depends(get_db)):
-
+async def list_employee(db: AsyncSession = Depends(get_db), _current_user: TokenPayload = Depends(get_current_user)):
     employees = await service.list_employee(db)
 
     return employees
