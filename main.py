@@ -1,15 +1,14 @@
 import logging
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-from contextlib import asynccontextmanager
-from middleware import configure_middleware
-
-from employees.router import router as employee_router
-from departments.router import router as department_router
 from auth.router import router as auth_router
-from exceptions.handlers import register_exception_handlers
-
 from config import settings
+from departments.router import router as department_router
+from employees.router import router as employee_router
+from exceptions.handlers import register_exception_handlers
+from middleware import configure_middleware
 
 logging.basicConfig(
     level=logging.INFO,
