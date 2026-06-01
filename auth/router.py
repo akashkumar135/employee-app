@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -8,6 +10,9 @@ from database import AsyncSession, get_db
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
+logger = logging.getLogger(__name__)
+
+
 @router.post("/login", response_model=TokenResponse)
 async def login(
     body: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)
@@ -16,7 +21,7 @@ async def login(
     access_token, refresh_token = await auth_service.login(
         db, body.username, body.password
     )
-
+    logger.info(f"User {body.username} is logged in successfully")
     return TokenResponse(access_token=access_token, refresh_token=refresh_token)
 
 

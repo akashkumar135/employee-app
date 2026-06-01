@@ -1,3 +1,5 @@
+import logging
+
 from auth.utils import (
     create_access_token,
     create_refresh_token,
@@ -8,6 +10,8 @@ from database import AsyncSession
 from employees import repo as employee_repo
 from exceptions import UnauthorizedException
 
+logger = logging.getLogger(__name__)
+
 
 async def login(db: AsyncSession, email: str, password: str) -> tuple[str, str]:
 
@@ -17,6 +21,7 @@ async def login(db: AsyncSession, email: str, password: str) -> tuple[str, str]:
         raise UnauthorizedException(detail="Invalid email or password")
 
     if not verify_password(password, employee.password_hash):
+        logger.info(f"user {email} unauthorized due to wrong password")
         raise UnauthorizedException(detail="Invalid email or password")
 
     payload = {"id": employee.id, "email": employee.email, "role": employee.role}
