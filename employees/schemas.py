@@ -54,7 +54,7 @@ class CreateEmployeePayload(BaseModel):
 
     name: str = Field(min_length=1)
     email: EmailStr
-    age: int | None = Field(gt=0, lt=150)
+    age: int | None = Field(gt=0, lt=150, default=None)
     password: str = Field(min_length=6)
     address: CreateAddressPayload | None = None
 
