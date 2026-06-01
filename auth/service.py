@@ -19,7 +19,7 @@ async def login(db: AsyncSession, email: str, password: str) -> tuple[str, str]:
     if not verify_password(password, employee.password_hash):
         raise UnauthorizedException(detail="Invalid email or password")
 
-    payload = {"id": employee.id, "email": employee.email}
+    payload = {"id": employee.id, "email": employee.email, "role": employee.role}
     access_token = create_access_token(payload)
     refresh_token = create_refresh_token(payload)
 
@@ -35,7 +35,11 @@ def refresh_token(db: AsyncSession, refresh_token: str) -> tuple[str, str]:
             detail="Invalid or expired refresh token, needs to reauthenticate"
         )
 
-    new_payload = {"id": payload.get("id"), "email": payload.get("email")}
+    new_payload = {
+        "id": payload.get("id"),
+        "email": payload.get("email"),
+        "role": payload.get("role"),
+    }
 
     new_access_token = create_access_token(new_payload)
     new_refresh_token = create_refresh_token(new_payload)

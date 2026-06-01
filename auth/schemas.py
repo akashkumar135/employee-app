@@ -23,3 +23,4 @@ class TokenResponse(BaseModel):
 class TokenPayload(BaseModel):
     id: int
     email: str
+    role: str
