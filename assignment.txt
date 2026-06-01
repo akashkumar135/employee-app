@@ -7,7 +7,7 @@ add address endpoints also
 add department, employee_x_department junction table
 
 create crud for adding department
-create endpoint for add and remove of employee to department 
+create endpoint for add and remove of employee to department
 
 
 add validation schemas for all features
@@ -15,5 +15,5 @@ add validation schemas for all features
 
 
 refer and add fastapi[standard] , refer official docs
-add ruff extensions for vscode 
+add ruff extensions for vscode
 try pylint , prettier, editorconfig
