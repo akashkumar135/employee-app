@@ -8,6 +8,7 @@ from exceptions import (
     AppException,
     BadRequestException,
     ConflictException,
+    ForbiddenException,
     NotFoundException,
     UnauthorizedException,
 )
@@ -20,6 +21,7 @@ _STATUS_MAP: dict[type[AppException]] = {
     BadRequestException: status.HTTP_400_BAD_REQUEST,
     UnauthorizedException: status.HTTP_401_UNAUTHORIZED,
     RequestValidationError: status.HTTP_400_BAD_REQUEST,
+    ForbiddenException: status.HTTP_403_FORBIDDEN,
 }
 
 

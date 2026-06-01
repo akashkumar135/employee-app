@@ -1,5 +1,3 @@
-
-
 class AppException(Exception):
     """Base for all application-level errors."""
 
@@ -15,8 +13,14 @@ class NotFoundException(AppException):
 class ConflictException(AppException):
     """Operation conflicts with existing state (e.g. duplicate email)."""
 
+
 class BadRequestException(AppException):
     """Client input is invalid in a way Pydantic validation didn't catch."""
 
+
 class UnauthorizedException(AppException):
+    """Client credentials are invalid."""
+
+
+class ForbiddenException(AppException):
     """Client credentials are invalid."""
