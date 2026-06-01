@@ -11,3 +11,9 @@ create endpoint for add and remove of employee to department
 
 
 add validation schemas for all features
+
+
+
+refer and add fastapi[standard] , refer official docs
+add ruff extensions for vscode 
+try pylint , prettier, editorconfig

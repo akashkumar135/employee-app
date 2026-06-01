@@ -4,7 +4,7 @@ Employee entity — ORM mapped class for table `employees`.
 
 import enum
 
-from sqlalchemy import Enum, Integer, String, func
+from sqlalchemy import Enum, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.employee_x_department import Employee_X_Department

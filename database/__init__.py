@@ -2,4 +2,4 @@
 
 from database.connection import *
 
-__all__=["*"]
+__all__ = ["*"]
