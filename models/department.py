@@ -9,7 +9,9 @@ from models.entity import Entity, datetime_to_iso
 class Department(Entity):
     __tablename__ = "departments"
 
-    name: Mapped[str] = mapped_column(CITEXT(20), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(
+        CITEXT(20).with_variant(String(20), "sqlite"), nullable=False, unique=True
+    )
 
     employees: Mapped[list["Employee"]] = relationship(
         "Employee",
