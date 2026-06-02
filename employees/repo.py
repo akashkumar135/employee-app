@@ -49,13 +49,14 @@ async def create(db: AsyncSession, employee: dict[str, Any]) -> Employee:
 
 
 async def search(
-    db: AsyncSession, filters: dict[str, str | int | float] = {}
+    db: AsyncSession, filters: dict[str, str | int | float] = None
 ) -> list[Employee]:
 
     stnt = _employee_stnt.where(Employee.deleted_at.is_(None))
 
-    if filters.get("name"):
-        stnt = stnt.where(Employee.name.ilike(f"%{filters.get('name')}%"))
+    if filters:
+        if filters.get("name"):
+            stnt = stnt.where(Employee.name.ilike(f"%{filters.get('name')}%"))
 
     results = await db.scalars(stnt)
 
@@ -139,16 +140,19 @@ async def delete_by_id(db: AsyncSession, id: int):
         update(Employee)
         .where(Employee.id == id, Employee.deleted_at.is_(None))
         .values(deleted_at=datetime.now())
+        .returning(Employee)
     )
 
     try:
-        (await db.execute(stnt)).scalar_one()
+        deleted_employee = (await db.execute(stnt)).scalar_one()
         await db.commit()
 
     except NoResultFound:
         raise NotFoundException(
             detail=f"user with id {id} not found or has already deleted"
         )
+
+    return deleted_employee
 
 
 async def add_address(db: AsyncSession, id: int, data: dict[str, Any]):
