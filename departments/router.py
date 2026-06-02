@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 
-from auth.dependencies import get_current_user
+from auth.dependencies import get_current_user, require_roles
 from auth.schemas import TokenPayload
 from database import AsyncSession, get_db
 from departments import service as department_service
@@ -12,11 +12,17 @@ from departments.schemas import (
     SearchDepartmentQueryParams,
     UpdateDepartmentPayload,
 )
+from models.employee import EmployeeRole
 
 router = APIRouter(prefix="/department", tags=["Departments"])
 
 
-@router.post("", status_code=status.HTTP_201_CREATED, response_model=DepartmentResponse)
+@router.post(
+    "",
+    status_code=status.HTTP_201_CREATED,
+    response_model=DepartmentResponse,
+    dependencies=[Depends(require_roles(EmployeeRole.HR))],
+)
 async def create_department(
     data: CreateDepartmentPayload,
     _current_user: TokenPayload = Depends(get_current_user),
@@ -25,7 +31,11 @@ async def create_department(
     return await department_service.create_department(db, data)
 
 
-@router.put("/{id}", response_model=DepartmentResponse)
+@router.put(
+    "/{id}",
+    response_model=DepartmentResponse,
+    dependencies=[Depends(require_roles(EmployeeRole.HR))],
+)
 async def update_department(
     id: int,
     body: UpdateDepartmentPayload,
@@ -65,6 +75,7 @@ async def get_department(
     "/{id}/{employee_id}",
     status_code=status.HTTP_201_CREATED,
     response_model=EmployeeXDepartmentResponse,
+    dependencies=[Depends(require_roles(EmployeeRole.HR))],
 )
 async def add_employee_to_department(
     id: int,
@@ -75,7 +86,11 @@ async def add_employee_to_department(
     return await department_service.add_employee_to_department(db, id, employee_id)
 
 
-@router.delete("/{id}/{employee_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{id}/{employee_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_roles(EmployeeRole.HR))],
+)
 async def remove_employee_from_department(
     id: int,
     employee_id: int,
