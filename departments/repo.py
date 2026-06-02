@@ -35,6 +35,17 @@ async def find_all(db: AsyncSession) -> list[Department]:
     return (await db.execute(stnt)).scalars()
 
 
+async def search(db: AsyncSession, filters: dict[str, Any] = None):
+
+    stnt = select(Department).where(Department.deleted_at.is_(None))
+    print(filters)
+    if filters:
+        if filters.get("name"):
+            stnt = stnt.where(Department.name.ilike(f"%{filters.get('name')}%"))
+
+    return await db.scalars(stnt)
+
+
 async def find_by_id(db: AsyncSession, id: int) -> list[Department]:
 
     stnt = select(Department).where(
