@@ -25,6 +25,12 @@ class UpdateDepartmentPayload(BaseModel):
         return name.lower() if name else name
 
 
+class SearchDepartmentQueryParams(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
+
+    name: str | None = None
+
+
 class BaseDepartmentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

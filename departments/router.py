@@ -9,6 +9,7 @@ from departments.schemas import (
     CreateDepartmentPayload,
     DepartmentResponse,
     EmployeeXDepartmentResponse,
+    SearchDepartmentQueryParams,
     UpdateDepartmentPayload,
 )
 
@@ -40,6 +41,24 @@ async def list_all_department(
     db: AsyncSession = Depends(get_db),
 ):
     return await department_service.list_department(db)
+
+
+@router.get("/search", response_model=list[BaseDepartmentResponse])
+async def search_departments(
+    filters: SearchDepartmentQueryParams = Depends(),
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    return await department_service.search_department(db, filters)
+
+
+@router.get("/:id", response_model=DepartmentResponse)
+async def get_department(
+    id: int,
+    _current_user: TokenPayload = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    return await department_service.get_department(db, id)
 
 
 @router.post(
