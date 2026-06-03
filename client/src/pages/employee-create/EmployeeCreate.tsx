@@ -1,15 +1,14 @@
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
+import SectionHeader from "../../components/layout/Section/SectionHeader";
 import { Select, SelectOption } from "../../components/select/Select";
 import "./style.css";
 
 const EmployeeCreate = () => {
   return (
-    <aside className="employee-rigth-container">
-      <div className="employee-head-section">
-        <h2>Create Employee</h2>
-      </div>
+    <aside className="employee-create-wrapper">
+      <SectionHeader label="Create Employee" />
 
       <form className="employee-create-form">
         <div className="employee-form-fields-container">

@@ -1,3 +1,9 @@
+.employee-create-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .navbar-container {
   padding: 10px 0;
   width: 300px;
@@ -6,16 +12,6 @@
   flex-direction: column;
   align-items: end;
   gap: 10px;
-}
-
-.employee-rigth-container {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  width: calc(100vw - 300px);
-  height: 100%;
-  padding: 32px;
-  background-color: #f3f6fa;
 }
 
 .employee-head-section {
