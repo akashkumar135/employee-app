@@ -1,10 +1,14 @@
 import "./App.css";
-import Login from "./pages/login/Login";
+import Layout from "./components/layout/Layout/Layout";
+import EmployeeCreate from "./pages/employee-create/EmployeeCreate";
 
 function App() {
   return (
     <>
-      <Login />
+      <Layout>
+        {/* <Login /> */}
+        <EmployeeCreate />
+      </Layout>
     </>
   );
 }

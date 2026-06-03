@@ -1,0 +1,81 @@
+.navbar-container {
+  padding: 10px 0;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+
+.employee-rigth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: calc(100vw - 300px);
+  height: 100%;
+  padding: 32px;
+  background-color: #f3f6fa;
+}
+
+.employee-head-section {
+  padding: 0 20px;
+  height: 82px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.employee-head-section h2 {
+  font-weight: 500;
+}
+
+.employee-create-form {
+  padding: 20px;
+  background-color: white;
+}
+
+.employee-form-fields-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.address-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.address-subdetails-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.employee-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.employee-form-submit-button {
+  width: 180px;
+  height: 50px;
+  background-color: #03aeee;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  border-width: 0;
+}
+
+.employee-form-clear-button {
+  width: 180px;
+  height: 50px;
+  border-radius: 8px;
+  font-weight: 700;
+  border: 2px solid #bdbec5;
+  color: #63667a;
+}
