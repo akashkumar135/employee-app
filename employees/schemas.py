@@ -13,6 +13,7 @@ from pydantic import (
 
 from departments.schemas import DepartmentResponse
 from employees.validators import validate_postal_code_for_country
+from models.employee import EmployeeRole
 
 
 class BaseAddressPayload(BaseModel):
@@ -57,6 +58,7 @@ class CreateEmployeePayload(BaseModel):
     age: int | None = Field(gt=0, lt=150, default=None)
     password: str = Field(min_length=6)
     address: CreateAddressPayload | None = None
+    role: EmployeeRole | None = EmployeeRole.DEVELOPER.value
 
 
 class UpdateEmployeePayload(BaseModel):
@@ -65,6 +67,7 @@ class UpdateEmployeePayload(BaseModel):
     name: str | None = Field(min_length=1, default=None)
     email: EmailStr | None = None
     age: int | None = Field(gt=0, lt=150, default=None)
+    role: EmployeeRole | None = None
 
 
 class SearchEmployeeQueryParams(BaseModel):
@@ -72,6 +75,7 @@ class SearchEmployeeQueryParams(BaseModel):
 
     name: str | None = None
     email: str | None = None
+    role: EmployeeRole | None = None
 
 
 class BaseAddressResponse(BaseModel):
@@ -96,6 +100,7 @@ class BaseEmployeeResponse(BaseModel):
     name: str
     email: str
     age: int | None
+    role: str
 
 
 class EmployeeResponse(BaseEmployeeResponse):

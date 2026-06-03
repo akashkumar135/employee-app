@@ -58,6 +58,9 @@ async def search(
         if filters.get("name"):
             stnt = stnt.where(Employee.name.ilike(f"%{filters.get('name')}%"))
 
+        if filters.get("role"):
+            stnt = stnt.where(Employee.role == filters.get("role"))
+
     results = await db.scalars(stnt)
 
     return results
