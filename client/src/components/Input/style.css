@@ -1,0 +1,63 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.input-wrapper label {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 44px;
+  background-color: #fafafa;
+  border: 2px solid #c6cdd9;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+}
+
+.input-wrapper select {
+  width: 100%;
+  max-width: 440px;
+  height: 44px;
+  background-color: #fafafa;
+  border-width: 2px;
+  border-color: #c6cdd9;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.input-wrapper input[type="file"] {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+.custom-file-upload-container {
+  border: 2px solid #c6cdd9;
+  border-radius: 4px;
+}
+
+.custom-file-upload {
+  width: 100%;
+  max-width: 440px;
+  height: 44px;
+  background-color: #fafafa;
+  border-width: 10px;
+  border-color: #4a73b9;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 4px;
+}
