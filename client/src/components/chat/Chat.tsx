@@ -35,7 +35,7 @@ export const ChatMessageBody: React.FC<ChatMessageBodyProps> = ({
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ label, iconUrl }) => {
   return (
     <div className="chat-header">
-      <img src={iconUrl} width={16} height={16} />
+      <img src={iconUrl} width={24} height={24} />
       <span>{label}</span>
     </div>
   );
@@ -61,7 +61,7 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = ({
   return (
     <div className="chat-input-wrapper">
       <input type="text" placeholder={placeholder} />
-      {iconUrl && <img src={iconUrl} width={12} height={12} />}
+      {iconUrl && <img src={iconUrl} width={20} height={20} />}
     </div>
   );
 };
