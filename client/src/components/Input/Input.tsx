@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
   isRequired = false,
 }) => {
   return (
-    <div className={"input-wrapper" + containerClassName}>
+    <div className={"input-wrapper " + containerClassName}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
         id={id}
