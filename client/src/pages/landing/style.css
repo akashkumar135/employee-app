@@ -1,0 +1,45 @@
+.landing-layout {
+  width: 100%;
+  height: 100%;
+}
+.landing-content {
+  display: flex;
+  width: 100%;
+  height: calc(100% - 65px);
+  background-color: #f3f7fb;
+}
+
+.landing-left-container {
+  width: 50%;
+  padding: 10px;
+}
+
+.landing-left-image {
+  width: 100%;
+  max-width: 640px;
+}
+
+.landing-right-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.landing-right-container h1 {
+  font-size: 44px;
+  color: #db143c;
+}
+
+.landing-right-container p {
+  font-size: 60px;
+}
+
+.landing-container {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
