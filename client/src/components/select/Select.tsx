@@ -5,6 +5,7 @@ import "../Input/style.css";
 type SelectProps = {
   id?: string;
   label?: string;
+  name?: string;
   isRequired?: boolean;
   containerClassName?: string;
   className?: string;
@@ -19,6 +20,7 @@ export const Select: React.FC<SelectProps> = ({
   id,
   isRequired = false,
   label,
+  name,
   className,
   containerClassName,
   children,
@@ -26,7 +28,7 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <div className={`input-wrapper ${containerClassName}`}>
       {label && <label htmlFor="role">{label}</label>}
-      <select id={id} required={isRequired} className={className}>
+      <select id={id} required={isRequired} name={name} className={className}>
         {children}
       </select>
     </div>

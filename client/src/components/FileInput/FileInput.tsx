@@ -4,10 +4,16 @@ import "../Input/style.css";
 type FileInputProps = {
   id: string;
   label: string;
+  name?: string;
   actionLabel: string;
 };
 
-const FileInput: React.FC<FileInputProps> = ({ id, label, actionLabel }) => {
+const FileInput: React.FC<FileInputProps> = ({
+  id,
+  label,
+  name,
+  actionLabel,
+}) => {
   return (
     <div className="input-wrapper">
       <span>{label}</span>
@@ -16,7 +22,7 @@ const FileInput: React.FC<FileInputProps> = ({ id, label, actionLabel }) => {
           <img src={FileIcon} width="16" height="16" />
           {actionLabel}
         </label>
-        <input id={id} type="file" />
+        <input id={id} type="file" name={name} />
       </div>
     </div>
   );

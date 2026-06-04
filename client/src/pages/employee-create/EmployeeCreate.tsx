@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
@@ -6,14 +7,30 @@ import { Select, SelectOption } from "../../components/select/Select";
 import "./style.css";
 
 const EmployeeCreate = () => {
+  const [data, setData] = useState({});
+
+  const handleSubmit = (event: React.SubmitEvent) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const datas: Record<string, any> = {};
+
+    for (const [key, value] of formData.entries()) {
+      datas[key] = value;
+    }
+
+    setData(datas);
+    console.log("Submitted data", datas);
+  };
   return (
     <aside className="employee-create-wrapper">
       <SectionHeader label="Create Employee" />
 
-      <form className="employee-create-form">
+      <form className="employee-create-form" onSubmit={handleSubmit}>
         <div className="employee-form-fields-container">
           <Input
             id="employee-name"
+            name="name"
             type="text"
             label="Employee Name"
             placeholder="Employee Name"
@@ -21,6 +38,7 @@ const EmployeeCreate = () => {
           />
           <Input
             id="employee-id"
+            name="id"
             type="text"
             label="Employee ID"
             placeholder="Employee ID"
@@ -28,25 +46,27 @@ const EmployeeCreate = () => {
           />
           <Input
             id="joining-date"
-            type="text"
+            name="joiningDate"
+            type="date"
             label="Joining Date"
             placeholder="Joining Date"
             isRequired
           />
 
-          <Select id="role" label="Role" isRequired>
+          <Select id="role" label="Role" name="role" isRequired>
             <SelectOption value="DEVELOPER">Developer</SelectOption>
             <SelectOption value="QA">QA</SelectOption>
             <SelectOption value="DESIGNER">Designer</SelectOption>
           </Select>
 
-          <Select id="status" label="Status" isRequired>
+          <Select id="status" label="Status" name="status" isRequired>
             <SelectOption value="ACTIVE">Active</SelectOption>
             <SelectOption value="INACTIVE">Inactive</SelectOption>
           </Select>
           <Input
             id="employee-experience"
             type="text"
+            name="experience"
             label="Experience"
             placeholder="Experience"
             isRequired
@@ -55,9 +75,10 @@ const EmployeeCreate = () => {
           <div className="input-wrapper">
             <label htmlFor="employee-address">Address</label>
             <div className="address-group">
-              <input id="address" type="text" placeholder="Address" />
+              {/* <input id="address" type="text" placeholder="Address" /> */}
               <Input
                 id="employee-address"
+                name="address.address"
                 type="text"
                 placeholder="Address"
                 isRequired
@@ -65,18 +86,21 @@ const EmployeeCreate = () => {
               <div className="address-subdetails-group">
                 <Input
                   id="employee-address-city"
+                  name="address.city"
                   type="text"
                   placeholder="City"
                   isRequired
                 />
                 <Input
                   id="employee-address-country"
+                  name="address.country"
                   type="text"
                   placeholder="Country"
                   isRequired
                 />
                 <Input
                   id="employee-address-postal-code"
+                  name="address.postalCode"
                   type="text"
                   placeholder="Postal Code"
                   isRequired
@@ -87,6 +111,7 @@ const EmployeeCreate = () => {
           <FileInput
             id="upload-file"
             label="Upload ID Proof"
+            name="idProof"
             actionLabel="Attach files"
           />
         </div>

@@ -9,8 +9,8 @@ type InputProps = {
   className?: string;
   containerClassName?: string;
   isRequired?: boolean;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 const Input: React.FC<InputProps> = ({
