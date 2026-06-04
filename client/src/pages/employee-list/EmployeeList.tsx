@@ -29,6 +29,7 @@ const EmployeeList = () => {
               selected="status"
               options={[{ label: "status", value: "status" }]}
             />
+
             <Button className=" action-button create-button">
               <div className="center icon-circle">
                 <img src={PlusIcon} width={20} height={20} />

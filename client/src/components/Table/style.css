@@ -17,6 +17,10 @@
   background-color: white;
 }
 
+.table-row:nth-child(even) {
+  background-color: #fbfcfe;
+}
+
 .table-header .table-head:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
