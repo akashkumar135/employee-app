@@ -43,6 +43,7 @@
 .chat-message-send {
   border-radius: 10px 10px 0px;
   justify-content: end;
+  background-color: #ececec;
 }
 
 .chat-message-receive {
