@@ -5,13 +5,13 @@ import "./style.css";
 type LayoutProps = {
   children: React.ReactNode;
 };
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <main>
       <Header />
       <section className="body-container">
         <SideNavbar />
-        {children}
+        <div className="rigth-container">{children}</div>
       </section>
     </main>
   );
