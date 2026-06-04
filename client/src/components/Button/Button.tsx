@@ -1,3 +1,5 @@
+import "./style.css";
+
 type ButtonProps = {
   type?: "button" | "submit" | "reset";
   className?: string;

@@ -1,6 +1,9 @@
 import "./App.css";
 import Layout from "./components/layout/Layout/Layout";
+import ChatExample from "./pages/ChatExample";
 import EmployeeCreate from "./pages/employee-create/EmployeeCreate";
+import EmployeeDetails from "./pages/employee-details/EmployeeDetails";
+import EmployeeList from "./pages/employee-list/EmployeeList";
 
 import { useFetch } from "./hooks/useFetch";
 
@@ -13,8 +16,10 @@ function App() {
   return (
     <>
       <Layout>
-        {/* <Login /> */}
-        <EmployeeCreate />
+        {/* <EmployeeCreate /> */}
+        {/* <ChatExample /> */}
+        {/* <EmployeeList /> */}
+        <EmployeeDetails />
       </Layout>
     </>
   );

@@ -1,0 +1,25 @@
+.employee-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-button {
+  border-radius: 12px;
+  background-color: #eaf9ff;
+}
+
+.details-wrapper {
+  padding: 10px;
+  background-color: white;
+}
+
+.details-wrapper .details-fields:first-child {
+  border-top: none;
+}
+
+.details-fields {
+  border-top: 2px solid #e5e8ed;
+  display: flex;
+  gap: 20px;
+}
