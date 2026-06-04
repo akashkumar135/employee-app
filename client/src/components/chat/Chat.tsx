@@ -1,7 +1,11 @@
+import Button from "../Button/Button";
+
+import ChatIcon from "../../assets/message-icon.svg";
 import "./styles.css";
 
 type ChatWrapperProps = {
   children: React.ReactNode[];
+  className?: string;
 };
 
 type ChatHeaderProps = {
@@ -22,9 +26,37 @@ type ChatInputBoxProps = {
 type ChatMessageBodyProps = {
   children: React.ReactNode[];
 };
+type ChatTriggerProps = {
+  isOpen: boolean;
+  onChange: (value: boolean) => void;
+};
+export const ChatTrigger: React.FC<ChatTriggerProps> = ({
+  isOpen,
+  onChange,
+}) => {
+  const handleTrigger = () => {
+    onChange(!isOpen);
+  };
 
-export const ChatWrapper: React.FC<ChatWrapperProps> = ({ children }) => {
-  return <div className="chat-wrapper">{children}</div>;
+  return (
+    // <div className="chat-trigger">
+    <Button
+      type="button"
+      className="chat-trigger center"
+      onClick={handleTrigger}
+    >
+      <div className="center icon-circle">
+        <img src={ChatIcon} width={28} height={28} />
+      </div>
+    </Button>
+    // </div>
+  );
+};
+export const ChatWrapper: React.FC<ChatWrapperProps> = ({
+  children,
+  className,
+}) => {
+  return <div className={`chat-wrapper ${className}`}>{children}</div>;
 };
 
 export const ChatMessageBody: React.FC<ChatMessageBodyProps> = ({

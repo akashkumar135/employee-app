@@ -2,6 +2,28 @@ main {
   width: 100%;
 }
 
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 .body-container {
   width: 100%;
   height: calc(100vh - 70px);
@@ -17,4 +39,20 @@ main {
   height: 100%;
   padding: 32px;
   background-color: #f3f6fa;
+}
+
+.chat-section {
+  padding: 20px;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: end;
+  overflow: hidden;
+}
+
+.chat-section .chat-wrapper {
+  animation: slide-in 200ms ease-in-out;
 }
