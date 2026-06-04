@@ -6,6 +6,7 @@ import EmployeeDetails from "./pages/employee-details/EmployeeDetails";
 import EmployeeList from "./pages/employee-list/EmployeeList";
 
 import { useFetch } from "./hooks/useFetch";
+import Login from "./pages/login/Login";
 
 function App() {
   const { data, pending, error } = useFetch(
@@ -15,12 +16,13 @@ function App() {
   console.log(data, pending, "Data from api response");
   return (
     <>
-      <Layout>
-        {/* <EmployeeCreate /> */}
-        {/* <ChatExample /> */}
-        {/* <EmployeeList /> */}
-        <EmployeeDetails />
-      </Layout>
+      {/* <Layout> */}
+      {/* <EmployeeCreate /> */}
+      {/* <ChatExample /> */}
+      {/* <EmployeeList /> */}
+      {/* <EmployeeDetails /> */}
+      <Login />
+      {/* </Layout> */}
     </>
   );
 }
