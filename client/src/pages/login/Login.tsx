@@ -12,9 +12,36 @@ const Login = () => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
+
+  const validateField = (name: string, value: string) => {
+    switch (name) {
+      case "username": {
+        const emailMsg = value && !value.includes("@") ? "Must contain @" : "";
+
+        setErrors((prev) => ({ ...prev, username: emailMsg }));
+        return;
+      }
+      case "password": {
+        const passwordMsg =
+          value && value.length < 8
+            ? "Must be greater than or equal 8 characters"
+            : "";
+        setErrors((prev) => ({
+          ...prev,
+          password: passwordMsg,
+        }));
+      }
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    validateField(name, value);
     setData((prev) => ({
       ...prev,
       [name]: value,
@@ -42,22 +69,34 @@ const Login = () => {
           <form className="login-form-layout" onSubmit={handleSubmit}>
             <Input
               id="username"
+              label="Username"
               type="text"
               name="username"
               placeholder="Username"
               value={data.username}
               onChange={handleChange}
+              // placeholder="Username"
+              containerClassName="custom-input"
               isRequired
             />
+            {errors.username && (
+              <span className="error-box">{errors.username}</span>
+            )}
             <Input
               id="password"
               type="password"
               name="password"
+              label="Password"
               placeholder="Password"
               value={data.password}
               onChange={handleChange}
+              containerClassName="custom-input"
               isRequired
             />
+            {errors.password && (
+              <span className="error-box">{errors.password}</span>
+            )}
+
             <Button type="submit" className="login-submit-button">
               Login
             </Button>
