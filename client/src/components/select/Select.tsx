@@ -6,6 +6,8 @@ type SelectProps = {
   id?: string;
   label?: string;
   isRequired?: boolean;
+  containerClassName?: string;
+  className?: string;
   children: React.ReactNode[] | React.ReactNode;
 };
 type SelectOptionProps = {
@@ -17,12 +19,14 @@ export const Select: React.FC<SelectProps> = ({
   id,
   isRequired = false,
   label,
+  className,
+  containerClassName,
   children,
 }) => {
   return (
-    <div className="input-wrapper">
+    <div className={`input-wrapper ${containerClassName}`}>
       {label && <label htmlFor="role">{label}</label>}
-      <select id={id} required={isRequired}>
+      <select id={id} required={isRequired} className={className}>
         {children}
       </select>
     </div>
