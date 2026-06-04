@@ -1,0 +1,9 @@
+.display-status {
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.status-probation {
+  color: #cca500;
+  background-color: #fff8d7;
+}

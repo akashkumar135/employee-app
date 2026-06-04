@@ -1,0 +1,10 @@
+.document-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.document-wrapper span {
+  font-size: 14px;
+  color: #1eb4f0;
+}
