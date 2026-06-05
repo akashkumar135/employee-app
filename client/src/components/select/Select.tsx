@@ -10,6 +10,8 @@ type SelectProps = {
   containerClassName?: string;
   className?: string;
   children: React.ReactNode[] | React.ReactNode;
+  value: string;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 };
 type SelectOptionProps = {
   value?: string;
@@ -24,11 +26,20 @@ export const Select: React.FC<SelectProps> = ({
   className,
   containerClassName,
   children,
+  value,
+  onChange,
 }) => {
   return (
     <div className={`input-wrapper ${containerClassName}`}>
       {label && <label htmlFor="role">{label}</label>}
-      <select id={id} required={isRequired} name={name} className={className}>
+      <select
+        id={id}
+        required={isRequired}
+        name={name}
+        className={className}
+        value={value}
+        onChange={onChange}
+      >
         {children}
       </select>
     </div>
