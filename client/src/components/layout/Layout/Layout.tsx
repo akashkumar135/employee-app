@@ -15,11 +15,9 @@ import MessageIcon from "../../../assets/send-icon.svg";
 
 import "./style.css";
 import { useState } from "react";
+import { Outlet } from "react-router";
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
-const Layout = ({ children }: LayoutProps) => {
+const Layout = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
@@ -27,7 +25,9 @@ const Layout = ({ children }: LayoutProps) => {
       <Header />
       <section className="body-container">
         <SideNavbar />
-        <div className="rigth-container">{children}</div>
+        <div className="rigth-container">
+          <Outlet />
+        </div>
 
         <div className="chat-section">
           {isChatOpen && (
