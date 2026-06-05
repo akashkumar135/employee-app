@@ -1,7 +1,4 @@
 .chat-trigger {
-  /* position: absolute;
-  bottom: 10px;
-  right: 10px; */
   width: fit-content;
   border-radius: 40px;
   background-color: #1eb4f0;
@@ -13,8 +10,7 @@
 
 .chat-wrapper {
   position: relative;
-  max-width: 400px;
-  width: 100%;
+  width: 400px;
   height: 500px;
   border-radius: 8px;
   padding-bottom: 6px;
@@ -25,6 +21,7 @@
 }
 
 .chat-header {
+  width: 100%;
   padding-left: 10px;
   display: flex;
   align-items: center;
@@ -39,6 +36,7 @@
 .chat-body {
   padding: 20px;
   height: calc(100% - 30px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -48,28 +46,29 @@
 .chat-message-box {
   display: flex;
   width: 100%;
+  max-width: 300px;
   padding: 16px;
   background-color: #def6ff;
   font-size: 16px;
 }
 
 .chat-message-send {
-  border-radius: 10px 10px 0px;
-  justify-content: end;
+  border-radius: 20px 20px 0px;
+  align-self: end;
   background-color: #ececec;
 }
 
 .chat-message-receive {
-  border-radius: 10px 10px 10px 0;
-  justify-content: start;
+  border-radius: 20px 20px 20px 0;
+  align-self: start;
 }
 
 .chat-input-wrapper {
   position: sticky;
   bottom: 0;
-  padding: 2px 6px;
+  padding: 2px 20px;
   border: 1.5px solid #c6cdd9;
-  border-radius: 2px;
+  border-radius: 12px;
   width: calc(100% - 30px);
   display: flex;
   align-items: center;
@@ -88,8 +87,3 @@
 .chat-input-wrapper input:focus {
   outline: none;
 }
-
-/* #1EB4F0  chat header*/
-/* #DEF6FF chat message color */
-
-/* #ECECEC chat send color */
