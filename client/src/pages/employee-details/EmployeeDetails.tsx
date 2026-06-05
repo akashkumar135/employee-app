@@ -1,3 +1,5 @@
+import { useNavigate, useParams } from "react-router";
+
 import Button from "../../components/Button/Button";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 
@@ -7,14 +9,32 @@ import "./style.css";
 import DisplayField from "../../components/employee/DisplayField/DisplayField";
 import DocumentView from "../../components/employee/DocumentView/DocumentView";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
+import Employees from "../../datas/employees.json";
 
 const EmployeeDetails = () => {
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+  const currentEmployee = Employees.find(
+    (eachEmp) => eachEmp.employeeId === id,
+  );
+
+  const handleEditClick = () => {
+    navigate("/employee/create", {
+      state: currentEmployee,
+    });
+  };
+
   return (
     <section className="employee-details-wrapper">
       <SectionHeader
-        label="Employee Details"
+        label={`Employee Details (${id})`}
         extraOptions={
-          <Button type="button" className="action-button edit-button">
+          <Button
+            type="button"
+            className="action-button edit-button"
+            onClick={handleEditClick}
+          >
             <div className="center icon-circle">
               <img src={EditIcon} width={20} height={20} />
             </div>
@@ -24,22 +44,29 @@ const EmployeeDetails = () => {
       />
       <div className="details-wrapper">
         <div className="details-fields">
-          <DisplayField label="Employee Name">Data 1</DisplayField>
-          <DisplayField label="Joining Date">Data 1</DisplayField>
-          <DisplayField label="Experience">Data 1</DisplayField>
-          <DisplayField label="Role">Data 1</DisplayField>
-          <DisplayField label="Status">
-            <DisplayStatus status="Probation" />
+          <DisplayField label="Employee Name">
+            {currentEmployee?.employeeName}
           </DisplayField>
-          <DisplayField label="Experience">Data 1</DisplayField>
+          <DisplayField label="Joining Date">
+            {currentEmployee?.joiningDate}
+          </DisplayField>
+          <DisplayField label="Experience">
+            {currentEmployee?.experience}
+          </DisplayField>
+          <DisplayField label="Role">{currentEmployee?.role}</DisplayField>
+          <DisplayField label="Status">
+            <DisplayStatus status={currentEmployee?.status || ""} />
+          </DisplayField>
         </div>
         <div className="details-fields">
-          <DisplayField label="Address">Data 1</DisplayField>
+          <DisplayField label="Address">Address 1</DisplayField>
 
           <DisplayField label="Employee Document">
             <DocumentView label="View Document" />
           </DisplayField>
-          <DisplayField label="Employee ID">Data 1</DisplayField>
+          <DisplayField label="Employee ID">
+            {currentEmployee?.employeeId}
+          </DisplayField>
         </div>
       </div>
     </section>
