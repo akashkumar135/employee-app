@@ -16,7 +16,7 @@ const FileInput: React.FC<FileInputProps> = ({
 }) => {
   return (
     <div className="input-wrapper">
-      <span>{label}</span>
+      <label htmlFor={id}>{label}</label>
       <div className="custom-file-upload-container">
         <label htmlFor={id} className="custom-file-upload">
           <img src={FileIcon} width="16" height="16" />
