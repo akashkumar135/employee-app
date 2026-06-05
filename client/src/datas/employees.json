@@ -6,7 +6,13 @@
     "role": "Software Engineer",
     "status": "Employee",
     "experience": 4,
-    "action": "View"
+    "action": "View",
+    "address": {
+      "city": "New York",
+      "address": "123 Park Avenue",
+      "country": "USA",
+      "postalCode": "10001"
+    }
   },
   {
     "employeeName": "Bob Smith",
@@ -15,7 +21,13 @@
     "role": "Senior Software Engineer",
     "status": "Employee",
     "experience": 6,
-    "action": "View"
+    "action": "View",
+    "address": {
+      "city": "San Francisco",
+      "address": "456 Market Street",
+      "country": "USA",
+      "postalCode": "94105"
+    }
   },
   {
     "employeeName": "Charlie Davis",
@@ -24,7 +36,13 @@
     "role": "QA Engineer",
     "status": "Probation",
     "experience": 2,
-    "action": "View"
+    "action": "View",
+    "address": {
+      "city": "Austin",
+      "address": "789 Congress Avenue",
+      "country": "USA",
+      "postalCode": "78701"
+    }
   },
   {
     "employeeName": "Diana Wilson",
@@ -33,7 +51,13 @@
     "role": "Project Manager",
     "status": "Employee",
     "experience": 8,
-    "action": "View"
+    "action": "View",
+    "address": {
+      "city": "Chicago",
+      "address": "321 Michigan Avenue",
+      "country": "USA",
+      "postalCode": "60601"
+    }
   },
   {
     "employeeName": "Ethan Brown",
@@ -42,6 +66,12 @@
     "role": "Tech Lead",
     "status": "Inactive",
     "experience": 10,
-    "action": "View"
+    "action": "View",
+    "address": {
+      "city": "Seattle",
+      "address": "654 Pine Street",
+      "country": "USA",
+      "postalCode": "98101"
+    }
   }
 ]

@@ -4,18 +4,11 @@ import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 import { Select, SelectOption } from "../../components/select/Select";
-import "./style.css";
 import { useLocation, useNavigate } from "react-router";
 
-type Employee = {
-  employeeName: string;
-  employeeId: string;
-  joiningDate: string;
-  role: string;
-  status: string;
-  experience: number;
-  action: string;
-};
+import "./style.css";
+import type { Employee } from "../../types/employee";
+
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
@@ -39,7 +32,18 @@ const EmployeeCreate = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    setData((prev) => ({ ...prev, [name]: value }));
+    if (name.includes(".")) {
+      const keys = name.split(".");
+      setData((prev) => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [keys[1]]: value,
+        },
+      }));
+    } else {
+      setData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -124,10 +128,11 @@ const EmployeeCreate = () => {
           <div className="input-wrapper">
             <label htmlFor="employee-address">Address</label>
             <div className="address-group">
-              {/* <input id="address" type="text" placeholder="Address" /> */}
               <Input
                 id="employee-address"
                 name="address.address"
+                value={data.address.address}
+                onChange={handleChange}
                 type="text"
                 placeholder="Address"
                 isRequired
@@ -136,6 +141,8 @@ const EmployeeCreate = () => {
                 <Input
                   id="employee-address-city"
                   name="address.city"
+                  value={data.address.city}
+                  onChange={handleChange}
                   type="text"
                   placeholder="City"
                   isRequired
@@ -144,12 +151,16 @@ const EmployeeCreate = () => {
                   id="employee-address-country"
                   name="address.country"
                   type="text"
+                  value={data.address.country}
+                  onChange={handleChange}
                   placeholder="Country"
                   isRequired
                 />
                 <Input
                   id="employee-address-postal-code"
                   name="address.postalCode"
+                  value={data.address.postalCode}
+                  onChange={handleChange}
                   type="text"
                   placeholder="Postal Code"
                   isRequired

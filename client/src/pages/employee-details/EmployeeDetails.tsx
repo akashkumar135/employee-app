@@ -59,7 +59,11 @@ const EmployeeDetails = () => {
           </DisplayField>
         </div>
         <div className="details-fields">
-          <DisplayField label="Address">Address 1</DisplayField>
+          <DisplayField label="Address">
+            {currentEmployee?.address.address},{currentEmployee?.address.city},{" "}
+            {currentEmployee?.address.country},{" "}
+            {currentEmployee?.address.postalCode}
+          </DisplayField>
 
           <DisplayField label="Employee Document">
             <DocumentView label="View Document" />
