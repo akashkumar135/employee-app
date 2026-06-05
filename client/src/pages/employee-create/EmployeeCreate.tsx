@@ -5,7 +5,7 @@ import Input from "../../components/Input/Input";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 import { Select, SelectOption } from "../../components/select/Select";
 import "./style.css";
-import { Form, Link, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 type Employee = {
   employeeName: string;

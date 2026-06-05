@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 import Button from "../../components/Button/Button";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
@@ -30,8 +30,18 @@ const EmployeeList = () => {
     navigate("/employee/create");
   };
 
-  const handleEditClick = (id: string) => {
+  const handleRowClick = (id: string) => {
     navigate(`/employee/${id}/details`);
+  };
+
+  const handleEditClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    employee,
+  ) => {
+    event.stopPropagation();
+    navigate("/employee/create", {
+      state: employee,
+    });
   };
   console.log(searchParams.get("name"), searchParams.get("role"));
 
@@ -70,7 +80,7 @@ const EmployeeList = () => {
         </TableHeader>
         <TableBody>
           {Employees.map((eachEmp) => (
-            <TableRow>
+            <TableRow onClick={() => handleRowClick(eachEmp.employeeId)}>
               <TableCell>{eachEmp.employeeName}</TableCell>
               <TableCell>{eachEmp.employeeId}</TableCell>
               <TableCell>{eachEmp.joiningDate}</TableCell>
@@ -87,7 +97,7 @@ const EmployeeList = () => {
                   <Button
                     type="button"
                     className="action-button icon-button"
-                    onClick={() => handleEditClick(eachEmp.employeeId)}
+                    onClick={(event) => handleEditClick(event, eachEmp)}
                   >
                     <img src={EditIcon} width={20} height={20} />
                   </Button>
