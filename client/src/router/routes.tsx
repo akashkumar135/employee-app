@@ -6,6 +6,7 @@ import EmployeeList from "../pages/employee-list/EmployeeList";
 import EmployeeCreate from "../pages/employee-create/EmployeeCreate";
 import NotFound from "../pages/not-found/NotFound";
 import CommonError from "../pages/error/CommonError";
+import ProtectedRoute from "../components/protected/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -21,15 +22,27 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <EmployeeList />,
+        element: (
+          <ProtectedRoute>
+            <EmployeeList />
+          </ProtectedRoute>
+        ),
       },
       {
         path: ":id/details",
-        element: <EmployeeDetails />,
+        element: (
+          <ProtectedRoute>
+            <EmployeeDetails />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "create",
-        element: <EmployeeCreate />,
+        element: (
+          <ProtectedRoute>
+            <EmployeeCreate />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
