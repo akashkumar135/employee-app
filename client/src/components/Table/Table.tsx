@@ -9,6 +9,11 @@ type TableCellProps = {
   children: React.ReactNode;
 };
 
+type TableRowProps = {
+  children: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLTableRowElement>;
+};
+
 export const Table: React.FC<TableProps> = ({ children }) => {
   return <table className="table-wrapper">{children}</table>;
 };
@@ -21,8 +26,12 @@ export const TableBody: React.FC<TableProps> = ({ children }) => {
   return <tbody className="table-body">{children}</tbody>;
 };
 
-export const TableRow: React.FC<TableProps> = ({ children }) => {
-  return <tr className="table-row">{children}</tr>;
+export const TableRow: React.FC<TableRowProps> = ({ children, onClick }) => {
+  return (
+    <tr className="table-row" onClick={onClick}>
+      {children}
+    </tr>
+  );
 };
 
 export const TableHead: React.FC<TableProps> = ({ children }) => {
