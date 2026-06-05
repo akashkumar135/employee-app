@@ -4,7 +4,7 @@
     "employeeId": "EMP001",
     "joiningDate": "2022-03-15",
     "role": "Software Engineer",
-    "status": "employee",
+    "status": "Employee",
     "experience": 4,
     "action": "View"
   },
@@ -13,7 +13,7 @@
     "employeeId": "EMP002",
     "joiningDate": "2021-07-10",
     "role": "Senior Software Engineer",
-    "status": "employee",
+    "status": "Employee",
     "experience": 6,
     "action": "View"
   },
@@ -31,7 +31,7 @@
     "employeeId": "EMP004",
     "joiningDate": "2020-11-20",
     "role": "Project Manager",
-    "status": "employee",
+    "status": "Employee",
     "experience": 8,
     "action": "View"
   },
@@ -40,7 +40,7 @@
     "employeeId": "EMP005",
     "joiningDate": "2019-06-01",
     "role": "Tech Lead",
-    "status": "inactive",
+    "status": "Inactive",
     "experience": 10,
     "action": "View"
   }

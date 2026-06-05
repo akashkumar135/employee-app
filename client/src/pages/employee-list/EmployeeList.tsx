@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 
 import Button from "../../components/Button/Button";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
@@ -24,7 +24,15 @@ import Employees from "../../datas/employees.json";
 
 const EmployeeList = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
+  const handleEmployeeCreteClick = () => {
+    navigate("/employee/create");
+  };
+
+  const handleEditClick = (id: string) => {
+    navigate(`/employee/${id}/details`);
+  };
   console.log(searchParams.get("name"), searchParams.get("role"));
 
   return (
@@ -38,7 +46,10 @@ const EmployeeList = () => {
               selected="status"
               options={[{ label: "status", value: "status" }]}
             />
-            <Button className=" action-button create-button">
+            <Button
+              className=" action-button create-button"
+              onClick={handleEmployeeCreteClick}
+            >
               <div className="center icon-circle">
                 <img src={PlusIcon} width={20} height={20} />
               </div>
@@ -73,7 +84,11 @@ const EmployeeList = () => {
                   <Button type="button" className="action-button icon-button">
                     <img src={DeleteIcon} width={20} height={20} />
                   </Button>
-                  <Button type="button" className="action-button icon-button">
+                  <Button
+                    type="button"
+                    className="action-button icon-button"
+                    onClick={() => handleEditClick(eachEmp.employeeId)}
+                  >
                     <img src={EditIcon} width={20} height={20} />
                   </Button>
                 </div>
