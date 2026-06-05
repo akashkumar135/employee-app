@@ -21,6 +21,7 @@ import "./style.css";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 
 import Employees from "../../datas/employees.json";
+import type { Employee } from "../../types/employee";
 
 const EmployeeList = () => {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,7 @@ const EmployeeList = () => {
 
   const handleEditClick = (
     event: React.MouseEvent<HTMLButtonElement>,
-    employee,
+    employee: Employee,
   ) => {
     event.stopPropagation();
     navigate("/employee/create", {
