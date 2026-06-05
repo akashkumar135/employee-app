@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import "./style.css";
@@ -7,6 +9,8 @@ import LoginHeroImage from "../../assets/login-left-image-mask.png";
 import { useState } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -51,6 +55,7 @@ const Login = () => {
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
 
+    navigate("/employee");
     console.log(data, "FORM Submitted");
   };
 
