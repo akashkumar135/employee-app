@@ -16,6 +16,7 @@ import StatusSelector from "../../components/employee/search-filters/StatusSelec
 import PlusIcon from "../../assets/plus-icon.svg";
 
 import "./style.css";
+import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 
 const EmployeeList = () => {
   return (
@@ -55,7 +56,9 @@ const EmployeeList = () => {
             <TableCell>Data1</TableCell>
             <TableCell>Data1</TableCell>
             <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
+            <TableCell>
+              <DisplayStatus status="probation" />
+            </TableCell>
             <TableCell>Data1</TableCell>
             <TableCell>
               <div className="action-group">
@@ -73,7 +76,9 @@ const EmployeeList = () => {
             <TableCell>Data1</TableCell>
             <TableCell>Data1</TableCell>
             <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
+            <TableCell>
+              <DisplayStatus status="probation" />
+            </TableCell>
             <TableCell>Data1</TableCell>
             <TableCell>
               <div className="action-group">

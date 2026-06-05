@@ -21,6 +21,10 @@
   background-color: #fbfcfe;
 }
 
+.table-row:hover {
+  background-color: #e2e1e1;
+}
+
 .table-header .table-head:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
