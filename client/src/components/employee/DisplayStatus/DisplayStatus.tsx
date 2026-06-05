@@ -8,6 +8,10 @@ const getClassNameByStatus = (status: string) => {
   switch (status.toLowerCase()) {
     case "probation":
       return "status-probation";
+    case "inactive":
+      return "status-inactive";
+    case "employee":
+      return "status-employee";
   }
 };
 

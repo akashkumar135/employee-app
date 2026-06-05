@@ -1,0 +1,47 @@
+[
+  {
+    "employeeName": "Alice Johnson",
+    "employeeId": "EMP001",
+    "joiningDate": "2022-03-15",
+    "role": "Software Engineer",
+    "status": "employee",
+    "experience": 4,
+    "action": "View"
+  },
+  {
+    "employeeName": "Bob Smith",
+    "employeeId": "EMP002",
+    "joiningDate": "2021-07-10",
+    "role": "Senior Software Engineer",
+    "status": "employee",
+    "experience": 6,
+    "action": "View"
+  },
+  {
+    "employeeName": "Charlie Davis",
+    "employeeId": "EMP003",
+    "joiningDate": "2023-01-05",
+    "role": "QA Engineer",
+    "status": "Probation",
+    "experience": 2,
+    "action": "View"
+  },
+  {
+    "employeeName": "Diana Wilson",
+    "employeeId": "EMP004",
+    "joiningDate": "2020-11-20",
+    "role": "Project Manager",
+    "status": "employee",
+    "experience": 8,
+    "action": "View"
+  },
+  {
+    "employeeName": "Ethan Brown",
+    "employeeId": "EMP005",
+    "joiningDate": "2019-06-01",
+    "role": "Tech Lead",
+    "status": "inactive",
+    "experience": 10,
+    "action": "View"
+  }
+]

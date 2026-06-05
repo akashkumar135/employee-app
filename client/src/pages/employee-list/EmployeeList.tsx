@@ -1,3 +1,5 @@
+import { Link, useSearchParams } from "react-router";
+
 import Button from "../../components/Button/Button";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 import {
@@ -18,7 +20,13 @@ import PlusIcon from "../../assets/plus-icon.svg";
 import "./style.css";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 
+import Employees from "../../datas/employees.json";
+
 const EmployeeList = () => {
+  const [searchParams] = useSearchParams();
+
+  console.log(searchParams.get("name"), searchParams.get("role"));
+
   return (
     <section className="employee-list-wrapper">
       <SectionHeader
@@ -30,7 +38,6 @@ const EmployeeList = () => {
               selected="status"
               options={[{ label: "status", value: "status" }]}
             />
-
             <Button className=" action-button create-button">
               <div className="center icon-circle">
                 <img src={PlusIcon} width={20} height={20} />
@@ -51,46 +58,28 @@ const EmployeeList = () => {
           <TableHead>Action</TableHead>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>
-              <DisplayStatus status="probation" />
-            </TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>
-              <div className="action-group">
-                <Button type="button" className="action-button icon-button">
-                  <img src={DeleteIcon} width={20} height={20} />
-                </Button>
-                <Button type="button" className="action-button icon-button">
-                  <img src={EditIcon} width={20} height={20} />
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>
-              <DisplayStatus status="probation" />
-            </TableCell>
-            <TableCell>Data1</TableCell>
-            <TableCell>
-              <div className="action-group">
-                <Button type="button" className="action-button icon-button">
-                  <img src={DeleteIcon} width={20} height={20} />
-                </Button>
-                <Button type="button" className="action-button icon-button">
-                  <img src={EditIcon} width={20} height={20} />
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
+          {Employees.map((eachEmp) => (
+            <TableRow>
+              <TableCell>{eachEmp.employeeName}</TableCell>
+              <TableCell>{eachEmp.employeeId}</TableCell>
+              <TableCell>{eachEmp.joiningDate}</TableCell>
+              <TableCell>{eachEmp.role}</TableCell>
+              <TableCell>
+                <DisplayStatus status={eachEmp.status} />
+              </TableCell>
+              <TableCell>{eachEmp.experience}</TableCell>
+              <TableCell>
+                <div className="action-group">
+                  <Button type="button" className="action-button icon-button">
+                    <img src={DeleteIcon} width={20} height={20} />
+                  </Button>
+                  <Button type="button" className="action-button icon-button">
+                    <img src={EditIcon} width={20} height={20} />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </section>
