@@ -19,6 +19,8 @@ const EmployeeCreate = () => {
     showDialog: showFileDialog,
     hideDialog: hideFileDialog,
     isOpen: isFileDialogOpen,
+    containerRef: fileContainerRef,
+    triggerRef: fileTriggerRef,
   } = useDialog();
 
   const [data, setData] = useState<Employee>(
@@ -99,11 +101,13 @@ const EmployeeCreate = () => {
     }));
   };
 
+  console.log(isFileDialogOpen);
   return (
     <aside className="employee-create-wrapper">
       <SectionHeader label="Create Employee" />
       {isFileDialogOpen && (
         <FileUploadDialog
+          ref={fileContainerRef}
           onChange={handleFileChange}
           onCancel={hideFileDialog}
           onUpload={handleFileUpload}
@@ -226,6 +230,7 @@ const EmployeeCreate = () => {
             </div>
           </div>
           <FileInput
+            ref={fileTriggerRef}
             id="upload-file"
             label="Upload ID Proof"
             name="idProof"
