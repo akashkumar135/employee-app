@@ -3,13 +3,12 @@ import { useNavigate, useParams } from "react-router";
 import Button from "../../components/Button/Button";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 
-import EditIcon from "../../assets/edit-icon.svg";
-
 import "./style.css";
 import DisplayField from "../../components/employee/DisplayField/DisplayField";
 import DocumentView from "../../components/employee/DocumentView/DocumentView";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 import Employees from "../../datas/employees.json";
+import { LuPencil } from "react-icons/lu";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
@@ -36,7 +35,7 @@ const EmployeeDetails = () => {
             onClick={handleEditClick}
           >
             <div className="center icon-circle">
-              <img src={EditIcon} width={20} height={20} />
+              <LuPencil size={20} />
             </div>
             Edit Details
           </Button>

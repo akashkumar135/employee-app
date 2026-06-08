@@ -13,6 +13,10 @@
   gap: 6px;
 }
 
+.filter-options span {
+  color: #8991a1;
+}
+
 .create-button {
   gap: 8px;
   border-radius: 20px;

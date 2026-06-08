@@ -23,6 +23,10 @@ import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus
 import Employees from "../../datas/employees.json";
 import type { Employee } from "../../types/employee";
 
+const StatusOptions = [
+  { label: "Status", value: "" },
+  { label: "Active", value: "active" },
+];
 const EmployeeList = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -53,11 +57,8 @@ const EmployeeList = () => {
         label="Employee List"
         extraOptions={
           <div className="filter-options">
-            <span className="">Filter by</span>
-            <StatusSelector
-              selected="status"
-              options={[{ label: "status", value: "status" }]}
-            />
+            <span>Filter by</span>
+            <StatusSelector selected="status" options={StatusOptions} />
             <Button
               className=" action-button create-button"
               onClick={handleEmployeeCreteClick}
