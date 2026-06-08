@@ -12,4 +12,5 @@ export type Employee = {
     country: string;
     postalCode: string;
   };
+  idProof: File | null;
 };
