@@ -12,7 +12,23 @@ import type { Employee } from "../../types/employee";
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
-  const [data, setData] = useState<Employee>(location.state || {});
+  const [data, setData] = useState<Employee>(
+    location.state || {
+      employeeName: "",
+      employeeId: "",
+      joiningDate: "",
+      role: "",
+      status: "",
+      experience: "",
+      action: "",
+      address: {
+        address: "",
+        city: "",
+        country: "",
+        postalCode: "",
+      },
+    },
+  );
 
   const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
@@ -97,6 +113,8 @@ const EmployeeCreate = () => {
             value={data.role}
             onChange={handleSelectChange}
           >
+            <SelectOption value="">Select a role</SelectOption>
+
             <SelectOption value="DEVELOPER">Developer</SelectOption>
             <SelectOption value="QA">QA</SelectOption>
             <SelectOption value="DESIGNER">Designer</SelectOption>
@@ -110,6 +128,7 @@ const EmployeeCreate = () => {
             value={data.status}
             onChange={handleSelectChange}
           >
+            <SelectOption value="">Select a status</SelectOption>
             <SelectOption value="Probation">Probation</SelectOption>
             <SelectOption value="Inactive">Inactive</SelectOption>
             <SelectOption value="Employee">Employee</SelectOption>
