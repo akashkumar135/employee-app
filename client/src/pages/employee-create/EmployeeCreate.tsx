@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
@@ -8,10 +8,19 @@ import { useLocation, useNavigate } from "react-router";
 
 import "./style.css";
 import type { Employee } from "../../types/employee";
+import FileUploadDialog from "../../components/FileUpload/FileUpload";
+import { useDialog } from "../../hooks/useDialog";
 
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
+
+  const {
+    showDialog: showFileDialog,
+    hideDialog: hideFileDialog,
+    isOpen: isFileDialogOpen,
+  } = useDialog();
+
   const [data, setData] = useState<Employee>(
     location.state || {
       employeeName: "",
@@ -27,6 +36,7 @@ const EmployeeCreate = () => {
         country: "",
         postalCode: "",
       },
+      idProof: null,
     },
   );
 
@@ -68,10 +78,38 @@ const EmployeeCreate = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+
+    const file = event.target.files[0];
+    setData((prev) => ({
+      ...prev,
+      idProof: file,
+    }));
+  };
+
+  const handleFileUpload = () => {
+    hideFileDialog();
+  };
+
+  const handleRemoveFile = () => {
+    setData((prev) => ({
+      ...prev,
+      idProof: null,
+    }));
+  };
+
   return (
     <aside className="employee-create-wrapper">
       <SectionHeader label="Create Employee" />
-
+      {isFileDialogOpen && (
+        <FileUploadDialog
+          onChange={handleFileChange}
+          onCancel={hideFileDialog}
+          onUpload={handleFileUpload}
+          value={data.idProof?.name || ""}
+        />
+      )}
       <form className="employee-create-form" onSubmit={handleSubmit}>
         <div className="employee-form-fields-container">
           <Input
@@ -191,7 +229,10 @@ const EmployeeCreate = () => {
             id="upload-file"
             label="Upload ID Proof"
             name="idProof"
+            fileName={data.idProof?.name || ""}
             actionLabel="Attach files"
+            onClick={showFileDialog}
+            onRemoveClick={handleRemoveFile}
           />
         </div>
         <div className="employee-form-actions">
