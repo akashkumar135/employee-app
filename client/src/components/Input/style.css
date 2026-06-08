@@ -61,3 +61,32 @@
   align-items: center;
   gap: 4px;
 }
+
+.custom-file-value-wrapper {
+  width: 100%;
+}
+.custom-file-value {
+  width: fit-content;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 4px 8px;
+  background-color: #03aeee4d;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.custom-file-remove {
+  background-color: transparent;
+  border: none;
+}
+
+.custom-file-action-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
