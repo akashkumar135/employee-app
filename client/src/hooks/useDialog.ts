@@ -1,14 +1,9 @@
-import { useEffect, useState, type Ref, type RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// type UseDialogProps = {
-//   containerRef: ;
-//   targetRef: RefObject<HTMLDivElement>;
-// };
+export const useDialog = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
 
-export const useDialog = (
-  containerRef: RefObject<HTMLDivElement | null>,
-  targetRef: RefObject<HTMLDivElement | null>,
-) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const showDialog = () => {
@@ -20,24 +15,23 @@ export const useDialog = (
   };
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    if (!targetRef.current) return;
-
-    const handler = (event: Event) => {
+    const handler = (event: MouseEvent) => {
       if (!containerRef.current) return;
 
-      if (containerRef.current.contains(event.target)) {
-        console.log("Clicked");
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        !triggerRef.current?.contains(event.target as Node)
+      ) {
+        console.log("Closed");
+        hideDialog();
       }
     };
 
-    containerRef.current.addEventListener("click", handler);
+    document.addEventListener("click", handler);
 
     return () => {
-      if (!containerRef.current) return;
-
-      containerRef.current.removeEventListener("click", handler);
+      document.removeEventListener("click", handler);
     };
   }, []);
 
@@ -45,5 +39,7 @@ export const useDialog = (
     showDialog,
     hideDialog,
     isOpen,
+    containerRef,
+    triggerRef,
   };
 };
