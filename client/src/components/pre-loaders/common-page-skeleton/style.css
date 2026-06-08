@@ -1,0 +1,30 @@
+.page-skeleton-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-skeleton-header {
+  height: 62px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.page-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-skeleton-side-content {
+  display: flex;
+  gap: 20px;
+}
+
+.page-skeleton-common {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+}

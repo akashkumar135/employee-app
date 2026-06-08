@@ -14,8 +14,9 @@ import Icon from "../../../assets/message-icon.svg";
 import MessageIcon from "../../../assets/send-icon.svg";
 
 import "./style.css";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Outlet } from "react-router";
+import { CommonPageSkeleton } from "../../pre-loaders/common-page-skeleton/CommonPageSkeleton";
 
 const Layout = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -26,7 +27,9 @@ const Layout = () => {
       <section className="body-container">
         <SideNavbar />
         <div className="rigth-container">
-          <Outlet />
+          <Suspense fallback={<CommonPageSkeleton />}>
+            <Outlet />
+          </Suspense>
         </div>
 
         <div className="chat-section">

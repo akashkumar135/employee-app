@@ -1,12 +1,14 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import Login from "../pages/login/Login";
 import EmployeeDetails from "../pages/employee-details/EmployeeDetails";
 import Layout from "../components/layout/Layout/Layout";
-import EmployeeList from "../pages/employee-list/EmployeeList";
 import EmployeeCreate from "../pages/employee-create/EmployeeCreate";
 import NotFound from "../pages/not-found/NotFound";
 import CommonError from "../pages/error/CommonError";
 import ProtectedRoute from "../components/protected/ProtectedRoute";
+
+const EmployeeList = lazy(() => import("../pages/employee-list/EmployeeList"));
 
 export const router = createBrowserRouter([
   {
