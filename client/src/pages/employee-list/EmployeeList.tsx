@@ -22,12 +22,29 @@ import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus
 
 import Employees from "../../datas/employees.json";
 import type { Employee } from "../../types/employee";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from "../../components/Dialog/Dialog";
+import { useDialog } from "../../hooks/useDialog";
+import { useRef } from "react";
 
 const StatusOptions = [
   { label: "Status", value: "" },
   { label: "Active", value: "active" },
 ];
 const EmployeeList = () => {
+  const confirmDialogContaierRef = useRef<HTMLDivElement | null>(null);
+  const confirmDialogTargetRef = useRef<HTMLDivElement | null>(null);
+
+  const { showDialog, hideDialog, isOpen } = useDialog(
+    confirmDialogContaierRef,
+    confirmDialogTargetRef,
+  );
+
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -49,10 +66,42 @@ const EmployeeList = () => {
     });
   };
 
+  const handleDeleteClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    employee: Employee,
+  ) => {
+    event.stopPropagation();
+    showDialog();
+  };
+
   console.log(searchParams.get("name"), searchParams.get("role"));
 
   return (
     <section className="employee-list-wrapper">
+      {isOpen && (
+        <Dialog>
+          <DialogBody>
+            <DialogContent>
+              <DialogTitle>Are you sure ?</DialogTitle>
+              Do you really want to delete employee?
+            </DialogContent>
+            <DialogFooter>
+              <Button
+                className="action-button cancel-button center"
+                onClick={hideDialog}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="action-button confirm-button center"
+                onClick={hideDialog}
+              >
+                Confirm
+              </Button>
+            </DialogFooter>
+          </DialogBody>
+        </Dialog>
+      )}
       <SectionHeader
         label="Employee List"
         extraOptions={
@@ -95,7 +144,11 @@ const EmployeeList = () => {
               <TableCell>{eachEmp.experience}</TableCell>
               <TableCell>
                 <div className="action-group">
-                  <Button type="button" className="action-button icon-button">
+                  <Button
+                    type="button"
+                    className="action-button icon-button"
+                    onClick={(event) => handleDeleteClick(event, eachEmp)}
+                  >
                     <img src={DeleteIcon} width={20} height={20} />
                   </Button>
                   <Button
