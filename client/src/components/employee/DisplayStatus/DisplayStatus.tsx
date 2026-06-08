@@ -10,8 +10,8 @@ const getClassNameByStatus = (status: string) => {
       return "status-probation";
     case "inactive":
       return "status-inactive";
-    case "employee":
-      return "status-employee";
+    case "active":
+      return "status-active";
   }
 };
 

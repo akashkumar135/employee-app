@@ -5,16 +5,16 @@
 }
 
 .status-probation {
-  color: #cca500;
+  color: #aa8a00;
   background-color: #fff8d7;
 }
 
 .status-inactive {
-  color: #812f00;
-  background-color: #f3a181;
+  color: #dc3232;
+  background-color: #ffe2e2;
 }
 
-.status-employee {
-  color: #60b11f;
-  background-color: #a8f7c0;
+.status-active {
+  color: #00812f;
+  background-color: #daf6e1;
 }

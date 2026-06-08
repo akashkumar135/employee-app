@@ -2,9 +2,9 @@
   {
     "employeeName": "Alice Johnson",
     "employeeId": "EMP001",
-    "joiningDate": "2022-03-15",
+    "joiningDate": "15-03-2022",
     "role": "Software Engineer",
-    "status": "Employee",
+    "status": "Active",
     "experience": 4,
     "action": "View",
     "address": {
@@ -17,9 +17,9 @@
   {
     "employeeName": "Bob Smith",
     "employeeId": "EMP002",
-    "joiningDate": "2021-07-10",
+    "joiningDate": "15-03-2022",
     "role": "Senior Software Engineer",
-    "status": "Employee",
+    "status": "Active",
     "experience": 6,
     "action": "View",
     "address": {
@@ -32,7 +32,7 @@
   {
     "employeeName": "Charlie Davis",
     "employeeId": "EMP003",
-    "joiningDate": "2023-01-05",
+    "joiningDate": "15-03-2022",
     "role": "QA Engineer",
     "status": "Probation",
     "experience": 2,
@@ -47,9 +47,9 @@
   {
     "employeeName": "Diana Wilson",
     "employeeId": "EMP004",
-    "joiningDate": "2020-11-20",
+    "joiningDate": "15-03-2022",
     "role": "Project Manager",
-    "status": "Employee",
+    "status": "Active",
     "experience": 8,
     "action": "View",
     "address": {
@@ -62,7 +62,7 @@
   {
     "employeeName": "Ethan Brown",
     "employeeId": "EMP005",
-    "joiningDate": "2019-06-01",
+    "joiningDate": "15-03-2022",
     "role": "Tech Lead",
     "status": "Inactive",
     "experience": 10,

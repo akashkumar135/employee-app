@@ -50,5 +50,8 @@
 }
 
 .table-cell {
+  color: #19202d;
+  font-style: regular;
+  font-weight: 400;
   padding: 16px;
 }
