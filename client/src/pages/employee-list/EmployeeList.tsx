@@ -44,6 +44,7 @@ const EmployeeList = () => {
       state: employee,
     });
   };
+
   console.log(searchParams.get("name"), searchParams.get("role"));
 
   return (
@@ -69,6 +70,7 @@ const EmployeeList = () => {
           </div>
         }
       />
+
       <Table>
         <TableHeader>
           <TableHead>Employee Name</TableHead>
