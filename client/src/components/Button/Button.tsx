@@ -5,6 +5,7 @@ type ButtonProps = {
   className?: string;
   children: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,9 +13,15 @@ const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
   children,
+  disabled = false,
 }) => {
   return (
-    <button type={type} className={className} onClick={onClick}>
+    <button
+      type={type}
+      className={className}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

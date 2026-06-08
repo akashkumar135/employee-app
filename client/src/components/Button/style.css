@@ -10,6 +10,11 @@
   width: fit-content;
 }
 
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .action-group {
   display: flex;
   gap: 10px;
@@ -26,4 +31,9 @@
 .icon-button {
   border-radius: 8px;
   background-color: white;
+}
+
+.icon-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
