@@ -30,6 +30,8 @@ import {
   DialogTitle,
 } from "../../components/Dialog/Dialog";
 import { useDialog } from "../../hooks/useDialog";
+import { useSelector } from "react-redux";
+import type { StoreState } from "../../store/store";
 
 const StatusOptions = [
   { label: "Status", value: "" },
@@ -45,6 +47,10 @@ const EmployeeList = () => {
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const employees = useSelector(
+    (state: StoreState) => state.employee.employees,
+  );
 
   const handleEmployeeCreteClick = () => {
     navigate("/employee/create");
@@ -105,7 +111,7 @@ const EmployeeList = () => {
           <TableHead>Action</TableHead>
         </TableHeader>
         <TableBody>
-          {Employees.map((eachEmp) => (
+          {employees.map((eachEmp) => (
             <TableRow onClick={() => handleRowClick(eachEmp.employeeId)}>
               <TableCell>{eachEmp.employeeName}</TableCell>
               <TableCell>{eachEmp.employeeId}</TableCell>
