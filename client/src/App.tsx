@@ -1,7 +1,9 @@
 import "./App.css";
 import { useFetch } from "./hooks/useFetch";
 import { RouterProvider } from "react-router";
+import { Provider } from "react-redux";
 import { router } from "./router/routes";
+import store from "./store/store";
 
 function App() {
   const { data, pending, error } = useFetch(
@@ -11,7 +13,9 @@ function App() {
   console.log(data, pending, "Data from api response");
   return (
     <>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </>
   );
 }
