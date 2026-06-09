@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
 import Button from "../../components/Button/Button";
@@ -7,16 +8,17 @@ import "./style.css";
 import DisplayField from "../../components/employee/DisplayField/DisplayField";
 import DocumentView from "../../components/employee/DocumentView/DocumentView";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
-import Employees from "../../datas/employees.json";
 import { LuPencil } from "react-icons/lu";
+import type { StoreState } from "../../store/store";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
 
-  const navigate = useNavigate();
-  const currentEmployee = Employees.find(
-    (eachEmp) => eachEmp.employeeId === id,
+  const currentEmployee = useSelector((state: StoreState) =>
+    state.employee.employees.find((eachEmp) => eachEmp.employeeId === id),
   );
+
+  const navigate = useNavigate();
 
   const handleEditClick = () => {
     navigate("/employee/create", {

@@ -10,10 +10,14 @@ import "./style.css";
 import type { Employee } from "../../types/employee";
 import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
+import { useDispatch } from "react-redux";
+import { addEmployeeActionCreator } from "../../store/employee/employeeActions";
 
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
+
+  const dispatch = useDispatch();
 
   const {
     showDialog: showFileDialog,
@@ -45,15 +49,8 @@ const EmployeeCreate = () => {
   const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const datas: Record<string, any> = {};
-
-    for (const [key, value] of formData.entries()) {
-      datas[key] = value;
-    }
-
-    setData(datas as Employee);
-    console.log("Submitted data", datas);
+    console.log("Submitted data", data);
+    dispatch(addEmployeeActionCreator(data));
     navigte(`/employee/${data.employeeId}/details`);
   };
 
