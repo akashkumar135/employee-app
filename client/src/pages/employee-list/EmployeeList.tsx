@@ -20,7 +20,6 @@ import PlusIcon from "../../assets/plus-icon.svg";
 import "./style.css";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 
-import Employees from "../../datas/employees.json";
 import type { Employee } from "../../types/employee";
 import {
   Dialog,
@@ -30,8 +29,7 @@ import {
   DialogTitle,
 } from "../../components/Dialog/Dialog";
 import { useDialog } from "../../hooks/useDialog";
-import { useSelector } from "react-redux";
-import type { StoreState } from "../../store/store";
+import { useAppSelector } from "../../store/store";
 
 const StatusOptions = [
   { label: "Status", value: "" },
@@ -48,9 +46,7 @@ const EmployeeList = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const employees = useSelector(
-    (state: StoreState) => state.employee.employees,
-  );
+  const employees = useAppSelector((state) => state.employee.employees);
 
   const handleEmployeeCreteClick = () => {
     navigate("/employee/create");

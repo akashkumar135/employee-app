@@ -9,12 +9,12 @@ import DisplayField from "../../components/employee/DisplayField/DisplayField";
 import DocumentView from "../../components/employee/DocumentView/DocumentView";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 import { LuPencil } from "react-icons/lu";
-import type { StoreState } from "../../store/store";
+import { useAppSelector } from "../../store/store";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
 
-  const currentEmployee = useSelector((state: StoreState) =>
+  const currentEmployee = useAppSelector((state) =>
     state.employee.employees.find((eachEmp) => eachEmp.employeeId === id),
   );
 

@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
@@ -10,15 +10,14 @@ import "./style.css";
 import type { Employee } from "../../types/employee";
 import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
-import { useDispatch } from "react-redux";
-import { addEmployeeActionCreator } from "../../store/employee/employeeActions";
+import { addEmployee } from "../../store/employee/employeeReducer";
+import { useAppDispatch } from "../../store/store";
 
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
 
-  const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
   const {
     showDialog: showFileDialog,
     hideDialog: hideFileDialog,
@@ -49,8 +48,8 @@ const EmployeeCreate = () => {
   const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
 
-    console.log("Submitted data", data);
-    dispatch(addEmployeeActionCreator(data));
+    dispatch(addEmployee(data));
+
     navigte(`/employee/${data.employeeId}/details`);
   };
 
