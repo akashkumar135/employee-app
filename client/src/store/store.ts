@@ -1,14 +1,22 @@
-import { legacy_createStore as createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "@redux-devtools/extension";
-import { logger } from "redux-logger";
-import rootReducer from "./rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import employeeReducer from "./employee/employeeReducer";
+import {
+  useDispatch,
+  useSelector,
+  type TypedUseSelectorHook,
+} from "react-redux";
 
-const store = createStore(
-  rootReducer,
-  undefined,
-  composeWithDevTools(applyMiddleware(logger)),
-);
+const store = configureStore({
+  reducer: {
+    employee: employeeReducer,
+  },
+});
 
-export type StoreState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

@@ -14,3 +14,7 @@ export type Employee = {
   };
   idProof: File | null;
 };
+
+export type EmployeeState = {
+  employees: Employee[];
+};
