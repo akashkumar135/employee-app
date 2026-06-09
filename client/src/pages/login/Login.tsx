@@ -7,9 +7,12 @@ import "./style.css";
 import IconImage from "../../assets/icon.png";
 import LoginHeroImage from "../../assets/login-left-image-mask.png";
 import { useState } from "react";
+import { useLoginMutation } from "../../api-service/auth/login.api";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
 
   const [data, setData] = useState({
     username: "",
@@ -52,11 +55,26 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
-    navigate("/employee");
-    console.log(data, "FORM Submitted");
+    try {
+      const formData = new FormData();
+
+      formData.set("username", data.username);
+      formData.set("password", data.password);
+
+      const response = await login(formData);
+
+      if (response.data) {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        navigate("/employee");
+      }
+      console.log(data, "FORM Submitted");
+    } catch (err) {
+      console.log(err instanceof Error ? err.message : err);
+    }
   };
 
   return (
@@ -102,7 +120,11 @@ const Login = () => {
               <span className="error-box">{errors.password}</span>
             )}
 
-            <Button type="submit" className="login-submit-button">
+            <Button
+              type="submit"
+              className="login-submit-button"
+              disabled={isLoading}
+            >
               Login
             </Button>
           </form>
