@@ -11,20 +11,55 @@ import {
 import "./style.css";
 import { BsCloudArrowUpFill } from "react-icons/bs";
 import { FiUpload } from "react-icons/fi";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 
 type FileUploadDialogProps = {
+  id: string;
   onCancel: () => void;
   onUpload: () => void;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: (file: File) => void;
   ref?: React.Ref<HTMLDivElement | null>;
   value: string;
 };
 const FileUploadDialog: React.FC<FileUploadDialogProps> = forwardRef(
   (
-    { onChange, onCancel, onUpload, value },
+    { id, onChange, onCancel, onUpload, value },
     ref: React.Ref<HTMLDivElement | null>,
   ) => {
+    const handleFileDropEnter = (event: React.DragEvent<HTMLLabelElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const handleFileDropLeave = (event: React.DragEvent<HTMLLabelElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const handleFileDropOver = (event: React.DragEvent<HTMLLabelElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const handleFileDropEnd = (event: React.DragEvent<HTMLLabelElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const handleFileDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!event.dataTransfer || !event.dataTransfer.files) {
+        return;
+      }
+      const file = event.dataTransfer.files[0];
+
+      onChange(file);
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (!event.target.files) return;
+
+      onChange(event.target.files[0]);
+    };
+
     return (
       <Dialog>
         <DialogBody className="custom-body" ref={ref}>
@@ -35,7 +70,15 @@ const FileUploadDialog: React.FC<FileUploadDialogProps> = forwardRef(
             </Button>
           </DialogTitle>
           <DialogContent>
-            <label htmlFor="1234" className="file-upload">
+            <label
+              htmlFor={id}
+              className="file-upload"
+              onDragEnter={handleFileDropEnter}
+              onDragLeave={handleFileDropLeave}
+              onDragOver={handleFileDropOver}
+              onDragEnd={handleFileDropEnd}
+              onDrop={handleFileDrop}
+            >
               <div className="file-upload-drag">
                 <BsCloudArrowUpFill size={64} color="#183072" opacity="0.1" />
                 <span>Drag & drop excel file here</span>
@@ -45,14 +88,19 @@ const FileUploadDialog: React.FC<FileUploadDialogProps> = forwardRef(
                 <FiUpload size={24} />
                 <p>Upload file</p>
               </div>
+              <input
+                id={id}
+                type="file"
+                className="visually-hidden"
+                onChange={handleFileChange}
+              />
+              {value && (
+                <p>
+                  <span>Uploaded file :</span>
+                  {value}
+                </p>
+              )}
             </label>
-
-            <input
-              id="1234"
-              type="file"
-              className="hidden"
-              onChange={onChange}
-            />
           </DialogContent>
           <DialogFooter>
             <Button

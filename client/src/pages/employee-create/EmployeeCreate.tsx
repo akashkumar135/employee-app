@@ -80,10 +80,9 @@ const EmployeeCreate = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
+  const handleFileChange = (file: File) => {
+    if (!file) return;
 
-    const file = event.target.files[0];
     setData((prev) => ({
       ...prev,
       idProof: file,
@@ -107,6 +106,7 @@ const EmployeeCreate = () => {
       <SectionHeader label="Create Employee" />
       {isFileDialogOpen && (
         <FileUploadDialog
+          id="id-proof"
           ref={fileContainerRef}
           onChange={handleFileChange}
           onCancel={hideFileDialog}
