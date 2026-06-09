@@ -1,15 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import employeeReducer from "./employee/employeeReducer";
 import {
   useDispatch,
   useSelector,
   type TypedUseSelectorHook,
 } from "react-redux";
 
+import employeeReducer from "./employee/employeeReducer";
+import employeeBaseApi from "../api-service/api";
+
 const store = configureStore({
   reducer: {
     employee: employeeReducer,
+    [employeeBaseApi.reducerPath]: employeeBaseApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(employeeBaseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
