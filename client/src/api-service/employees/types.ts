@@ -35,3 +35,19 @@ export type EmployeeWithAddressAndDepartmentApiResponse =
 export type GetEmployeeQuery = {
   id: number;
 };
+
+export type CreateAddressPayload = {
+  line1: string;
+  city: string;
+  country: string;
+  postal_code: string;
+};
+
+export type CreateEmployeePayload = {
+  name: string;
+  email: string;
+  age: number | null;
+  role: string;
+  password: string;
+  address: CreateAddressPayload | null;
+};

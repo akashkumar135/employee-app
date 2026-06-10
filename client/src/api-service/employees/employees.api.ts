@@ -2,6 +2,8 @@ import employeeBaseApi from "../api";
 import {
   type EmployeeWithAddressAndDepartmentApiResponse,
   type EmployeeListResponse,
+  type EmployeeApiResponse,
+  type CreateEmployeePayload,
 } from "./types";
 
 const employeeApi = employeeBaseApi.injectEndpoints({
@@ -17,7 +19,21 @@ const employeeApi = employeeBaseApi.injectEndpoints({
       query: (id) => `employee/${id}`,
       providesTags: ["Employees"],
     }),
+    createEmployee: builder.mutation<
+      EmployeeApiResponse,
+      CreateEmployeePayload
+    >({
+      query: (payload) => ({
+        url: "/employee",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useGetEmployeesQuery, useGetEmployeeQuery } = employeeApi;
+export const {
+  useGetEmployeesQuery,
+  useGetEmployeeQuery,
+  useCreateEmployeeMutation,
+} = employeeApi;
