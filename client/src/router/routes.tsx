@@ -7,6 +7,7 @@ import EmployeeCreate from "../pages/employee-create/EmployeeCreate";
 import NotFound from "../pages/not-found/NotFound";
 import CommonError from "../pages/error/CommonError";
 import ProtectedRoute from "../components/protected/ProtectedRoute";
+import EmployeeUpdate from "../pages/employee-update/EmployeeUpdate";
 
 const EmployeeList = lazy(() => import("../pages/employee-list/EmployeeList"));
 
@@ -43,6 +44,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <EmployeeCreate />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ":id/update",
+        element: (
+          <ProtectedRoute>
+            <EmployeeUpdate />
           </ProtectedRoute>
         ),
       },

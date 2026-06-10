@@ -1,23 +1,42 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
 import SectionHeader from "../../components/layout/Section/SectionHeader";
 import { Select, SelectOption } from "../../components/select/Select";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 import "./style.css";
-import type { Employee } from "../../types/employee";
+import type { UpdateEmployeeForm } from "../../types/employee";
 import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
-import { useCreateEmployeeMutation } from "../../api-service/employees/employees.api";
-import type { CreateEmployeePayload } from "../../api-service/employees/types";
+import {
+  useGetEmployeeQuery,
+  useUpdateAddressByIdMutation,
+  useUpdateEmployeeMutation,
+} from "../../api-service/employees/employees.api";
+import type {
+  UpdateAddressPayload,
+  UpdateEmployeePayload,
+} from "../../api-service/employees/types";
 
-const EmployeeCreate = () => {
+const EmployeeUpdate = () => {
   const navigte = useNavigate();
+  const { id } = useParams();
 
-  const [createEmployee, { isLoading: isCreateLoading }] =
-    useCreateEmployeeMutation();
+  const [updateEmployee, { isLoading: isUpdateLoading }] =
+    useUpdateEmployeeMutation();
+
+  const [updateAddress, { isLoading: isAddressLoading }] =
+    useUpdateAddressByIdMutation();
+
+  const {
+    data: currentEmployee,
+    isLoading: isEmployeeLoading,
+    error: employeeLoadingError,
+  } = useGetEmployeeQuery(id!, {
+    skip: !id,
+  });
 
   const {
     showDialog: showFileDialog,
@@ -27,7 +46,7 @@ const EmployeeCreate = () => {
     triggerRef: fileTriggerRef,
   } = useDialog();
 
-  const [data, setData] = useState<Employee>({
+  const [data, setData] = useState<UpdateEmployeeForm>({
     employeeName: "",
     employeeId: "",
     joiningDate: "",
@@ -36,7 +55,6 @@ const EmployeeCreate = () => {
     experience: 0,
     age: null,
     employeeEmail: "",
-    password: "",
     address: {
       address: "",
       city: "",
@@ -49,25 +67,37 @@ const EmployeeCreate = () => {
   const handleSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
 
-    const payload: CreateEmployeePayload = {
-      name: data.employeeName,
-      email: data.employeeEmail,
-      age: data.age,
-      role: data.role,
-      password: data.password,
-      address: {
+    const employeePayload: UpdateEmployeePayload = {
+      id: String(currentEmployee?.id),
+      payload: {
+        name: data.employeeName,
+        email: data.employeeEmail,
+        age: data.age,
+        role: data.role,
+      },
+    };
+
+    const addressPayload: UpdateAddressPayload = {
+      employeeId: String(currentEmployee?.id),
+      addressId: String(currentEmployee?.addresses[0].id),
+      payload: {
         line1: data.address.address,
         city: data.address.city,
         country: data.address.country,
         postal_code: data.address.postalCode,
       },
     };
-    createEmployee(payload)
-      .unwrap()
-      .then((data) => {
-        navigte(`/employee/${data.id}/details`);
-      })
-      .catch((err) => alert(err));
+
+    try {
+      await Promise.all([
+        updateEmployee(employeePayload).unwrap(),
+        updateAddress(addressPayload).unwrap(),
+      ]);
+
+      navigte(`/employee/${currentEmployee?.id}/details`);
+    } catch (err) {
+      console.log("Failed to update employee and address");
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,8 +143,37 @@ const EmployeeCreate = () => {
     }));
   };
 
+  useEffect(() => {
+    if (isEmployeeLoading) return;
+
+    if (employeeLoadingError) {
+      alert("Failed to fetch employee details");
+      return;
+    }
+
+    if (currentEmployee) {
+      setData({
+        employeeName: currentEmployee.name,
+        employeeId: "",
+        joiningDate: "",
+        role: currentEmployee.role,
+        status: "",
+        experience: 4,
+        age: currentEmployee.age,
+        employeeEmail: currentEmployee.email,
+        address: {
+          address: currentEmployee.addresses[0]?.line1,
+          city: currentEmployee.addresses[0]?.city,
+          country: currentEmployee.addresses[0]?.country,
+          postalCode: currentEmployee.addresses[0]?.postal_code,
+        },
+        idProof: null,
+      });
+    }
+  }, [currentEmployee, isEmployeeLoading, employeeLoadingError]);
+
   return (
-    <aside className="employee-create-wrapper">
+    <aside className="employee-update-wrapper">
       <SectionHeader label="Create Employee" />
       {isFileDialogOpen && (
         <FileUploadDialog
@@ -126,7 +185,7 @@ const EmployeeCreate = () => {
           value={data.idProof?.name || ""}
         />
       )}
-      <form className="employee-create-form" onSubmit={handleSubmit}>
+      <form className="employee-update-form" onSubmit={handleSubmit}>
         <div className="employee-form-fields-container">
           <Input
             id="employee-name"
@@ -208,16 +267,6 @@ const EmployeeCreate = () => {
             onChange={handleChange}
             isRequired
           />
-          <Input
-            id="employee-password"
-            type="password"
-            name="password"
-            label="Passowrd"
-            placeholder="Password"
-            value={data.password}
-            onChange={handleChange}
-            isRequired
-          />
 
           <FileInput
             ref={fileTriggerRef}
@@ -278,9 +327,9 @@ const EmployeeCreate = () => {
           <Button
             type="submit"
             className="employee-form-submit-button"
-            disabled={isCreateLoading}
+            disabled={isUpdateLoading || isAddressLoading}
           >
-            {isCreateLoading ? "Saving" : "Create"}
+            {isUpdateLoading || isAddressLoading ? "Saving" : "Update"}
           </Button>
           <Button type="reset" className="employee-form-clear-button">
             Cancel
@@ -291,4 +340,4 @@ const EmployeeCreate = () => {
   );
 };
 
-export default EmployeeCreate;
+export default EmployeeUpdate;
