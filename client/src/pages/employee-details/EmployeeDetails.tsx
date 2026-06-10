@@ -65,8 +65,8 @@ const EmployeeDetails = () => {
             {currentEmployee?.addresses[0] ? (
               <>
                 {currentEmployee?.addresses[0]?.line1},
-                {currentEmployee?.addresses[0]?.city},{" "}
-                {currentEmployee?.addresses[0]?.country},{" "}
+                {currentEmployee?.addresses[0]?.city},
+                {currentEmployee?.addresses[0]?.country}
                 {currentEmployee?.addresses[0]?.postal_code}
               </>
             ) : (
