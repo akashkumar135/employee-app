@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
@@ -12,7 +12,12 @@ import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
 import { addEmployee } from "../../store/employee/employeeReducer";
 import { useAppDispatch } from "../../store/store";
-import { useCreateEmployeeMutation } from "../../api-service/employees/employees.api";
+import {
+  useCreateEmployeeMutation,
+  useGetEmployeeQuery,
+  useUpdateAddressByIdMutation,
+  useUpdateEmployeeMutation,
+} from "../../api-service/employees/employees.api";
 import type { CreateEmployeePayload } from "../../api-service/employees/types";
 
 const EmployeeCreate = () => {
@@ -21,7 +26,20 @@ const EmployeeCreate = () => {
 
   const dispatch = useAppDispatch();
 
-  const [createEmployee, { isLoading }] = useCreateEmployeeMutation();
+  const [createEmployee, { isLoading: isCreateLoading }] =
+    useCreateEmployeeMutation();
+
+  const [updateEmployee, { isLoading: isUpdateLoading }] =
+    useUpdateEmployeeMutation();
+
+  const [updateAddress, { isLoading: isAddressLoading }] =
+    useUpdateAddressByIdMutation();
+
+  const {
+    data: currentEmployee,
+    isLoading: isEmployeeLoading,
+    error: employeeLoadingError,
+  } = useGetEmployeeQuery(location.state.id);
 
   const {
     showDialog: showFileDialog,
@@ -31,27 +49,27 @@ const EmployeeCreate = () => {
     triggerRef: fileTriggerRef,
   } = useDialog();
 
-  const [data, setData] = useState<Employee>(
-    location.state || {
-      employeeName: "",
-      employeeId: "",
-      joiningDate: "",
-      role: "",
-      status: "",
-      experience: "",
-      action: "",
-      age: null,
-      employeeEmail: "",
-      password: "",
-      address: {
-        address: "",
-        city: "",
-        country: "",
-        postalCode: "",
-      },
-      idProof: null,
+  const [data, setData] = useState<Employee>({
+    employeeName: "",
+    employeeId: "",
+    joiningDate: "",
+    role: "",
+    status: "",
+    experience: 0,
+    action: "",
+    age: null,
+    employeeEmail: "",
+    password: "",
+    address: {
+      address: "",
+      city: "",
+      country: "",
+      postalCode: "",
     },
-  );
+    idProof: null,
+  });
+
+  const isUpdateMode = Boolean(location.state);
 
   const handleSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
@@ -71,12 +89,33 @@ const EmployeeCreate = () => {
         postal_code: data.address.postalCode,
       },
     };
-    createEmployee(payload)
-      .unwrap()
-      .then((data) => {
-        navigte(`/employee/${data.id}/details`);
+
+    if (isUpdateMode) {
+      if (payload.address) {
+        updateAddress({
+          employeeId: String(currentEmployee?.id),
+          addressId: String(currentEmployee?.addresses[0].id),
+          payload: payload.address,
+        }).catch((err) => alert(err));
+      }
+
+      updateEmployee({
+        id: String(currentEmployee!.id),
+        payload: payload,
       })
-      .catch((err) => alert(err));
+        .unwrap()
+        .then((data) => {
+          navigte(`/employee/${data.id}/details`);
+        })
+        .catch((err) => alert(err));
+    } else {
+      createEmployee(payload)
+        .unwrap()
+        .then((data) => {
+          navigte(`/employee/${data.id}/details`);
+        })
+        .catch((err) => alert(err));
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +161,37 @@ const EmployeeCreate = () => {
     }));
   };
 
-  console.log(isFileDialogOpen);
+  useEffect(() => {
+    if (isEmployeeLoading) return;
+
+    if (employeeLoadingError) {
+      alert("Failed to fetch employee details");
+      return;
+    }
+
+    if (currentEmployee) {
+      setData({
+        employeeName: currentEmployee.name,
+        employeeId: "",
+        joiningDate: "",
+        role: currentEmployee.role,
+        status: "",
+        experience: 4,
+        action: "",
+        age: currentEmployee.age,
+        employeeEmail: currentEmployee.email,
+        password: "",
+        address: {
+          address: currentEmployee.addresses[0]?.line1,
+          city: currentEmployee.addresses[0]?.city,
+          country: currentEmployee.addresses[0]?.country,
+          postalCode: currentEmployee.addresses[0]?.postal_code,
+        },
+        idProof: null,
+      });
+    }
+  }, [currentEmployee, isEmployeeLoading, employeeLoadingError]);
+
   return (
     <aside className="employee-create-wrapper">
       <SectionHeader label="Create Employee" />
@@ -217,15 +286,28 @@ const EmployeeCreate = () => {
             onChange={handleChange}
             isRequired
           />
-          <Input
-            id="employee-password"
-            type="password"
-            name="password"
-            label="Passowrd"
-            placeholder="Password"
-            value={data.password}
-            onChange={handleChange}
-            isRequired
+          {!isUpdateMode && (
+            <Input
+              id="employee-password"
+              type="password"
+              name="password"
+              label="Passowrd"
+              placeholder="Password"
+              value={data.password}
+              onChange={handleChange}
+              isRequired
+            />
+          )}
+
+          <FileInput
+            ref={fileTriggerRef}
+            id="upload-file"
+            label="Upload ID Proof"
+            name="idProof"
+            fileName={data.idProof?.name || ""}
+            actionLabel="Attach files"
+            onClick={showFileDialog}
+            onRemoveClick={handleRemoveFile}
           />
 
           <div className="input-wrapper">
@@ -271,20 +353,18 @@ const EmployeeCreate = () => {
               </div>
             </div>
           </div>
-          <FileInput
-            ref={fileTriggerRef}
-            id="upload-file"
-            label="Upload ID Proof"
-            name="idProof"
-            fileName={data.idProof?.name || ""}
-            actionLabel="Attach files"
-            onClick={showFileDialog}
-            onRemoveClick={handleRemoveFile}
-          />
         </div>
         <div className="employee-form-actions">
-          <Button type="submit" className="employee-form-submit-button">
-            Create
+          <Button
+            type="submit"
+            className="employee-form-submit-button"
+            disabled={isCreateLoading || isUpdateLoading}
+          >
+            {isCreateLoading || isUpdateLoading
+              ? "Saving"
+              : isUpdateMode
+                ? "Update"
+                : "Create"}
           </Button>
           <Button type="reset" className="employee-form-clear-button">
             Cancel
