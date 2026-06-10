@@ -11,6 +11,7 @@ import type { UpdateEmployeeForm } from "../../types/employee";
 import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
 import {
+  useCreateAddressMutation,
   useGetEmployeeQuery,
   useUpdateAddressByIdMutation,
   useUpdateEmployeeMutation,
@@ -30,6 +31,9 @@ const EmployeeUpdate = () => {
 
   const [updateAddress, { isLoading: isAddressLoading }] =
     useUpdateAddressByIdMutation();
+
+  const [createAddress, { isLoading: isCreateLoading }] =
+    useCreateAddressMutation();
 
   const {
     data: currentEmployee,
@@ -82,22 +86,37 @@ const EmployeeUpdate = () => {
       },
     };
 
-    const addressPayload: UpdateAddressPayload = {
-      employeeId: String(currentEmployee?.id),
-      addressId: String(currentEmployee?.addresses[0].id),
-      payload: {
-        line1: data.address.address,
-        city: data.address.city,
-        country: data.address.country,
-        postal_code: data.address.postalCode,
-      },
-    };
+    const promises: Promise<any>[] = [updateEmployee(employeePayload).unwrap()];
+
+    if (currentEmployee?.addresses[0]) {
+      promises.push(
+        updateAddress({
+          employeeId: String(currentEmployee?.id),
+          addressId: String(currentEmployee?.addresses[0].id),
+          payload: {
+            line1: data.address.address,
+            city: data.address.city,
+            country: data.address.country,
+            postal_code: data.address.postalCode,
+          },
+        }).unwrap(),
+      );
+    } else {
+      promises.push(
+        createAddress({
+          employeeId: String(currentEmployee?.id),
+          payload: {
+            line1: data.address.address,
+            city: data.address.city,
+            country: data.address.country,
+            postal_code: data.address.postalCode,
+          },
+        }).unwrap(),
+      );
+    }
 
     try {
-      await Promise.all([
-        updateEmployee(employeePayload).unwrap(),
-        updateAddress(addressPayload).unwrap(),
-      ]);
+      await Promise.all(promises);
 
       navigte(`/employee/${currentEmployee?.id}/details`);
     } catch (err) {
@@ -185,7 +204,7 @@ const EmployeeUpdate = () => {
 
   return (
     <aside className="employee-update-wrapper">
-      <SectionHeader label="Create Employee" />
+      <SectionHeader label="Update Employee" />
       {isFileDialogOpen && (
         <FileUploadDialog
           id="id-proof"
@@ -226,7 +245,6 @@ const EmployeeUpdate = () => {
             placeholder="Joining Date"
             value={data.joiningDate}
             onChange={handleChange}
-            isRequired
           />
 
           <Select
