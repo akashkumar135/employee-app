@@ -74,6 +74,10 @@ const EmployeeCreate = () => {
       .catch((err) => alert(err));
   };
 
+  const handleCancel = () => {
+    navigte("/employee");
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -286,7 +290,11 @@ const EmployeeCreate = () => {
           >
             {isCreateLoading ? "Saving" : "Create"}
           </Button>
-          <Button type="reset" className="employee-form-clear-button">
+          <Button
+            type="reset"
+            className="employee-form-clear-button"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
         </div>

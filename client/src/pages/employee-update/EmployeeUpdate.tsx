@@ -105,6 +105,10 @@ const EmployeeUpdate = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigte("/employee");
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -338,7 +342,11 @@ const EmployeeUpdate = () => {
           >
             {isUpdateLoading || isAddressLoading ? "Saving" : "Update"}
           </Button>
-          <Button type="reset" className="employee-form-clear-button">
+          <Button
+            type="button"
+            className="employee-form-clear-button"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
         </div>
