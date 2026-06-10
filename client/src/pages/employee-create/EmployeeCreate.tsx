@@ -39,7 +39,9 @@ const EmployeeCreate = () => {
     data: currentEmployee,
     isLoading: isEmployeeLoading,
     error: employeeLoadingError,
-  } = useGetEmployeeQuery(location.state.id);
+  } = useGetEmployeeQuery(location.state?.id, {
+    skip: !location.state?.id,
+  });
 
   const {
     showDialog: showFileDialog,
