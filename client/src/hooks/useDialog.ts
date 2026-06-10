@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useDialog = () => {
+export const useDialog = <PayloadType>() => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [payload, setPayload] = useState<PayloadType>();
 
-  const showDialog = () => {
+  const showDialog = (newPayload?: PayloadType) => {
+    setPayload(newPayload);
     setIsOpen(true);
   };
 
   const hideDialog = () => {
     setIsOpen(false);
+    setPayload(undefined);
   };
 
   useEffect(() => {
@@ -41,5 +44,6 @@ export const useDialog = () => {
     isOpen,
     containerRef,
     triggerRef,
+    payload,
   };
 };
