@@ -29,7 +29,10 @@ import {
 } from "../../components/Dialog/Dialog";
 import { useDialog } from "../../hooks/useDialog";
 import { useAppSelector } from "../../store/store";
-import { useGetEmployeesQuery } from "../../api-service/employees/employees.api";
+import {
+  useDeleteEmployeeMutation,
+  useGetEmployeesQuery,
+} from "../../api-service/employees/employees.api";
 import type { BaseEmployeeApiResponse } from "../../api-service/employees/types";
 
 const StatusOptions = [
@@ -42,11 +45,15 @@ const EmployeeList = () => {
     hideDialog,
     isOpen,
     containerRef: confirmDialogContaierRef,
-  } = useDialog();
+    payload: deleteEmployeeId,
+  } = useDialog<string>();
 
   const navigate = useNavigate();
 
   const { data = [], isLoading, error } = useGetEmployeesQuery();
+  const [deleteEmployee, { isLoading: isDeleteLoading }] =
+    useDeleteEmployeeMutation();
+
   const employees = useAppSelector((state) => state.employee.employees);
 
   const handleEmployeeCreteClick = () => {
@@ -72,7 +79,18 @@ const EmployeeList = () => {
     employee: BaseEmployeeApiResponse,
   ) => {
     event.stopPropagation();
-    showDialog();
+    showDialog(String(employee.id));
+  };
+
+  const handleDeleteConfirm = () => {
+    if (!deleteEmployeeId) return;
+
+    deleteEmployee(deleteEmployeeId)
+      .unwrap()
+      .then(() => {
+        alert("Employee deleted");
+        hideDialog();
+      });
   };
 
   console.log(data[0], isLoading, error);
@@ -157,9 +175,10 @@ const EmployeeList = () => {
               </Button>
               <Button
                 className="action-button confirm-button center"
-                onClick={hideDialog}
+                onClick={handleDeleteConfirm}
+                disabled={isDeleteLoading}
               >
-                Confirm
+                {isDeleteLoading ? "Deleting" : "Confirm"}
               </Button>
             </DialogFooter>
           </DialogBody>
