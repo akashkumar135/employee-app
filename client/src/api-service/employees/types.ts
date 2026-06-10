@@ -84,3 +84,8 @@ export type UpdateAddressPayload = {
     country?: string;
   };
 };
+
+export type CreateAddressApiPayload = {
+  employeeId: string;
+  payload: CreateAddressPayload;
+};

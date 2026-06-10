@@ -7,6 +7,7 @@ import {
   type UpdateEmployeePayload,
   type AddressApiResponse,
   type UpdateAddressPayload,
+  type CreateAddressApiPayload,
 } from "./types";
 
 const employeeApi = employeeBaseApi.injectEndpoints({
@@ -50,6 +51,17 @@ const employeeApi = employeeBaseApi.injectEndpoints({
       }),
       invalidatesTags: ["Employees"],
     }),
+    createAddress: builder.mutation<
+      AddressApiResponse,
+      CreateAddressApiPayload
+    >({
+      query: ({ employeeId, payload }) => ({
+        url: `/employee/${employeeId}/addresses`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["Employees"],
+    }),
     updateAddressById: builder.mutation<
       AddressApiResponse,
       UpdateAddressPayload
@@ -70,5 +82,6 @@ export const {
   useCreateEmployeeMutation,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
+  useCreateAddressMutation,
   useUpdateAddressByIdMutation,
 } = employeeApi;
