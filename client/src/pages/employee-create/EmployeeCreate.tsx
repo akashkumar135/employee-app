@@ -12,12 +12,17 @@ import FileUploadDialog from "../../components/FileUpload/FileUpload";
 import { useDialog } from "../../hooks/useDialog";
 import { addEmployee } from "../../store/employee/employeeReducer";
 import { useAppDispatch } from "../../store/store";
+import { useCreateEmployeeMutation } from "../../api-service/employees/employees.api";
+import type { CreateEmployeePayload } from "../../api-service/employees/types";
 
 const EmployeeCreate = () => {
   const navigte = useNavigate();
   const location = useLocation();
 
   const dispatch = useAppDispatch();
+
+  const [createEmployee, { isLoading }] = useCreateEmployeeMutation();
+
   const {
     showDialog: showFileDialog,
     hideDialog: hideFileDialog,
@@ -35,6 +40,9 @@ const EmployeeCreate = () => {
       status: "",
       experience: "",
       action: "",
+      age: null,
+      employeeEmail: "",
+      password: "",
       address: {
         address: "",
         city: "",
@@ -45,12 +53,30 @@ const EmployeeCreate = () => {
     },
   );
 
-  const handleSubmit = (event: React.SubmitEvent) => {
+  const handleSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
 
-    dispatch(addEmployee(data));
+    // dispatch(addEmployee(data));
 
-    navigte(`/employee/${data.employeeId}/details`);
+    const payload: CreateEmployeePayload = {
+      name: data.employeeName,
+      email: data.employeeEmail,
+      age: data.age,
+      role: data.role,
+      password: data.password,
+      address: {
+        line1: data.address.address,
+        city: data.address.city,
+        country: data.address.country,
+        postal_code: data.address.postalCode,
+      },
+    };
+    createEmployee(payload)
+      .unwrap()
+      .then((data) => {
+        navigte(`/employee/${data.id}/details`);
+      })
+      .catch((err) => alert(err));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,9 +179,9 @@ const EmployeeCreate = () => {
           >
             <SelectOption value="">Select a role</SelectOption>
 
-            <SelectOption value="DEVELOPER">Developer</SelectOption>
-            <SelectOption value="QA">QA</SelectOption>
-            <SelectOption value="DESIGNER">Designer</SelectOption>
+            <SelectOption value="Developer">Developer</SelectOption>
+            <SelectOption value="UI">UI</SelectOption>
+            <SelectOption value="UX">UX</SelectOption>
           </Select>
 
           <Select
@@ -178,6 +204,26 @@ const EmployeeCreate = () => {
             label="Experience"
             placeholder="Experience"
             value={data.experience?.toString()}
+            onChange={handleChange}
+            isRequired
+          />
+          <Input
+            id="employee-email"
+            name="employeeEmail"
+            type="email"
+            label="Employee Email"
+            placeholder="Employee Email"
+            value={data.employeeEmail}
+            onChange={handleChange}
+            isRequired
+          />
+          <Input
+            id="employee-password"
+            type="password"
+            name="password"
+            label="Passowrd"
+            placeholder="Password"
+            value={data.password}
             onChange={handleChange}
             isRequired
           />
