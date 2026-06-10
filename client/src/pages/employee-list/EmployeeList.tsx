@@ -20,7 +20,6 @@ import PlusIcon from "../../assets/plus-icon.svg";
 import "./style.css";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 
-import type { Employee } from "../../types/employee";
 import {
   Dialog,
   DialogBody,
@@ -30,6 +29,8 @@ import {
 } from "../../components/Dialog/Dialog";
 import { useDialog } from "../../hooks/useDialog";
 import { useAppSelector } from "../../store/store";
+import { useGetEmployeesQuery } from "../../api-service/employees/employees.api";
+import type { BaseEmployeeApiResponse } from "../../api-service/employees/types";
 
 const StatusOptions = [
   { label: "Status", value: "" },
@@ -43,22 +44,22 @@ const EmployeeList = () => {
     containerRef: confirmDialogContaierRef,
   } = useDialog();
 
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const { data = [], isLoading, error } = useGetEmployeesQuery();
   const employees = useAppSelector((state) => state.employee.employees);
 
   const handleEmployeeCreteClick = () => {
     navigate("/employee/create");
   };
 
-  const handleRowClick = (id: string) => {
+  const handleRowClick = (id: number) => {
     navigate(`/employee/${id}/details`);
   };
 
   const handleEditClick = (
     event: React.MouseEvent<HTMLButtonElement>,
-    employee: Employee,
+    employee: BaseEmployeeApiResponse,
   ) => {
     event.stopPropagation();
     navigate("/employee/create", {
@@ -68,13 +69,13 @@ const EmployeeList = () => {
 
   const handleDeleteClick = (
     event: React.MouseEvent<HTMLButtonElement>,
-    employee: Employee,
+    employee: BaseEmployeeApiResponse,
   ) => {
     event.stopPropagation();
     showDialog();
   };
 
-  console.log(searchParams.get("name"), searchParams.get("role"));
+  console.log(data[0], isLoading, error);
   return (
     <section className="employee-list-wrapper">
       <SectionHeader
@@ -107,16 +108,16 @@ const EmployeeList = () => {
           <TableHead>Action</TableHead>
         </TableHeader>
         <TableBody>
-          {employees.map((eachEmp) => (
-            <TableRow onClick={() => handleRowClick(eachEmp.employeeId)}>
-              <TableCell>{eachEmp.employeeName}</TableCell>
-              <TableCell>{eachEmp.employeeId}</TableCell>
-              <TableCell>{eachEmp.joiningDate}</TableCell>
+          {data.map((eachEmp) => (
+            <TableRow onClick={() => handleRowClick(eachEmp.id)}>
+              <TableCell>{eachEmp.name}</TableCell>
+              <TableCell>{eachEmp.id}</TableCell>
+              <TableCell>12-12-2020</TableCell>
               <TableCell>{eachEmp.role}</TableCell>
               <TableCell>
-                <DisplayStatus status={eachEmp.status} />
+                <DisplayStatus status="probation" />
               </TableCell>
-              <TableCell>{eachEmp.experience}</TableCell>
+              <TableCell>5</TableCell>
               <TableCell>
                 <div className="action-group">
                   <Button
