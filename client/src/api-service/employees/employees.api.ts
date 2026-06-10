@@ -1,5 +1,8 @@
 import employeeBaseApi from "../api";
-import type { EmployeeListResponse } from "./types";
+import {
+  type EmployeeWithAddressAndDepartmentApiResponse,
+  type EmployeeListResponse,
+} from "./types";
 
 const employeeApi = employeeBaseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +10,14 @@ const employeeApi = employeeBaseApi.injectEndpoints({
       query: () => "employee", // The reason for not defining the url, path , is due to its default nature. Also we cam access params with callback
       providesTags: ["Employees"],
     }),
+    getEmployee: builder.query<
+      EmployeeWithAddressAndDepartmentApiResponse,
+      string
+    >({
+      query: (id) => `employee/${id}`,
+      providesTags: ["Employees"],
+    }),
   }),
 });
 
-export const { useGetEmployeesQuery } = employeeApi;
+export const { useGetEmployeesQuery, useGetEmployeeQuery } = employeeApi;

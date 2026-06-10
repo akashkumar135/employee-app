@@ -1,3 +1,5 @@
+import { type BaseApiResponse } from "../type";
+
 export type BaseEmployeeApiResponse = {
   id: number;
   name: string;
@@ -12,3 +14,24 @@ export type EmployeeApiResponse = BaseEmployeeApiResponse & {
 };
 
 export type EmployeeListResponse = BaseEmployeeApiResponse[];
+
+type AddressApiResponse = BaseApiResponse & {
+  city: string;
+  line1: string;
+  postal_code: string;
+  country: string;
+};
+
+type BaseDepartmentApiResponse = BaseApiResponse & {
+  name: string;
+};
+
+export type EmployeeWithAddressAndDepartmentApiResponse =
+  EmployeeApiResponse & {
+    addresses: AddressApiResponse[];
+    departments: BaseDepartmentApiResponse[];
+  };
+
+export type GetEmployeeQuery = {
+  id: number;
+};
