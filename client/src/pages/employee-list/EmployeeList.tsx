@@ -69,9 +69,7 @@ const EmployeeList = () => {
     employee: BaseEmployeeApiResponse,
   ) => {
     event.stopPropagation();
-    navigate("/employee/create", {
-      state: employee,
-    });
+    navigate(`/employee/${employee.id}/update`);
   };
 
   const handleDeleteClick = (
