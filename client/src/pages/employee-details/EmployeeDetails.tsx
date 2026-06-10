@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
 import Button from "../../components/Button/Button";
@@ -10,13 +9,19 @@ import DocumentView from "../../components/employee/DocumentView/DocumentView";
 import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus";
 import { LuPencil } from "react-icons/lu";
 import { useAppSelector } from "../../store/store";
+import { useGetEmployeeQuery } from "../../api-service/employees/employees.api";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
 
-  const currentEmployee = useAppSelector((state) =>
-    state.employee.employees.find((eachEmp) => eachEmp.employeeId === id),
-  );
+  const {
+    data: currentEmployee,
+    isLoading,
+    error,
+  } = useGetEmployeeQuery(id as string);
+  // const currentEmployee = useAppSelector((state) =>
+  //   state.employee.employees.find((eachEmp) => eachEmp.employeeId === id),
+  // );
 
   const navigate = useNavigate();
 
@@ -46,32 +51,33 @@ const EmployeeDetails = () => {
       <div className="details-wrapper">
         <div className="details-fields">
           <DisplayField label="Employee Name">
-            {currentEmployee?.employeeName}
+            {currentEmployee?.name}
           </DisplayField>
-          <DisplayField label="Joining Date">
-            {currentEmployee?.joiningDate}
-          </DisplayField>
-          <DisplayField label="Experience">
-            {currentEmployee?.experience}
-          </DisplayField>
+          <DisplayField label="Joining Date">12-12-2004</DisplayField>
+          <DisplayField label="Experience">5</DisplayField>
           <DisplayField label="Role">{currentEmployee?.role}</DisplayField>
           <DisplayField label="Status">
-            <DisplayStatus status={currentEmployee?.status || ""} />
+            <DisplayStatus status="probation" />
           </DisplayField>
         </div>
         <div className="details-fields">
           <DisplayField label="Address">
-            {currentEmployee?.address.address},{currentEmployee?.address.city},{" "}
-            {currentEmployee?.address.country},{" "}
-            {currentEmployee?.address.postalCode}
+            {currentEmployee?.addresses[0] ? (
+              <>
+                {currentEmployee?.addresses[0]?.line1},
+                {currentEmployee?.addresses[0]?.city},{" "}
+                {currentEmployee?.addresses[0]?.country},{" "}
+                {currentEmployee?.addresses[0]?.postal_code}
+              </>
+            ) : (
+              "No address available"
+            )}
           </DisplayField>
 
           <DisplayField label="Employee Document">
             <DocumentView label="View Document" />
           </DisplayField>
-          <DisplayField label="Employee ID">
-            {currentEmployee?.employeeId}
-          </DisplayField>
+          <DisplayField label="Employee ID">{currentEmployee?.id}</DisplayField>
         </div>
       </div>
     </section>
