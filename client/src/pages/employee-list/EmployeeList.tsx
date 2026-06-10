@@ -127,7 +127,10 @@ const EmployeeList = () => {
         </TableHeader>
         <TableBody>
           {data.map((eachEmp) => (
-            <TableRow onClick={() => handleRowClick(eachEmp.id)}>
+            <TableRow
+              key={eachEmp.id}
+              onClick={() => handleRowClick(eachEmp.id)}
+            >
               <TableCell>{eachEmp.name}</TableCell>
               <TableCell>{eachEmp.id}</TableCell>
               <TableCell>12-12-2020</TableCell>
