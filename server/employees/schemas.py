@@ -84,6 +84,7 @@ class BaseAddressResponse(BaseModel):
     id: int
     line1: str
     city: str
+    country: str
     employee_id: int
     postal_code: str
 
