@@ -34,6 +34,7 @@ import {
   useGetEmployeesQuery,
 } from "../../api-service/employees/employees.api";
 import type { BaseEmployeeApiResponse } from "../../api-service/employees/types";
+import { getFormattedDate } from "../../utils/date.util";
 
 const StatusOptions = [
   { label: "Status", value: "" },
@@ -130,13 +131,17 @@ const EmployeeList = () => {
               onClick={() => handleRowClick(eachEmp.id)}
             >
               <TableCell>{eachEmp.name}</TableCell>
-              <TableCell>{eachEmp.id}</TableCell>
-              <TableCell>12-12-2020</TableCell>
+              <TableCell>{eachEmp.alternate_id}</TableCell>
+              <TableCell>
+                {eachEmp.joining_date
+                  ? getFormattedDate(eachEmp.joining_date)
+                  : "N/A"}
+              </TableCell>
               <TableCell>{eachEmp.role}</TableCell>
               <TableCell>
-                <DisplayStatus status="probation" />
+                <DisplayStatus status={eachEmp.status} />
               </TableCell>
-              <TableCell>5</TableCell>
+              <TableCell>{eachEmp.experience}</TableCell>
               <TableCell>
                 <div className="action-group">
                   <Button

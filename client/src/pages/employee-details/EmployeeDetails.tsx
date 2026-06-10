@@ -10,6 +10,7 @@ import DisplayStatus from "../../components/employee/DisplayStatus/DisplayStatus
 import { LuPencil } from "react-icons/lu";
 import { useAppSelector } from "../../store/store";
 import { useGetEmployeeQuery } from "../../api-service/employees/employees.api";
+import { getFormattedDate } from "../../utils/date.util";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
@@ -26,9 +27,7 @@ const EmployeeDetails = () => {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate("/employee/create", {
-      state: currentEmployee,
-    });
+    navigate(`/employee/${currentEmployee?.id}/update`);
   };
 
   return (
@@ -53,11 +52,17 @@ const EmployeeDetails = () => {
           <DisplayField label="Employee Name">
             {currentEmployee?.name}
           </DisplayField>
-          <DisplayField label="Joining Date">12-12-2004</DisplayField>
-          <DisplayField label="Experience">5</DisplayField>
+          <DisplayField label="Joining Date">
+            {currentEmployee?.joining_date
+              ? getFormattedDate(currentEmployee.joining_date)
+              : "No date specified"}
+          </DisplayField>
+          <DisplayField label="Experience">
+            {currentEmployee?.experience}
+          </DisplayField>
           <DisplayField label="Role">{currentEmployee?.role}</DisplayField>
           <DisplayField label="Status">
-            <DisplayStatus status="probation" />
+            <DisplayStatus status={currentEmployee?.status || ""} />
           </DisplayField>
         </div>
         <div className="details-fields">

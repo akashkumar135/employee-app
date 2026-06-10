@@ -19,6 +19,7 @@ import type {
   UpdateAddressPayload,
   UpdateEmployeePayload,
 } from "../../api-service/employees/types";
+import { getInputDateFormat } from "../../utils/date.util";
 
 const EmployeeUpdate = () => {
   const navigte = useNavigate();
@@ -74,6 +75,10 @@ const EmployeeUpdate = () => {
         email: data.employeeEmail,
         age: data.age,
         role: data.role,
+        experience: data.experience,
+        joining_date: new Date(data.joiningDate),
+        alternate_id: data.employeeId,
+        status: data.status,
       },
     };
 
@@ -154,11 +159,13 @@ const EmployeeUpdate = () => {
     if (currentEmployee) {
       setData({
         employeeName: currentEmployee.name,
-        employeeId: "",
-        joiningDate: "",
+        employeeId: currentEmployee.alternate_id,
+        joiningDate: currentEmployee.joining_date
+          ? getInputDateFormat(currentEmployee.joining_date)
+          : "",
         role: currentEmployee.role,
-        status: "",
-        experience: 4,
+        status: currentEmployee.status,
+        experience: currentEmployee.experience,
         age: currentEmployee.age,
         employeeEmail: currentEmployee.email,
         address: {
@@ -244,8 +251,8 @@ const EmployeeUpdate = () => {
           >
             <SelectOption value="">Select a status</SelectOption>
             <SelectOption value="Probation">Probation</SelectOption>
+            <SelectOption value="Active">Active</SelectOption>
             <SelectOption value="Inactive">Inactive</SelectOption>
-            <SelectOption value="Employee">Employee</SelectOption>
           </Select>
           <Input
             id="employee-experience"

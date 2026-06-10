@@ -55,6 +55,10 @@ const EmployeeCreate = () => {
       age: data.age,
       role: data.role,
       password: data.password,
+      experience: data.experience,
+      joining_date: new Date(data.joiningDate),
+      alternate_id: data.employeeId,
+      status: data.status,
       address: {
         line1: data.address.address,
         city: data.address.city,
