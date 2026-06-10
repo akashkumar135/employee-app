@@ -4,6 +4,9 @@ import {
   type EmployeeListResponse,
   type EmployeeApiResponse,
   type CreateEmployeePayload,
+  type UpdateEmployeePayload,
+  type AddressApiResponse,
+  type UpdateAddressPayload,
 } from "./types";
 
 const employeeApi = employeeBaseApi.injectEndpoints({
@@ -29,6 +32,26 @@ const employeeApi = employeeBaseApi.injectEndpoints({
         body: payload,
       }),
     }),
+    updateEmployee: builder.mutation<
+      EmployeeApiResponse,
+      UpdateEmployeePayload
+    >({
+      query: ({ id, payload }) => ({
+        url: `/employee/${id}`,
+        method: "PUT",
+        body: payload,
+      }),
+    }),
+    updateAddressById: builder.mutation<
+      AddressApiResponse,
+      UpdateAddressPayload
+    >({
+      query: ({ employeeId, addressId, payload }) => ({
+        url: `/employee/${employeeId}/addresses/${addressId}`,
+        method: "PUT",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -36,4 +59,6 @@ export const {
   useGetEmployeesQuery,
   useGetEmployeeQuery,
   useCreateEmployeeMutation,
+  useUpdateEmployeeMutation,
+  useUpdateAddressByIdMutation,
 } = employeeApi;

@@ -15,13 +15,6 @@ export type EmployeeApiResponse = BaseEmployeeApiResponse & {
 
 export type EmployeeListResponse = BaseEmployeeApiResponse[];
 
-type AddressApiResponse = BaseApiResponse & {
-  city: string;
-  line1: string;
-  postal_code: string;
-  country: string;
-};
-
 type BaseDepartmentApiResponse = BaseApiResponse & {
   name: string;
 };
@@ -43,6 +36,13 @@ export type CreateAddressPayload = {
   postal_code: string;
 };
 
+export type AddressApiResponse = BaseApiResponse & {
+  city: string;
+  line1: string;
+  postal_code: string;
+  country: string;
+};
+
 export type CreateEmployeePayload = {
   name: string;
   email: string;
@@ -50,4 +50,25 @@ export type CreateEmployeePayload = {
   role: string;
   password: string;
   address: CreateAddressPayload | null;
+};
+
+export type UpdateEmployeePayload = {
+  id: string;
+  payload: {
+    name?: string;
+    email?: string;
+    age?: number | null;
+    role?: string;
+  };
+};
+
+export type UpdateAddressPayload = {
+  employeeId: string;
+  addressId: string;
+  payload: {
+    city?: string;
+    line1?: string;
+    postal_code?: string;
+    country?: string;
+  };
 };
