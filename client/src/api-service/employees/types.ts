@@ -6,6 +6,10 @@ export type BaseEmployeeApiResponse = {
   email: string;
   age: number | null;
   role: string;
+  experience: number;
+  joining_date: string | null;
+  alternate_id: string;
+  status: string;
 };
 
 export type EmployeeApiResponse = BaseEmployeeApiResponse & {
@@ -50,6 +54,10 @@ export type CreateEmployeePayload = {
   role: string;
   password: string;
   address: CreateAddressPayload | null;
+  experience: number;
+  status: string;
+  joining_date: Date;
+  alternate_id: string;
 };
 
 export type UpdateEmployeePayload = {
@@ -59,6 +67,10 @@ export type UpdateEmployeePayload = {
     email?: string;
     age?: number | null;
     role?: string;
+    experience?: number;
+    status?: string;
+    joining_date?: Date;
+    alternate_id?: string;
   };
 };
 

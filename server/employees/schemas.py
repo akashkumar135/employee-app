@@ -110,6 +110,7 @@ class BaseEmployeeResponse(BaseModel):
     email: str
     age: int | None
     role: str
+    alternate_id: str
     experience: int
     status: str
     joining_date: datetime | None
