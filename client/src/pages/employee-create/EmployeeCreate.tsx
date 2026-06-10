@@ -164,7 +164,6 @@ const EmployeeCreate = () => {
             placeholder="Joining Date"
             value={data.joiningDate}
             onChange={handleChange}
-            isRequired
           />
 
           <Select
