@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Input component > should render without crashing 1`] = `
+<div>
+  <div
+    class="input-wrapper "
+  >
+    <label
+      for="test-input"
+    >
+      Test Input
+    </label>
+    <input
+      class=""
+      id="test-input"
+      name="test-input"
+      placeholder="test"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
