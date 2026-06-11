@@ -8,12 +8,20 @@ import {
   type AddressApiResponse,
   type UpdateAddressPayload,
   type CreateAddressApiPayload,
+  type SearchEmployeeQueryParams,
 } from "./types";
 
 const employeeApi = employeeBaseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getEmployees: builder.query<EmployeeListResponse, void>({
-      query: () => "employee", // The reason for not defining the url, path , is due to its default nature. Also we cam access params with callback
+    getEmployees: builder.query<
+      EmployeeListResponse,
+      SearchEmployeeQueryParams
+    >({
+      query: (queryParams) => ({
+        url: "/employee/search",
+        method: "GET",
+        params: queryParams,
+      }), // The reason for not defining the url, path , is due to its default nature. Also we cam access params with callback
       providesTags: ["Employees"],
     }),
     getEmployee: builder.query<

@@ -84,6 +84,7 @@ class SearchEmployeeQueryParams(BaseModel):
     name: str | None = None
     email: str | None = None
     role: EmployeeRole | None = None
+    status: EmployeeStatus | None = None
 
 
 class BaseAddressResponse(BaseModel):
