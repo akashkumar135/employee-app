@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DisplayField component > should render without crashing 1`] = `
+<div>
+  <div
+    class="display-wrapper"
+  >
+    <span>
+      Test Label
+    </span>
+    <div>
+      Test
+    </div>
+  </div>
+</div>
+`;

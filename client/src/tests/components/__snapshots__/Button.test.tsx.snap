@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button component > should render without crashing 1`] = `
+<div>
+  <button
+    class=""
+    type="button"
+  >
+    Test
+  </button>
+</div>
+`;

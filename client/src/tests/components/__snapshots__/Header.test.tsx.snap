@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FileInput component > should render without crashing 1`] = `
+<div>
+  <div
+    class="input-wrapper"
+  >
+    <label
+      for="testfile"
+    >
+      Test
+    </label>
+    <div
+      class="custom-file-upload-container"
+    >
+      <label
+        class="custom-file-upload"
+        for="testfile"
+      >
+        <div
+          class="custom-file-value-wrapper"
+        >
+          <div
+            class="custom-file-value"
+          >
+            <div>
+              test.pdf
+            </div>
+            <button
+              class="custom-file-remove center"
+              type="button"
+            >
+              <svg
+                fill="currentColor"
+                height="16"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="custom-file-action-label"
+        >
+          <img
+            height="16"
+            src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M16%206.00003L7.58603%2014.586C7.21088%2014.9612%207.00012%2015.47%207.00012%2016.0005C7.00012%2016.5311%207.21088%2017.0399%207.58603%2017.415C7.96118%2017.7902%208.46999%2018.0009%209.00053%2018.0009C9.53107%2018.0009%2010.0399%2017.7902%2010.415%2017.415L18.829%208.82903C19.5792%208.07887%2020.0006%207.06142%2020.0006%206.00053C20.0006%204.93964%2019.5792%203.9222%2018.829%203.17203C18.0789%202.42187%2017.0614%202.00043%2016.0005%202.00043C14.9396%202.00043%2013.9222%202.42187%2013.172%203.17203L4.79303%2011.723C4.22843%2012.2785%203.77939%2012.9403%203.47183%2013.6702C3.16426%2014.4001%203.00425%2015.1836%203.00103%2015.9756C2.9978%2016.7677%203.15142%2017.5525%203.45304%2018.2849C3.75465%2019.0173%204.19828%2019.6827%204.75834%2020.2427C5.31839%2020.8028%205.9838%2021.2464%206.71617%2021.548C7.44853%2021.8496%208.23337%2022.0033%209.02541%2022C9.81744%2021.9968%2010.601%2021.8368%2011.3309%2021.5292C12.0608%2021.2217%2012.7225%2020.7726%2013.278%2020.208L21.657%2011.657'%20stroke='%2363667A'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+            width="16"
+          />
+          Test File
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Header component > should render without crashing 1`] = `
+<div>
+  <header
+    class="header-container"
+  >
+    <img
+      class="header-icon"
+      src="/src/assets/icon.png"
+    />
+  </header>
+</div>
+`;

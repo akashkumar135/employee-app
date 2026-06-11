@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SideNavbarItem component > should render without crashing 1`] = `
+<div>
+  <a
+    class="navbar-item"
+    data-discover="true"
+    href="/test-url"
+  >
+    <div
+      class="navbar-icon-container center"
+    >
+      <img
+        height="20"
+        src="/src/tests/assets/navbar-employee-icon.svg"
+        width="20"
+      />
+    </div>
+    <span>
+      Test Item
+    </span>
+  </a>
+</div>
+`;

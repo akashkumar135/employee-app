@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SectionHeader component > should render without crashing 1`] = `
+<div>
+  <div
+    class="section-head"
+  >
+    <h2>
+      Test Header
+    </h2>
+    <div
+      class="section-extra"
+    >
+      <p>
+        Test extra options
+      </p>
+    </div>
+  </div>
+</div>
+`;

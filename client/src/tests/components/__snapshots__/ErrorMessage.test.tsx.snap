@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorMessage component > should render without crashing 1`] = `
+<div>
+  <span
+    class="error-box "
+    role="error"
+  >
+    Test Error Message
+  </span>
+</div>
+`;

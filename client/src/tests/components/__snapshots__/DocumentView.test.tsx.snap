@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DocumentView component > should render without crashing 1`] = `
+<div>
+  <div
+    class="document-wrapper"
+  >
+    <img
+      height="20"
+      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M6%2022C5.46957%2022%204.96086%2021.7893%204.58579%2021.4142C4.21071%2021.0391%204%2020.5304%204%2020V4C4%203.46957%204.21071%202.96086%204.58579%202.58579C4.96086%202.21072%205.46957%202%206%202H14C14.3166%201.99949%2014.6301%202.06161%2014.9225%202.18277C15.215%202.30394%2015.4806%202.48176%2015.704%202.706L19.292%206.294C19.5168%206.51751%2019.6952%206.78335%2019.8167%207.07616C19.9382%207.36898%2020.0005%207.68297%2020%208V20C20%2020.5304%2019.7893%2021.0391%2019.4142%2021.4142C19.0391%2021.7893%2018.5304%2022%2018%2022H6Z'%20stroke='%231EB4F0'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M14%202V7C14%207.26522%2014.1054%207.51957%2014.2929%207.70711C14.4804%207.89464%2014.7348%208%2015%208H20'%20stroke='%231EB4F0'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M10%209H8'%20stroke='%231EB4F0'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M16%2013H8'%20stroke='%231EB4F0'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M16%2017H8'%20stroke='%231EB4F0'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+      width="20"
+    />
+    <span>
+      Test
+    </span>
+  </div>
+</div>
+`;

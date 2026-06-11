@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StatusSelector component > should render without crashing 1`] = `
+<div>
+  <select
+    class="search-selector"
+    name="Test Options"
+  >
+    <option
+      value="Test"
+    >
+      Test
+    </option>
+  </select>
+</div>
+`;
