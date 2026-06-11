@@ -8,6 +8,7 @@ import IconImage from "../../assets/icon.png";
 import LoginHeroImage from "../../assets/login-left-image-mask.png";
 import { useState } from "react";
 import { useLoginMutation } from "../../api-service/auth/login.api";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -102,9 +103,7 @@ const Login = () => {
               containerClassName="custom-input"
               isRequired
             />
-            {errors.username && (
-              <span className="error-box">{errors.username}</span>
-            )}
+            {errors.username && <ErrorMessage message={errors.username} />}
             <Input
               id="password"
               type="password"
@@ -116,9 +115,7 @@ const Login = () => {
               containerClassName="custom-input"
               isRequired
             />
-            {errors.password && (
-              <span className="error-box">{errors.password}</span>
-            )}
+            {errors.password && <ErrorMessage message={errors.password} />}
 
             <Button
               type="submit"
