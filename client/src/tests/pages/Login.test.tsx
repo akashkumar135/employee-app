@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import Login from "../../pages/login/Login";
+import Login from "@pages/login/Login";
 
 // Mock react-router's useNavigate
 const mockNavigate = vi.fn();

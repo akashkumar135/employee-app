@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import Input from "../../components/Input/Input";
+import Input from "@components/Input/Input";
 import { render, screen } from "@testing-library/react";
 
 describe("Input component", () => {
