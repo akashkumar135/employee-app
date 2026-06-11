@@ -8,7 +8,7 @@ import {
   ChatMessageBox,
   ChatTrigger,
   ChatWrapper,
-} from "../../../components/chat/Chat";
+} from "../../Chat/Chat";
 
 import Icon from "../../../assets/message-icon.svg";
 import MessageIcon from "../../../assets/send-icon.svg";
@@ -16,7 +16,7 @@ import MessageIcon from "../../../assets/send-icon.svg";
 import "./style.css";
 import { Suspense, useState } from "react";
 import { Outlet } from "react-router";
-import { CommonPageSkeleton } from "../../pre-loaders/common-page-skeleton/CommonPageSkeleton";
+import { CommonPageSkeleton } from "../../pre-loaders/CommonPageSkeleton/CommonPageSkeleton";
 
 const Layout = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);

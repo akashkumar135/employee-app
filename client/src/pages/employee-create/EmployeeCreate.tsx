@@ -2,13 +2,13 @@ import { useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
-import SectionHeader from "../../components/layout/Section/SectionHeader";
-import { Select, SelectOption } from "../../components/select/Select";
+import SectionHeader from "../../components/layout/SectionHeader/SectionHeader";
+import { Select, SelectOption } from "../../components/Select/Select";
 import { useNavigate } from "react-router";
 
 import "./style.css";
 import type { Employee } from "../../types/employee";
-import FileUploadDialog from "../../components/FileUpload/FileUpload";
+import FileUploadDialog from "../../components/FileUploadDialog/FileUploadDialog";
 import { useDialog } from "../../hooks/useDialog";
 import { useCreateEmployeeMutation } from "../../api-service/employees/employees.api";
 import type { CreateEmployeePayload } from "../../api-service/employees/types";

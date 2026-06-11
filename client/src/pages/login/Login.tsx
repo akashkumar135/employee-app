@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router";
 
-import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
+import Button from "@components/Button/Button";
+import Input from "@components/Input/Input";
 import "./style.css";
 
-import IconImage from "../../assets/icon.png";
-import LoginHeroImage from "../../assets/login-left-image-mask.png";
+import IconImage from "@assets/icon.png";
+import LoginHeroImage from "@assets/login-left-image-mask.png";
 import { useState } from "react";
-import { useLoginMutation } from "../../api-service/auth/login.api";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { useLoginMutation } from "@api-service/auth/login.api";
+import ErrorMessage from "@components/ErrorMessage/ErrorMessage";
 
 const Login = () => {
   const navigate = useNavigate();

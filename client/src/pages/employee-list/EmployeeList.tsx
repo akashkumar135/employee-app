@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router";
 
 import Button from "../../components/Button/Button";
-import SectionHeader from "../../components/layout/Section/SectionHeader";
+import SectionHeader from "../../components/layout/SectionHeader/SectionHeader";
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import {
 import DeleteIcon from "../../assets/delete-icon.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 
-import StatusSelector from "../../components/employee/search-filters/StatusSelect";
+import StatusSelector from "../../components/employee/StatusSelector/StatusSelector";
 import PlusIcon from "../../assets/plus-icon.svg";
 
 import "./style.css";

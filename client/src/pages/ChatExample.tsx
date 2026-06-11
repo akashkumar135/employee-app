@@ -4,7 +4,7 @@ import {
   ChatMessageBody,
   ChatMessageBox,
   ChatWrapper,
-} from "../components/chat/Chat";
+} from "../components/Chat/Chat";
 
 import Icon from "../assets/message-icon.svg";
 import MessageIcon from "../assets/send-icon.svg";

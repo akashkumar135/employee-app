@@ -1,4 +1,4 @@
-import { forwardRef, type RefObject } from "react";
+import { forwardRef } from "react";
 import "./style.css";
 
 type DialogProps = {

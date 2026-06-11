@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 
 import Button from "../../components/Button/Button";
-import SectionHeader from "../../components/layout/Section/SectionHeader";
+import SectionHeader from "../../components/layout/SectionHeader/SectionHeader";
 
 import "./style.css";
 import DisplayField from "../../components/employee/DisplayField/DisplayField";
