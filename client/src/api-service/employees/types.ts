@@ -18,6 +18,12 @@ export type EmployeeApiResponse = BaseEmployeeApiResponse & {
 };
 
 export type EmployeeListResponse = BaseEmployeeApiResponse[];
+export type SearchEmployeeQueryParams = {
+  name?: string;
+  email?: string;
+  role?: string;
+  status?: string;
+};
 
 type BaseDepartmentApiResponse = BaseApiResponse & {
   name: string;

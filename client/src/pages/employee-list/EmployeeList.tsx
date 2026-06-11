@@ -38,9 +38,13 @@ import { getFormattedDate } from "../../utils/date.util";
 
 const StatusOptions = [
   { label: "Status", value: "" },
-  { label: "Active", value: "active" },
+  { label: "Active", value: "Active" },
+  { label: "Inactive", value: "Inactive" },
+  { label: "Probation", value: "Probation" },
 ];
+
 const EmployeeList = () => {
+  const [searchQuery, setSearchQuery] = useSearchParams();
   const {
     showDialog,
     hideDialog,
@@ -51,7 +55,13 @@ const EmployeeList = () => {
 
   const navigate = useNavigate();
 
-  const { data = [], isLoading, error } = useGetEmployeesQuery();
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useGetEmployeesQuery({
+    status: searchQuery.get("status") || undefined,
+  });
   const [deleteEmployee, { isLoading: isDeleteLoading }] =
     useDeleteEmployeeMutation();
 
@@ -92,6 +102,15 @@ const EmployeeList = () => {
       });
   };
 
+  const handleFilterChange = (name: string, value: string) => {
+    setSearchQuery((prev) => {
+      const newQuery = new URLSearchParams(prev);
+      newQuery.set(name, value);
+
+      return newQuery;
+    });
+  };
+
   console.log(data[0], isLoading, error);
   return (
     <section className="employee-list-wrapper">
@@ -100,7 +119,14 @@ const EmployeeList = () => {
         extraOptions={
           <div className="filter-options">
             <span>Filter by</span>
-            <StatusSelector selected="status" options={StatusOptions} />
+            <StatusSelector
+              selected={searchQuery.get("status") || ""}
+              options={StatusOptions}
+              onChange={(event) => {
+                console.log(event.target.value, "status");
+                handleFilterChange("status", event.target.value);
+              }}
+            />
             <Button
               className=" action-button create-button"
               onClick={handleEmployeeCreteClick}
