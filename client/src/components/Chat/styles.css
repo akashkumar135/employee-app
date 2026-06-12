@@ -1,3 +1,21 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
 .chat-trigger {
   width: fit-content;
   border-radius: 40px;
@@ -87,4 +105,19 @@
 
 .chat-input-wrapper input:focus {
   outline: none;
+}
+
+.chat-bottyping {
+  width: fit-content;
+  display: flex;
+  align-items: end;
+  gap: 4px;
+}
+
+.chat-bottyping span {
+  font-size: 14px;
+  opacity: 0.6;
+}
+.chat-boticon {
+  animation: shake 700ms ease-in-out infinite;
 }

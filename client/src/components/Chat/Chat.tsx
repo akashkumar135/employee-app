@@ -2,6 +2,8 @@ import Button from "../Button/Button";
 
 import ChatIcon from "../../assets/message-icon.svg";
 import "./styles.css";
+import { LuBot } from "react-icons/lu";
+import type { ChangeEvent } from "react";
 
 type ChatWrapperProps = {
   children: React.ReactNode[];
@@ -21,6 +23,10 @@ type ChatMessageBoxProps = {
 type ChatInputBoxProps = {
   placeholder: string;
   iconUrl: string;
+  onSubmit?: () => void;
+  onChange?: (value: string) => void;
+  value?: string;
+  loading?: boolean;
 };
 
 type ChatMessageBodyProps = {
@@ -86,14 +92,51 @@ export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
   );
 };
 
+export const ChatBotTyping = () => {
+  return (
+    <div className="chat-bottyping">
+      <LuBot size={24} className="chat-boticon" />
+      <span>Typing...</span>
+    </div>
+  );
+};
+
 export const ChatInputBox: React.FC<ChatInputBoxProps> = ({
   placeholder,
   iconUrl,
+  onSubmit,
+  onChange,
+  value,
+  loading = false,
 }) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key == "Enter" && onSubmit) {
+      onSubmit();
+    }
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (onChange) onChange(event.target.value);
+  };
+
   return (
     <div className="chat-input-wrapper">
-      <input type="text" placeholder={placeholder} />
-      {iconUrl && <img src={iconUrl} width={20} height={20} />}
+      <input
+        type="text"
+        placeholder={placeholder}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        value={value}
+      />
+      {iconUrl && (
+        <Button
+          className="action-button icon-button"
+          onClick={onSubmit}
+          disabled={loading}
+        >
+          <img src={iconUrl} width={20} height={20} />
+        </Button>
+      )}
     </div>
   );
 };
