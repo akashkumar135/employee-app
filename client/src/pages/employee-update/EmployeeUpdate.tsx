@@ -1,10 +1,10 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import FileInput from "../../components/FileInput/FileInput";
 import Input from "../../components/Input/Input";
 import SectionHeader from "../../components/layout/SectionHeader/SectionHeader";
 import { Select, SelectOption } from "../../components/Select/Select";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import "./style.css";
 import type { UpdateEmployeeForm } from "../../types/employee";
@@ -16,23 +16,20 @@ import {
   useUpdateAddressByIdMutation,
   useUpdateEmployeeMutation,
 } from "../../api-service/employees/employees.api";
-import type {
-  UpdateAddressPayload,
-  UpdateEmployeePayload,
-} from "../../api-service/employees/types";
+import type { UpdateEmployeePayload } from "../../api-service/employees/types";
 import { getInputDateFormat } from "../../utils/date.util";
 
 const EmployeeUpdate = () => {
   const navigte = useNavigate();
   const { id } = useParams();
 
-  const [updateEmployee, { isLoading: isUpdateLoading }] =
+  const [updateEmployee, { isLoading: isUpdateEmployeeLoading }] =
     useUpdateEmployeeMutation();
 
-  const [updateAddress, { isLoading: isAddressLoading }] =
+  const [updateAddress, { isLoading: isUpdateAddressLoading }] =
     useUpdateAddressByIdMutation();
 
-  const [createAddress, { isLoading: isCreateLoading }] =
+  const [createAddress, { isLoading: isCreateAddressLoading }] =
     useCreateAddressMutation();
 
   const {
@@ -202,6 +199,9 @@ const EmployeeUpdate = () => {
     }
   }, [currentEmployee, isEmployeeLoading, employeeLoadingError]);
 
+  const isFormSubmitting =
+    isUpdateEmployeeLoading || isCreateAddressLoading || isUpdateAddressLoading;
+
   return (
     <aside className="employee-update-wrapper">
       <SectionHeader label="Update Employee" />
@@ -356,9 +356,9 @@ const EmployeeUpdate = () => {
           <Button
             type="submit"
             className="employee-form-submit-button"
-            disabled={isUpdateLoading || isAddressLoading}
+            disabled={isFormSubmitting}
           >
-            {isUpdateLoading || isAddressLoading ? "Saving" : "Update"}
+            {isFormSubmitting ? "Saving" : "Update"}
           </Button>
           <Button
             type="button"
