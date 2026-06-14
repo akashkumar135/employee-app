@@ -67,7 +67,7 @@ exports[`Login page > should match snapshot 1`] = `
             />
           </div>
           <button
-            class="login-submit-button"
+            class=" action-button login-submit-button center"
             type="submit"
           >
             Login
