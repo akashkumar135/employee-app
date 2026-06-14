@@ -9,11 +9,13 @@ import {
 
 import Icon from "@assets/message-icon.svg";
 import MessageIcon from "@assets/send-icon.svg";
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { useChat } from "@hooks/useChat";
 
+const initialValue = { role: "assistant", text: "Hi, What can I do for you ?" };
+
 const ChatWindow = () => {
-  const { messages, sendMessage, isStreaming } = useChat();
+  const { messages, sendMessage, isStreaming } = useChat(initialValue);
   const [prompt, setPrompt] = useState("");
 
   const handlePromptChange = (value: string) => {

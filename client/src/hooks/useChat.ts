@@ -6,8 +6,10 @@ type Message = {
   text: string;
 };
 
-export const useChat = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+export const useChat = (initialValue?: Message) => {
+  const [messages, setMessages] = useState<Message[]>(
+    initialValue ? [initialValue] : [],
+  );
   const [isStreaming, setIsStreaming] = useState(false);
 
   const signalRef = useRef<AbortController | null>(null);
