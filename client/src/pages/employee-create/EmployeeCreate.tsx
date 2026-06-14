@@ -284,15 +284,16 @@ const EmployeeCreate = () => {
         <div className="employee-form-actions">
           <Button
             type="submit"
-            className="employee-form-submit-button"
+            className="action-button employee-form-submit-button center"
             disabled={isCreateLoading}
           >
             {isCreateLoading ? "Saving" : "Create"}
           </Button>
           <Button
             type="reset"
-            className="employee-form-clear-button"
+            className="action-button employee-form-clear-button center"
             onClick={handleCancel}
+            disabled={isCreateLoading}
           >
             Cancel
           </Button>

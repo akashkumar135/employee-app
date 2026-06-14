@@ -83,6 +83,7 @@
 }
 
 .login-submit-button {
+  width: 100%;
   border: none;
   color: white;
   font-weight: 600;

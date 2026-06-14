@@ -355,15 +355,16 @@ const EmployeeUpdate = () => {
         <div className="employee-form-actions">
           <Button
             type="submit"
-            className="employee-form-submit-button"
+            className="action-button employee-form-submit-button center"
             disabled={isFormSubmitting}
           >
             {isFormSubmitting ? "Saving" : "Update"}
           </Button>
           <Button
             type="button"
-            className="employee-form-clear-button"
+            className="action-button employee-form-clear-button center"
             onClick={handleCancel}
+            disabled={isFormSubmitting}
           >
             Cancel
           </Button>

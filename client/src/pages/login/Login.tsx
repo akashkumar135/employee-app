@@ -13,7 +13,7 @@ import ErrorMessage from "@components/ErrorMessage/ErrorMessage";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading: isLoginSubmitting }] = useLoginMutation();
 
   const [data, setData] = useState({
     username: "",
@@ -119,10 +119,10 @@ const Login = () => {
 
             <Button
               type="submit"
-              className="login-submit-button"
-              disabled={isLoading}
+              className=" action-button login-submit-button center"
+              disabled={isLoginSubmitting}
             >
-              Login
+              {isLoginSubmitting ? "Signing" : "Login"}
             </Button>
           </form>
         </div>
