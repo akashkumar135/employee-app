@@ -1,0 +1,320 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EmployeeCreate component > should render without crash 1`] = `
+<div>
+  <aside
+    class="employee-create-wrapper"
+  >
+    <div
+      class="section-head"
+    >
+      <h2>
+        Create Employee
+      </h2>
+    </div>
+    <form
+      class="employee-create-form"
+    >
+      <div
+        class="employee-form-fields-container"
+      >
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="employee-name"
+          >
+            Employee Name
+          </label>
+          <input
+            class=""
+            id="employee-name"
+            name="employeeName"
+            placeholder="Employee Name"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="employee-id"
+          >
+            Employee ID
+          </label>
+          <input
+            class=""
+            id="employee-id"
+            name="employeeId"
+            placeholder="Employee ID"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="joining-date"
+          >
+            Joining Date
+          </label>
+          <input
+            class=""
+            id="joining-date"
+            name="joiningDate"
+            placeholder="Joining Date"
+            type="date"
+            value=""
+          />
+        </div>
+        <div
+          class="input-wrapper undefined"
+        >
+          <label
+            for="role"
+          >
+            Role
+          </label>
+          <select
+            id="role"
+            name="role"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select a role
+            </option>
+            <option
+              value="HR"
+            >
+              HR
+            </option>
+            <option
+              value="Developer"
+            >
+              Developer
+            </option>
+            <option
+              value="UI"
+            >
+              UI
+            </option>
+            <option
+              value="UX"
+            >
+              UX
+            </option>
+          </select>
+        </div>
+        <div
+          class="input-wrapper undefined"
+        >
+          <label
+            for="status"
+          >
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select a status
+            </option>
+            <option
+              value="Probation"
+            >
+              Probation
+            </option>
+            <option
+              value="Inactive"
+            >
+              Inactive
+            </option>
+            <option
+              value="Active"
+            >
+              Active
+            </option>
+          </select>
+        </div>
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="employee-experience"
+          >
+            Experience
+          </label>
+          <input
+            class=""
+            id="employee-experience"
+            name="experience"
+            placeholder="Experience"
+            required=""
+            type="text"
+            value="0"
+          />
+        </div>
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="employee-email"
+          >
+            Employee Email
+          </label>
+          <input
+            class=""
+            id="employee-email"
+            name="employeeEmail"
+            placeholder="Employee Email"
+            required=""
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          class="input-wrapper "
+        >
+          <label
+            for="employee-password"
+          >
+            Passowrd
+          </label>
+          <input
+            class=""
+            id="employee-password"
+            name="password"
+            placeholder="Password"
+            required=""
+            type="password"
+            value=""
+          />
+        </div>
+        <div
+          class="input-wrapper"
+        >
+          <label
+            for="upload-file"
+          >
+            Upload ID Proof
+          </label>
+          <div
+            class="custom-file-upload-container"
+          >
+            <label
+              class="custom-file-upload"
+              for="upload-file"
+            >
+              <div
+                class="custom-file-action-label"
+              >
+                <img
+                  height="16"
+                  src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M16%206.00003L7.58603%2014.586C7.21088%2014.9612%207.00012%2015.47%207.00012%2016.0005C7.00012%2016.5311%207.21088%2017.0399%207.58603%2017.415C7.96118%2017.7902%208.46999%2018.0009%209.00053%2018.0009C9.53107%2018.0009%2010.0399%2017.7902%2010.415%2017.415L18.829%208.82903C19.5792%208.07887%2020.0006%207.06142%2020.0006%206.00053C20.0006%204.93964%2019.5792%203.9222%2018.829%203.17203C18.0789%202.42187%2017.0614%202.00043%2016.0005%202.00043C14.9396%202.00043%2013.9222%202.42187%2013.172%203.17203L4.79303%2011.723C4.22843%2012.2785%203.77939%2012.9403%203.47183%2013.6702C3.16426%2014.4001%203.00425%2015.1836%203.00103%2015.9756C2.9978%2016.7677%203.15142%2017.5525%203.45304%2018.2849C3.75465%2019.0173%204.19828%2019.6827%204.75834%2020.2427C5.31839%2020.8028%205.9838%2021.2464%206.71617%2021.548C7.44853%2021.8496%208.23337%2022.0033%209.02541%2022C9.81744%2021.9968%2010.601%2021.8368%2011.3309%2021.5292C12.0608%2021.2217%2012.7225%2020.7726%2013.278%2020.208L21.657%2011.657'%20stroke='%2363667A'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+                  width="16"
+                />
+                Attach files
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="input-wrapper"
+        >
+          <label
+            for="employee-address"
+          >
+            Address
+          </label>
+          <div
+            class="address-group"
+          >
+            <div
+              class="input-wrapper "
+            >
+              <input
+                class=""
+                id="employee-address"
+                name="address.address"
+                placeholder="Address"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="address-subdetails-group"
+            >
+              <div
+                class="input-wrapper "
+              >
+                <input
+                  class=""
+                  id="employee-address-city"
+                  name="address.city"
+                  placeholder="City"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="input-wrapper "
+              >
+                <input
+                  class=""
+                  id="employee-address-country"
+                  name="address.country"
+                  placeholder="Country"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="input-wrapper "
+              >
+                <input
+                  class=""
+                  id="employee-address-postal-code"
+                  name="address.postalCode"
+                  placeholder="Postal Code"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="employee-form-actions"
+      >
+        <button
+          class="action-button employee-form-submit-button center"
+          type="submit"
+        >
+          Create
+        </button>
+        <button
+          class="action-button employee-form-clear-button center"
+          type="reset"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </aside>
+</div>
+`;
