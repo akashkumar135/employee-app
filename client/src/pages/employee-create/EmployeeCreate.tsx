@@ -193,7 +193,7 @@ const EmployeeCreate = () => {
             <SelectOption value="">Select a status</SelectOption>
             <SelectOption value="Probation">Probation</SelectOption>
             <SelectOption value="Inactive">Inactive</SelectOption>
-            <SelectOption value="Employee">Employee</SelectOption>
+            <SelectOption value="Active">Active</SelectOption>
           </Select>
           <Input
             id="employee-experience"

@@ -31,7 +31,7 @@ export const Select: React.FC<SelectProps> = ({
 }) => {
   return (
     <div className={`input-wrapper ${containerClassName}`}>
-      {label && <label htmlFor="role">{label}</label>}
+      {label && <label htmlFor={id}>{label}</label>}
       <select
         id={id}
         required={isRequired}
