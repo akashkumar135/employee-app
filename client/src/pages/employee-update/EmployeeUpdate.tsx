@@ -278,7 +278,7 @@ const EmployeeUpdate = () => {
           </Select>
           <Input
             id="employee-experience"
-            type="text"
+            type="number"
             name="experience"
             label="Experience"
             placeholder="Experience"
