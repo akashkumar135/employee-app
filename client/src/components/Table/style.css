@@ -1,4 +1,10 @@
 .table-wrapper {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+.table {
   text-align: center;
   width: 100%;
   text-align: left;
@@ -10,6 +16,8 @@
   font-weight: 300;
   background-color: #eaf9ff;
   /* background-color: black; */
+  position: sticky;
+  top: 0;
 }
 
 .table-row {
@@ -47,6 +55,9 @@
 
 .table-head {
   padding: 16px;
+}
+
+.table-body {
 }
 
 .table-cell {

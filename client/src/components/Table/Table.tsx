@@ -15,7 +15,11 @@ type TableRowProps = {
 };
 
 export const Table: React.FC<TableProps> = ({ children }) => {
-  return <table className="table-wrapper">{children}</table>;
+  return (
+    <div className="table-wrapper">
+      <table className="table">{children}</table>
+    </div>
+  );
 };
 
 export const TableHeader: React.FC<TableProps> = ({ children }) => {
