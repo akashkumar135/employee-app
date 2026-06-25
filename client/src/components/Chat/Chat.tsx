@@ -4,6 +4,7 @@ import ChatIcon from "../../assets/message-icon.svg";
 import "./styles.css";
 import { LuBot } from "react-icons/lu";
 import type { ChangeEvent } from "react";
+import { FiUpload } from "react-icons/fi";
 
 type ChatWrapperProps = {
   children: React.ReactNode[];
@@ -25,6 +26,7 @@ type ChatInputBoxProps = {
   iconUrl: string;
   onSubmit?: () => void;
   onChange?: (value: string) => void;
+  onFileUpload: (file: File) => void;
   value?: string;
   loading?: boolean;
 };
@@ -106,6 +108,7 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = ({
   iconUrl,
   onSubmit,
   onChange,
+  onFileUpload,
   value,
   loading = false,
 }) => {
@@ -119,8 +122,31 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = ({
     if (onChange) onChange(event.target.value);
   };
 
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+
+    const file = event.target.files[0];
+
+    onFileUpload(file);
+
+    event.target.value = "";
+  };
+
   return (
     <div className="chat-input-wrapper">
+      <label
+        htmlFor="chat-file-input"
+        className="action-button icon-button"
+        onClick={() => {}}
+      >
+        <FiUpload size={16} />
+      </label>
+      <input
+        id="chat-file-input"
+        type="file"
+        className="visually-hidden"
+        onChange={handleFileChange}
+      />
       <input
         type="text"
         placeholder={placeholder}
