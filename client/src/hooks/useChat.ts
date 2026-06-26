@@ -1,5 +1,5 @@
 import { streamChatResponse } from "@utils/stream.util";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Message = {
   role: string;
@@ -13,7 +13,7 @@ export const useChat = (initialValue?: Message) => {
   );
   const [isStreaming, setIsStreaming] = useState(false);
 
-  const chatIdRef = useRef<null | string>(null)
+  const chatIdRef = useRef<string>("")
 
   const signalRef = useRef<AbortController | null>(null);
 
@@ -33,9 +33,7 @@ export const useChat = (initialValue?: Message) => {
     if (signalRef.current) signalRef.current.abort();
 
 
-    if (!chatIdRef.current) {
-      chatIdRef.current = crypto.randomUUID()
-    }
+
 
     signalRef.current = new AbortController();
 
@@ -54,9 +52,35 @@ export const useChat = (initialValue?: Message) => {
     }
   };
 
+
+  const uploadDoc = async (file: File) => {
+     try {
+
+          const formData = new FormData()
+
+          formData.set("file", file)
+
+          await fetch(import.meta.env.VITE_BACKEND_BASE_URL + `/chat/${chatIdRef.current}/upload`, {
+            method: "POST",
+            body: formData
+          })
+
+        } catch (err) {
+            console.log(err)
+        }
+  }
+
+
+  useEffect( () => {
+    if (!chatIdRef.current) {
+      chatIdRef.current = crypto.randomUUID()
+    }
+  }, [])
+
   return {
     isStreaming,
     messages,
     sendMessage,
+    uploadDoc,
   };
 };

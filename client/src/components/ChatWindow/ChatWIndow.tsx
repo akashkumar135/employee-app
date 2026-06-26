@@ -15,7 +15,7 @@ import { useChat } from "@hooks/useChat";
 const initialValue = { role: "assistant", text: "Hi, What can I do for you ?" };
 
 const ChatWindow = () => {
-  const { messages, sendMessage, isStreaming } = useChat(initialValue);
+  const { messages, sendMessage, isStreaming, uploadDoc } = useChat(initialValue);
   const [prompt, setPrompt] = useState("");
 
   const handlePromptChange = (value: string) => {
@@ -27,8 +27,10 @@ const ChatWindow = () => {
     setPrompt("");
   };
 
-  const handleFileUpload = (file: File) => {
-    console.log(file);
+  const handleFileUpload = async (file: File) => {
+      await uploadDoc(file)
+
+
   };
 
   return (
