@@ -4,11 +4,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from auth.router import router as auth_router
+from chat.router import router as chat_router
 from config import settings
 from departments.router import router as department_router
 from employees.router import router as employee_router
 from exceptions.handlers import register_exception_handlers
 from middleware import configure_middleware
+from vector_db import get_chroma_client
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,6 +22,11 @@ logging.basicConfig(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    client = get_chroma_client("./chroma_db")
+
+    app.state.chroma_client = client
+
     yield
 
 
@@ -36,6 +43,8 @@ configure_middleware(app)
 app.include_router(employee_router)
 app.include_router(department_router)
 app.include_router(auth_router)
+
+app.include_router(chat_router)
 
 
 @app.get("/health", tags=["Health"])
