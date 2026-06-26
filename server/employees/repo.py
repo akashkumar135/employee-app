@@ -64,6 +64,9 @@ async def search(
         if filters.get("status"):
             stnt = stnt.where(Employee.status == filters.get("status"))
 
+        if filters.get("alternate_id"):
+            stnt = stnt.where(Employee.alternate_id == filters.get("alternate_id"))
+
     results = await db.scalars(stnt)
 
     return results

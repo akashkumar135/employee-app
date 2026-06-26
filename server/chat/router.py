@@ -17,6 +17,6 @@ async def chat(id: str, data: ChatMessageRequest):
     )
 
 
-@router.post("/{id}", status_code=status.HTTP_200_OK)
+@router.post("/{id}/upload", status_code=status.HTTP_200_OK)
 async def upload_chat_document(id: str, file: UploadFile = File(...)):
     return await chat_service.upload_chat_document(id, file)
