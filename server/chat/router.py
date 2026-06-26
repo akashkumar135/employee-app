@@ -1,4 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, status
+from fastapi.responses import EventSourceResponse
 
 from chat import service as chat_service
 from chat.schema import ChatMessageRequest
@@ -11,10 +12,11 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
     status_code=status.HTTP_200_OK,
 )
 async def chat(id: str, data: ChatMessageRequest):
-    return await chat_service.send_chat_message(id, data)
+    return EventSourceResponse(
+        chat_service.send_chat_message(id, data), media_type="text/event-stream"
+    )
 
 
 @router.post(":id", status_code=status.HTTP_200_OK)
 async def upload_chat_document(id: str, file: UploadFile = File(...)):
-    print(id, file, "FROM LOGGING")
     return await chat_service.upload_chat_document(id, file)

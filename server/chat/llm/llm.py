@@ -9,6 +9,7 @@ def get_llm(model="openai/gpt-4o-mini"):
         api_key=settings.litellm_api_key,
         api_base=settings.litellm_api_base,
         model=model,
+        streaming=True,
     )
 
 

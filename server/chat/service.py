@@ -1,10 +1,17 @@
+import json
+
 from fastapi import UploadFile
 
 from chat.llm import llm
 from chat.rag.chunking import chunking
 from chat.rag.embedding import embedding
 from chat.rag.retrivel import retrival
-from chat.repo import add_document_chunks, find_related_chunks
+from chat.repo import (
+    add_document_chunks,
+    add_message,
+    create_or_get,
+    find_related_chunks,
+)
 from chat.schema import ChatMessageRequest
 from chat.utils import read_file
 
@@ -47,21 +54,38 @@ async def send_chat_message(id: str, data: ChatMessageRequest):
 
     embedding_model = embedding.get_embeding_model()
 
-    embedded_query = embedding.embed_query(embedding_model, data.message)
+    embedded_query = embedding.embed_query(embedding_model, data.content)
 
     context_chunks = find_related_chunks(id, embedded_query)
 
     formatted_context = retrival.format_context(context_chunks)
 
-    responses = agent.invoke(
-        {
-            "messages": [
-                {
-                    "role": "user",
-                    "content": f"{formatted_context}\n Query: {data.message}",
-                }
-            ]
-        }
-    )
+    previous_conversations = create_or_get(id)
 
-    return responses["messages"][-1].content
+    add_message(id, {"role": "user", "content": data.content})
+
+    print("Reached")
+    try:
+        reply = ""
+        async for message_chunk, _ in agent.astream(
+            {
+                "messages": previous_conversations
+                + [
+                    {
+                        "role": "user",
+                        "content": f"{formatted_context}\n\n Query: {data.content}",
+                    }
+                ]
+            },
+            stream_mode="messages",
+        ):
+            reply += message_chunk.content
+            yield f"data: {json.dumps({'content': message_chunk.content})} \n\n"
+
+        add_message(id, {"role": "assistant", "content": reply})
+
+    except Exception as err:
+        print(err, "ERROR")
+        pass
+    finally:
+        yield "data: [DONE]\n\n"

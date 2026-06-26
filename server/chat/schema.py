@@ -10,8 +10,7 @@ class ChatFileUploadRequest(BaseModel):
 class ChatMessageRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True, extra="ignore")
 
-    role: str
-    message: str = Field(min_length=1)
+    content: str = Field(min_length=1)
 
 
 # class ChatMessageResponse(BaseModel):
