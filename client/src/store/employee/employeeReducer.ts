@@ -2,10 +2,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import type { Employee, EmployeeState } from "../../types/employee";
 
-import DummyEmployees from "../../datas/employees.json";
-
 const initialState: EmployeeState = {
-  employees: DummyEmployees as Employee[],
+  employees: [],
 };
 
 const employeeSlice = createSlice({

@@ -27,6 +27,10 @@ const ChatWindow = () => {
     setPrompt("");
   };
 
+  const handleFileUpload = (file: File) => {
+    console.log(file);
+  };
+
   return (
     <ChatWrapper>
       <ChatHeader label="Help Desk" iconUrl={Icon} />
@@ -42,6 +46,7 @@ const ChatWindow = () => {
         placeholder="Type your question"
         iconUrl={MessageIcon}
         onChange={handlePromptChange}
+        onFileUpload={handleFileUpload}
         onSubmit={handleSendPrompt}
         value={prompt}
         loading={isStreaming}
