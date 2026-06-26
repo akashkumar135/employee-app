@@ -7,10 +7,13 @@ type Message = {
 };
 
 export const useChat = (initialValue?: Message) => {
+
   const [messages, setMessages] = useState<Message[]>(
     initialValue ? [initialValue] : [],
   );
   const [isStreaming, setIsStreaming] = useState(false);
+
+  const chatIdRef = useRef<null | string>(null)
 
   const signalRef = useRef<AbortController | null>(null);
 
@@ -29,6 +32,11 @@ export const useChat = (initialValue?: Message) => {
   const sendMessage = async (message: string) => {
     if (signalRef.current) signalRef.current.abort();
 
+
+    if (!chatIdRef.current) {
+      chatIdRef.current = crypto.randomUUID()
+    }
+
     signalRef.current = new AbortController();
 
     setMessages((prev) => [
@@ -39,7 +47,7 @@ export const useChat = (initialValue?: Message) => {
 
     try {
       setIsStreaming(true);
-      await streamChatResponse(message, onStreamData, signalRef.current.signal);
+      await streamChatResponse(chatIdRef.current, message, onStreamData, signalRef.current.signal);
     } catch (err) {
     } finally {
       setIsStreaming(false);

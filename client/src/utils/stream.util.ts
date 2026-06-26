@@ -1,11 +1,12 @@
 export const streamChatResponse = async (
+  chat_id: string,
   prompt: string,
   onStreamData: (text: string, type?: string) => void,
   signal?: AbortSignal,
 ) => {
   try {
     const response = await fetch(
-      "https://freshers-training-sse.onrender.com/events/stream",
+      import.meta.env.VITE_BACKEND_BASE_URL + `/chat/${chat_id}/message`,
       {
         method: "POST",
         headers: {
