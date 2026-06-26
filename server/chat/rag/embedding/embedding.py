@@ -1,13 +1,13 @@
-from chromadb.utils import embedding_functions
+from sentence_transformers import SentenceTransformer
 
 
-def get_embeding_function():
-    return embedding_functions.DefaultEmbeddingFunction()
+def get_embeding_model(model_name: str = "all-MiniLM-L6-v2") -> SentenceTransformer:
+    return SentenceTransformer(model_name)
 
 
-def embed_texts(texts: list[str]) -> list[list[float]]:
-    return list(get_embeding_function()(texts))
+def embed_texts(model: SentenceTransformer, texts: list[str]) -> list[list[float]]:
+    return model.encode(texts).tolist()
 
 
-def embed_query(query: str):
-    return get_embeding_function()([query])[0]
+def embed_query(model: SentenceTransformer, query: str):
+    return model.encode(query).tolist()

@@ -11,7 +11,7 @@ def create_collection(client: ClientAPI, collection_name: str):
 
 
 def add_chunks(
-    collection: Collection, chunks: list[dict[str, str]], embedings: list[list[float]]
+    collection: Collection, chunks: list[dict[str, str]], embeddings: list[list[float]]
 ):
 
     chunk_len = len(chunks)
@@ -27,6 +27,6 @@ def add_chunks(
         texts.append(chunk["text"])
         ids.append(chunk["chunk_id"])
         metadatas.append(chunk["metadata"])
-        vectors.append(embedings[index])
+        vectors.append(embeddings[index])
 
-    collection.add(ids=ids, documents=texts, embeddings=embedings, metadatas=metadatas)
+    collection.add(ids=ids, documents=texts, embeddings=embeddings, metadatas=metadatas)

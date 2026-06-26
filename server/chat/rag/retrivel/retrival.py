@@ -4,10 +4,12 @@ from chromadb import Collection
 
 
 def retrive_chunks(
-    collection: Collection, query_embeded: str, n_results: int = 5
+    collection: Collection, chat_id: str, query_embeded: str, n_results: int = 5
 ) -> list[dict[str, Any]]:
 
-    response = collection.query([query_embeded], n_results=n_results)
+    response = collection.query(
+        [query_embeded], where={"chat_id": chat_id}, n_results=n_results
+    )
 
     formatted_response = {
         "ids": response["ids"][0],
@@ -18,13 +20,13 @@ def retrive_chunks(
 
     results = []
     results_len = len(formatted_response["ids"])
-
+    print(formatted_response["metadatas"], results_len, "Hello")
     for index in range(results_len):
         results.append(
             {
                 "chunk_id": formatted_response["ids"][index],
                 "text": formatted_response["documents"][index],
-                "metadata": response["metadatas"][index],
+                "metadata": formatted_response["metadatas"][index],
                 "distance": formatted_response["distances"][index],
             }
         )
